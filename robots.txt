@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://trustedbuyerlab.com/sitemap.xml
