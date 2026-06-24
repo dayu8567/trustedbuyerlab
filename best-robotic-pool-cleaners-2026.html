@@ -241,6 +241,30 @@ h1 {
   box-shadow: 0 12px 22px rgba(249, 115, 22, .22);
 }
 .cta-button:hover { background: var(--brand-dark); }
+.deal-strip {
+  background: #fff;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+}
+.deal-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.deal-button {
+  display: block;
+  text-align: center;
+  background: var(--brand);
+  color: #fff;
+  border-radius: 8px;
+  padding: 15px 16px;
+  font-weight: 800;
+  box-shadow: 0 10px 20px rgba(249, 115, 22, .2);
+}
+.deal-button:hover {
+  background: var(--brand-dark);
+}
 .method-grid, .scenario-grid, .pros-grid, .image-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -343,6 +367,22 @@ tr:last-child td { border-bottom: 0; }
   padding: 48px 0;
 }
 .verdict p { color: #dbe4ee; max-width: 780px; }
+.verdict .hero-meta {
+  align-items: center;
+}
+.verdict .affiliate-link {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+  border-radius: 8px;
+  font-weight: 800;
+  padding: 13px 18px;
+  box-shadow: 0 10px 20px rgba(249, 115, 22, .2);
+}
+.verdict .affiliate-link:hover {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+}
 .footer {
   background: #fff;
   border-top: 1px solid var(--line);
@@ -390,6 +430,7 @@ tr:last-child td { border-bottom: 0; }
   h1 { font-size: 30px; line-height: 1.08; }
   .hero-copy { font-size: 16px; }
   .mobile-buybar a { font-size: 13px; padding: 10px 8px; }
+  .deal-row { grid-template-columns: 1fr; }
 }
 </style>
 <script type="application/ld+json">
@@ -514,6 +555,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <a class="quick-pick" href="#wybot-c2"><span>Best Scheduling</span><strong>WYBOT C2</strong></a>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="deal-strip" aria-label="Quick price buttons">
+    <div class="container deal-row">
+      <a class="deal-button affiliate-link" href="https://pboost.me/g2a3Bwe2" target="_blank" rel="nofollow sponsored" data-product-name="Beatbot Sora 30 Pool Vacuum" data-product-rank="1" data-category="Cordless Robotic Pool Cleaners" data-affiliate-network="partnerboost" data-cta-text="Check Sora 30 Price" data-page-type="review">Check Sora 30 Price</a>
+      <a class="deal-button affiliate-link" href="https://pboost.me/J2a3g3vgv" target="_blank" rel="nofollow sponsored" data-product-name="WYBOT C1 Power Cordless Robotic Pool Vacuum" data-product-rank="2" data-category="Cordless Robotic Pool Cleaners" data-affiliate-network="partnerboost" data-cta-text="Check WYBOT C1 Price" data-page-type="review">Check WYBOT C1 Price</a>
+      <a class="deal-button affiliate-link" href="https://pboost.me/R2a3c45ga" target="_blank" rel="nofollow sponsored" data-product-name="WYBOT C2 Cordless Robotic Pool Cleaner" data-product-rank="3" data-category="Cordless Robotic Pool Cleaners" data-affiliate-network="partnerboost" data-cta-text="Check WYBOT C2 Price" data-page-type="review">Check WYBOT C2 Price</a>
     </div>
   </section>
 
@@ -775,9 +824,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2>Final Verdict</h2>
       <p>For the strongest overall spec profile, start with Beatbot Sora 30. For a more balanced value choice with app support, look at WYBOT C1. For routine scheduling and dual filtration, WYBOT C2 is the better fit. Match the cleaner to your pool rather than buying the most expensive option by default.</p>
       <div class="hero-meta">
-        <a class="pill affiliate-link" href="https://pboost.me/g2a3Bwe2" target="_blank" rel="nofollow sponsored" data-product-name="Beatbot Sora 30 Pool Vacuum" data-product-rank="1" data-category="Cordless Robotic Pool Cleaners" data-affiliate-network="partnerboost" data-cta-text="Check Sora 30 Price" data-page-type="review">Check Sora 30 Price</a>
-        <a class="pill affiliate-link" href="https://pboost.me/J2a3g3vgv" target="_blank" rel="nofollow sponsored" data-product-name="WYBOT C1 Power Cordless Robotic Pool Vacuum" data-product-rank="2" data-category="Cordless Robotic Pool Cleaners" data-affiliate-network="partnerboost" data-cta-text="Check WYBOT C1 Price" data-page-type="review">Check WYBOT C1 Price</a>
-        <a class="pill affiliate-link" href="https://pboost.me/R2a3c45ga" target="_blank" rel="nofollow sponsored" data-product-name="WYBOT C2 Cordless Robotic Pool Cleaner" data-product-rank="3" data-category="Cordless Robotic Pool Cleaners" data-affiliate-network="partnerboost" data-cta-text="Check WYBOT C2 Price" data-page-type="review">Check WYBOT C2 Price</a>
+        <a class="affiliate-link" href="https://pboost.me/g2a3Bwe2" target="_blank" rel="nofollow sponsored" data-product-name="Beatbot Sora 30 Pool Vacuum" data-product-rank="1" data-category="Cordless Robotic Pool Cleaners" data-affiliate-network="partnerboost" data-cta-text="Check Sora 30 Price" data-page-type="review">Check Sora 30 Price</a>
+        <a class="affiliate-link" href="https://pboost.me/J2a3g3vgv" target="_blank" rel="nofollow sponsored" data-product-name="WYBOT C1 Power Cordless Robotic Pool Vacuum" data-product-rank="2" data-category="Cordless Robotic Pool Cleaners" data-affiliate-network="partnerboost" data-cta-text="Check WYBOT C1 Price" data-page-type="review">Check WYBOT C1 Price</a>
+        <a class="affiliate-link" href="https://pboost.me/R2a3c45ga" target="_blank" rel="nofollow sponsored" data-product-name="WYBOT C2 Cordless Robotic Pool Cleaner" data-product-rank="3" data-category="Cordless Robotic Pool Cleaners" data-affiliate-network="partnerboost" data-cta-text="Check WYBOT C2 Price" data-page-type="review">Check WYBOT C2 Price</a>
       </div>
     </div>
   </section>
