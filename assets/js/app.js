@@ -104,6 +104,8 @@ item.classList.toggle("active");
 });
 
 });
+/* Legacy CTA CSS was accidentally embedded in this JS file. The same visual styles
+   are defined in index.html, so this block is commented to keep app.js parseable.
 .cta-button{
   display:inline-block;
   background:#FF9900;
@@ -121,4 +123,48 @@ item.classList.toggle("active");
   background:#e68a00;
   transform:translateY(-2px);
   box-shadow:0 12px 30px rgba(255,153,0,.45);
+}
+*/
+
+/* ========================
+   AFFILIATE CLICK TRACKING
+======================== */
+window.dataLayer = window.dataLayer || [];
+
+document.addEventListener("click", function(event) {
+  const link = event.target.closest(
+    "a.affiliate-link, a[href*='pboost.me'], a[href*='amazon.com'], a[href*='amzn.to'], a[href*='impact.com'], a[href*='shareasale.com'], a[href*='cj.com'], a[href*='awin1.com'], a[href*='partnerstack.com']"
+  );
+  if (!link) return;
+
+  const linkText = link.innerText.trim();
+  const affiliateNetwork = link.dataset.affiliateNetwork || getAffiliateNetwork(link.href);
+
+  window.dataLayer.push({
+    event: "affiliate_click",
+    product_name: link.dataset.productName || "",
+    product_rank: link.dataset.productRank || "",
+    category: link.dataset.category || "",
+    affiliate_network: affiliateNetwork,
+    cta_text: link.dataset.ctaText || linkText,
+    page_type: link.dataset.pageType || "",
+    page_location: window.location.href,
+    page_title: document.title,
+    outbound_url: link.href,
+    link_text: linkText
+  });
+});
+
+function getAffiliateNetwork(url) {
+  const host = new URL(url, window.location.href).hostname.replace(/^www\./, "").toLowerCase();
+
+  if (host === "pboost.me") return "pboost";
+  if (host.endsWith("amazon.com") || host === "amzn.to") return "amazon";
+  if (host.endsWith("impact.com")) return "impact";
+  if (host.endsWith("shareasale.com")) return "shareasale";
+  if (host.endsWith("cj.com")) return "cj";
+  if (host.endsWith("awin1.com")) return "awin";
+  if (host.endsWith("partnerstack.com")) return "partnerstack";
+
+  return host;
 }
