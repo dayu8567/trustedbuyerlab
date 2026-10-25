@@ -1,0 +1,39 @@
+---
+import { Image } from "astro:assets";
+import type { ArticleSummary } from "../data/blog";
+import { SECTIONS } from "../data/blog";
+
+interface Props {
+  article: ArticleSummary;
+  priority?: boolean;
+}
+
+const { article, priority = false } = Astro.props;
+---
+
+<article class="feature-story">
+  <a class="feature-story-media" href={article.href} tabindex="-1" aria-hidden="true">
+    <Image
+      src={article.image}
+      alt={article.imageAlt}
+      widths={[560, 840, 1200]}
+      sizes="(max-width: 940px) 100vw, 55vw"
+      format="webp"
+      quality={72}
+      loading={priority ? "eager" : "lazy"}
+      fetchpriority={priority ? "high" : undefined}
+      decoding="async"
+    />
+  </a>
+  <div class="feature-story-body">
+    <p class="article-kicker">{article.kicker}</p>
+    <h2><a href={article.href}>{article.title}</a></h2>
+    <p>{article.description}</p>
+    <p class="article-meta">
+      <span>{SECTIONS[article.category].label}</span>
+      <span>{article.dateLabel}</span>
+      <span>{article.readingTime}</span>
+    </p>
+    <a class="button" href={article.href}>Read the guide</a>
+  </div>
+</article>

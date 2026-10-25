@@ -1,0 +1,202 @@
+---
+import { Image } from "astro:assets";
+import { render, type CollectionEntry } from "astro:content";
+import ArticleGrid from "../../components/ArticleGrid.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { articleFromEntry, SECTIONS } from "../../data/blog";
+import { SITE } from "../../data/site";
+import {
+  articleSlug,
+  getAllArticles,
+  getPublishedEntries,
+} from "../../lib/articles";
+
+export async function getStaticPaths() {
+  const entries = await getPublishedEntries();
+  return entries.map((entry) => ({
+    params: { slug: articleSlug(entry.id) },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<"articles">;
+}
+
+const { entry } = Astro.props;
+const article = articleFromEntry(entry);
+const { Content, headings } = await render(entry);
+const allArticles = await getAllArticles();
+const related = allArticles
+  .filter(
+    (candidate) =>
+      candidate.category === article.category && candidate.id !== article.id,
+  )
+  .slice(0, 3);
+const section = SECTIONS[article.category];
+const toc = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+const canonicalPath = article.href;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": `${SITE.url}${canonicalPath}#article`,
+      headline: article.title,
+      description: article.description,
+      datePublished: article.date,
+      dateModified: article.date,
+      inLanguage: "en",
+      image: new URL(article.image.src, SITE.url).href,
+      author: {
+        "@type": "Organization",
+        name: SITE.name,
+        url: `${SITE.url}/`,
+      },
+      publisher: {
+        "@type": "Organization",
+        name: SITE.name,
+        url: `${SITE.url}/`,
+      },
+      mainEntityOfPage: `${SITE.url}${canonicalPath}`,
+      articleSection: section.label,
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${SITE.url}${canonicalPath}#breadcrumbs`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${SITE.url}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "All guides",
+          item: `${SITE.url}/guides/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: section.label,
+          item: `${SITE.url}${section.href}`,
+        },
+        {
+          "@type": "ListItem",
+          position: 4,
+          name: article.title,
+          item: `${SITE.url}${canonicalPath}`,
+        },
+      ],
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={article.title}
+  description={article.description}
+  canonicalPath={canonicalPath}
+  schema={schema}
+>
+  <Breadcrumbs
+    items={[
+      { href: "/", label: "Home" },
+      { href: "/guides/", label: "All guides" },
+      { href: section.href, label: section.label },
+      { label: article.title },
+    ]}
+  />
+
+  <article class="article-page">
+    <header class="article-header">
+      <div class="article-header-inner">
+        <p class="article-kicker">{section.label}</p>
+        <h1>{article.title}</h1>
+        <p class="article-deck">{article.description}</p>
+        <p class="article-byline">
+          <span>By Trusted Buyer Lab</span>
+          <span>{article.dateLabel}</span>
+          <span>{article.readingTime}</span>
+        </p>
+      </div>
+    </header>
+
+    <figure class="article-cover">
+      <Image
+        src={article.image}
+        alt={article.imageAlt}
+        widths={[640, 960, 1440]}
+        sizes="(max-width: 1240px) 100vw, 1160px"
+        format="webp"
+        quality={74}
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <figcaption>{article.imageAlt}</figcaption>
+    </figure>
+
+    <div class="container article-layout">
+      <article class="article-content prose">
+        <p class="article-disclosure">
+          Independent editorial. Published specifications and retailer details
+          can change, so confirm current information before purchase.
+        </p>
+        <Content />
+        <footer class="article-endnote">
+          <strong>Research note</strong>
+          <p>
+            This guide is based on published product information and practical
+            pool-care criteria. It is not a hands-on laboratory test.
+          </p>
+        </footer>
+      </article>
+
+      <aside class="article-side">
+        {
+          toc.length > 0 && (
+            <nav class="article-toc" aria-label="In this guide">
+              <p>In this guide</p>
+              <ol>
+                {toc.map((heading) => (
+                  <li class:list={[heading.depth === 3 ? "toc-subitem" : ""]}>
+                    <a href={`#${heading.slug}`}>{heading.text}</a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )
+        }
+        <div class="article-side-links">
+          <p>Keep exploring</p>
+          <a href={section.href}>More {section.label}</a>
+          <a href="/guides/">All pool guides</a>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  {
+    related.length > 0 && (
+      <section class="section mist">
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Related reading</p>
+              <h2>Continue with {section.label.toLowerCase()}</h2>
+            </div>
+            <a class="text-link section-header-link" href={section.href}>
+              See the full section
+            </a>
+          </div>
+          <ArticleGrid articles={related} />
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

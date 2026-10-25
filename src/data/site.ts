@@ -7,11 +7,12 @@ export const SITE = {
   updated: "October 25, 2026",
   gtmId: import.meta.env.PUBLIC_GTM_ID ?? "",
   navigation: [
-    { href: "/", label: "Pool robot guide" },
-    {
-      href: "/best-cordless-robotic-pool-cleaners/",
-      label: "2026 comparison",
-    },
+    { href: "/", label: "Home" },
+    { href: "/guides/", label: "All Guides" },
+    { href: "/pool-robots/", label: "Pool Robots" },
+    { href: "/pool-care/", label: "Pool Care" },
+    { href: "/buying-guides/", label: "Buying Guides" },
+    { href: "/about/", label: "About" },
   ],
   legalLinks: [
     { href: "/privacy-policy/", label: "Privacy policy" },

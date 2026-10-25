@@ -2,6 +2,8 @@
 import { SITE } from "../data/site";
 
 const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  path === href || (href !== "/" && path.startsWith(href));
 ---
 
 <header class="site-header">
@@ -15,17 +17,34 @@ const path = Astro.url.pathname;
         SITE.navigation.map((item) => (
           <a
             href={item.href}
-            aria-current={
-              path === item.href ||
-              (item.href !== "/" && path.startsWith(item.href))
-                ? "page"
-                : undefined
-            }
+            aria-current={isActive(item.href) ? "page" : undefined}
           >
             {item.label}
           </a>
         ))
       }
     </nav>
+    <details class="mobile-menu">
+      <summary>
+        <span>Browse</span>
+        <span class="menu-icon" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </summary>
+      <div class="mobile-menu-panel">
+        <nav aria-label="Mobile navigation">
+          {
+            SITE.navigation.map((item) => (
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </details>
   </div>
 </header>

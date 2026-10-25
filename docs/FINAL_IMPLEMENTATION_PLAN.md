@@ -19,8 +19,15 @@ desktop and mobile before production DNS is changed.
 
 | Route | Purpose | Source |
 | --- | --- | --- |
-| `/` | Beatbot Sora 70 / 30 / 10 buying guide | Existing `index.html` |
+| `/` | Editorial blog home, lead story, latest articles, and section navigation | New |
+| `/guides/` | Complete article library organized by section | New |
+| `/pool-robots/` | Pool robot section index | New |
+| `/pool-care/` | Pool care section index | New |
+| `/buying-guides/` | Buying guide section index | New |
+| `/guides/<slug>/` | Markdown article detail route | New content collection |
+| `/guides/beatbot-sora-robotic-pool-cleaner/` | Beatbot Sora 70 / 30 / 10 comparison | Previous home page |
 | `/best-cordless-robotic-pool-cleaners/` | Three-model cordless pool robot comparison | Existing `best-robotic-pool-cleaners-2026.html` |
+| `/about/` | Editorial method and disclosure | New |
 | `/privacy-policy/` | Privacy policy | Existing legal page |
 | `/terms/` | Terms of use | Existing legal page |
 | `/affiliate-disclosure/` | Affiliate disclosure | Existing legal page |
@@ -36,8 +43,10 @@ file and merchant verification meta tag.
 - Astro static output with no SSR adapter and no Pages Functions.
 - Shared layouts and components for metadata, navigation, footer, product cards,
   comparison tables, disclosures, and structured data.
-- Content data in typed TypeScript modules so product copy, links, specs, and
-  rankings have one source of truth.
+- Markdown articles in Astro Content Collections for the blog library and article
+  routes.
+- Typed TypeScript modules for section definitions, image mapping, product copy,
+  links, specs, and rankings.
 - Small reusable CSS layer with design tokens and responsive layout primitives.
 - Native `<details>` elements for FAQ behavior. No Alpine, no client framework,
   and no CDN-hosted CSS.
@@ -101,10 +110,11 @@ file and merchant verification meta tag.
 
 ## 9. Content And Conversion
 
+- Organize content into Pool Robots, Pool Care, and Buying Guides sections.
+- Keep the home page focused on the publication and its newest useful guides,
+  not on one product model.
 - Preserve product order, affiliate links, current disclosures, and research-only
-  disclaimers.
-- Keep the strongest commercial links above the fold without turning the page
-  into a link farm.
+  disclaimers on commercial comparison pages.
 - Use consistent CTA language and track outbound affiliate clicks with product,
   rank, category, network, page type, and destination data.
 - Keep the buyer guidance specific: pool size, wall and waterline needs, runtime,
@@ -113,10 +123,11 @@ file and merchant verification meta tag.
 ## 10. Implementation Sequence
 
 1. Create and push `refactor/astro-observatory-100`.
-2. Add Astro project configuration, content data, layouts, and shared components.
+2. Add Astro project configuration, article collection, section data, layouts,
+   and shared blog components.
 3. Localize and optimize all visual assets used above the fold.
-4. Build both editorial pages plus legal, thank-you, 404, sitemap, robots, and
-   redirects.
+4. Build the home, article library, section indexes, article detail template,
+   legal pages, thank-you, 404, sitemap, robots, and redirects.
 5. Add security headers and deferred analytics behavior.
 6. Run Astro checks, production build, local route checks, and Playwright visual
    checks at desktop and mobile widths.
@@ -129,7 +140,7 @@ file and merchant verification meta tag.
 ## 11. Acceptance Criteria
 
 - `npm run check` and `npm run build` pass.
-- No 404s, broken internal links, or missing assets on the preview.
+- No broken internal links or missing assets on the preview.
 - No console errors and no hydration or framework JavaScript.
 - Observatory desktop score: 100.
 - Observatory mobile score: 100.

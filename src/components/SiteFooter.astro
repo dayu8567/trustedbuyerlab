@@ -8,15 +8,24 @@ import { SITE, disclosure } from "../data/site";
       <div class="footer-brand">
         <strong>Trusted Buyer Lab</strong>
         <p>
-          Research-led product comparisons with plain-language buyer guidance.
+          Research-led buying guides and practical explainers for pool owners.
           Specifications and retailer availability can change, so confirm
           details before purchase.
         </p>
         <p>{disclosure}</p>
       </div>
-      <nav class="footer-links" aria-label="Legal links">
-        {SITE.legalLinks.map((link) => <a href={link.href}>{link.label}</a>)}
-      </nav>
+      <div class="footer-column">
+        <p class="footer-heading">Explore</p>
+        <nav class="footer-links" aria-label="Footer navigation">
+          {SITE.navigation.map((link) => <a href={link.href}>{link.label}</a>)}
+        </nav>
+      </div>
+      <div class="footer-column">
+        <p class="footer-heading">Legal</p>
+        <nav class="footer-links" aria-label="Legal links">
+          {SITE.legalLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+        </nav>
+      </div>
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 Trusted Buyer Lab</span>

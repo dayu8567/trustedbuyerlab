@@ -1,0 +1,299 @@
+---
+import { Image } from "astro:assets";
+import AffiliateButton from "../../../components/AffiliateButton.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import ComparisonTable from "../../../components/ComparisonTable.astro";
+import Faq from "../../../components/Faq.astro";
+import ProductCard from "../../../components/ProductCard.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { SITE, disclosure } from "../../../data/site";
+import {
+  soraComparisonHeaders,
+  soraComparisonRows,
+  soraFaqs,
+  soraPicks,
+  soraScores,
+} from "../../../data/sora";
+import heroImage from "../../../assets/images/scene-hero-beatbot.jpg";
+import detailImage from "../../../assets/images/beatbot-sora-30.jpg";
+
+const title = "Best Beatbot Sora Robotic Pool Cleaner for 2026";
+const description =
+  "Compare Beatbot Sora 70, Sora 30, and Sora 10 for 2026. See which robotic pool cleaner fits your pool size, debris load, runtime needs, and budget.";
+const canonicalPath = "/guides/beatbot-sora-robotic-pool-cleaner/";
+const topPick = soraPicks[0];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${SITE.url}${canonicalPath}#webpage`,
+      url: `${SITE.url}${canonicalPath}`,
+      name: title,
+      description,
+      inLanguage: "en",
+      dateModified: "2026-10-25",
+      author: {
+        "@type": "Organization",
+        name: SITE.name,
+      },
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${SITE.url}${canonicalPath}#itemlist`,
+      name: "Best Beatbot Sora picks for 2026",
+      itemListElement: soraPicks.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: `${SITE.url}${canonicalPath}#${product.id}`,
+      })),
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE.url}${canonicalPath}#faq`,
+      mainEntity: soraFaqs.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+  schema={schema}
+>
+  <Breadcrumbs
+    items={[
+      { href: "/", label: "Home" },
+      { href: "/pool-robots/", label: "Pool Robots" },
+      { label: "Beatbot Sora comparison" },
+    ]}
+  />
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">2026 Sora comparison</p>
+        <h1>Best Beatbot Sora Robotic Pool Cleaner for 2026</h1>
+        <p class="hero-lede">
+          Sora 70, Sora 30, and Sora 10 share the same cordless format but not
+          the same job. Choose by pool size, floating debris, wall coverage,
+          runtime, and the capacity you can live with.
+        </p>
+        <div class="hero-meta">
+          <span class="meta-item"><span class="meta-dot"></span>3 models compared</span>
+          <span class="meta-item"><span class="meta-dot"></span>Updated {SITE.updated}</span>
+          <span class="meta-item"><span class="meta-dot"></span>Published specs only</span>
+        </div>
+        <div class="hero-meta">
+          <a class="button" href="#picks">Compare the three models</a>
+          <AffiliateButton link={topPick.cta} variant="secondary" />
+        </div>
+        <p class="note">{disclosure}</p>
+      </div>
+
+      <figure class="hero-media">
+        <div class="hero-media-frame">
+          <Image
+            src={heroImage}
+            alt="Beatbot Sora robotic pool cleaner returning to the water surface"
+            widths={[480, 760, 1200]}
+            sizes="(max-width: 940px) 100vw, 46vw"
+            format="webp"
+            quality={72}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+        <div class="hero-picks" aria-label="Quick winners">
+          {
+            soraPicks.map((product) => (
+              <a class="hero-pick" href={`#${product.id}`}>
+                <span>{product.rankLabel}</span>
+                <strong>{product.shortName}</strong>
+              </a>
+            ))
+          }
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="trust-strip" aria-label="How this guide was compared">
+    <div class="container trust-grid">
+      <div class="trust-item">
+        <span class="trust-number">03</span>
+        <span>Sora models compared by buyer fit</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-number">05</span>
+        <span>Coverage, runtime, capacity, zones, and value</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-number">01</span>
+        <span>Clear recommendation for most pools</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section mist" id="picks">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">At a glance</p>
+          <h2>Three models. Three very different pool owners.</h2>
+        </div>
+        <p>
+          The premium model is not automatically the right model. Start with
+          what your pool collects and where it collects it.
+        </p>
+      </div>
+      <div class="product-grid">
+        {soraPicks.map((product) => <ProductCard product={product} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section paper">
+    <div class="container split">
+      <figure class="split-media">
+        <Image
+          src={detailImage}
+          alt="Beatbot Sora 30 cordless robotic pool cleaner detail view"
+          widths={[420, 680, 960]}
+          sizes="(max-width: 940px) 100vw, 46vw"
+          format="webp"
+          quality={74}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <div class="split-copy">
+        <p class="eyebrow">The deciding feature</p>
+        <h2>Floating debris is the line between Sora 70 and the rest.</h2>
+        <p>
+          All three models target routine pool care, but Sora 70 adds surface
+          cleaning and the largest basket. If leaves and insects collect before
+          they sink, that changes the value calculation.
+        </p>
+        <div class="check-grid">
+          <div class="check-item">
+            <strong>Surface debris</strong>
+            <span>Choose Sora 70 for floating leaves, pollen, and insects.</span>
+          </div>
+          <div class="check-item">
+            <strong>Family pool</strong>
+            <span>Sora 30 is the balanced floor, wall, and waterline pick.</span>
+          </div>
+          <div class="check-item">
+            <strong>Routine floor care</strong>
+            <span>Sora 10 keeps the entry price lower without hose handling.</span>
+          </div>
+          <div class="check-item">
+            <strong>Large or complex pool</strong>
+            <span>Compare current coverage claims and runtime before choosing.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section mist" id="compare">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Side by side</p>
+          <h2>Beatbot Sora 70 vs Sora 30 vs Sora 10</h2>
+        </div>
+        <p>
+          Use the retailer listing to confirm current specifications, price,
+          and availability before ordering.
+        </p>
+      </div>
+      <ComparisonTable
+        caption="Comparison of Beatbot Sora 70, Sora 30, and Sora 10"
+        headers={soraComparisonHeaders}
+        rows={soraComparisonRows}
+      />
+    </div>
+  </section>
+
+  <section class="section paper">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Match the pool</p>
+          <h2>Which Sora should you buy?</h2>
+        </div>
+        <p>Start with the problem your pool creates most often.</p>
+      </div>
+      <div class="scenario-grid">
+        <article class="scenario-card">
+          <h3>Choose Sora 70 for surface debris</h3>
+          <p>
+            Pick it when floating leaves, pollen, or insects are a recurring
+            problem and you want the most complete coverage in this lineup.
+          </p>
+        </article>
+        <article class="scenario-card">
+          <h3>Choose Sora 30 for balance</h3>
+          <p>
+            Pick it for a typical family pool where floor, wall, waterline, and
+            platform cleaning matter more than surface pickup.
+          </p>
+        </article>
+        <article class="scenario-card">
+          <h3>Choose Sora 10 for routine care</h3>
+          <p>
+            Pick it when cordless floor and wall maintenance is enough and the
+            premium surface features are not worth the extra spend.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="verdict">
+    <div class="section">
+      <div class="container">
+        <p class="eyebrow">Final verdict</p>
+        <h2>Sora 70 wins the full-pool brief. Sora 30 wins the value brief.</h2>
+        <p>
+          Buy Sora 70 when surface cleaning is part of the job. Buy Sora 30 for
+          the most balanced family-pool recommendation. Choose Sora 10 only if
+          your needs are genuinely simple and the price difference matters.
+        </p>
+        <div class="score-grid">
+          {
+            soraScores.map((score) => (
+              <div class="score">
+                <span>{score.label}</span>
+                <strong>{score.value}</strong>
+              </div>
+            ))
+          }
+        </div>
+        <div class="verdict-actions">
+          <AffiliateButton link={topPick.cta} />
+          <a class="button secondary" href="#picks">Review all three picks</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Faq
+    items={soraFaqs}
+    heading="Beatbot Sora questions, answered"
+    intro="The answers that most often change which model makes sense."
+  />
+</BaseLayout>

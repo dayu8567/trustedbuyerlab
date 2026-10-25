@@ -1,5 +1,5 @@
 import { chromium } from "playwright";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir, writeFile } from "node:fs/promises";
 
 const baseUrl = process.env.QA_BASE_URL ?? "http://127.0.0.1:4321";
 const chromePath =
@@ -7,14 +7,40 @@ const chromePath =
   "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 const outputDir = ".qa";
 
+const articleFiles = await readdir("src/content/articles");
+const markdownArticles = articleFiles
+  .filter((file) => file.endsWith(".md"))
+  .map((file) => file.replace(/\.md$/, ""));
+
 const pages = [
   { path: "/", name: "home" },
-  { path: "/best-cordless-robotic-pool-cleaners/", name: "comparison" },
+  { path: "/guides/", name: "all-guides" },
+  { path: "/pool-robots/", name: "pool-robots" },
+  { path: "/pool-care/", name: "pool-care" },
+  { path: "/buying-guides/", name: "buying-guides" },
+  { path: "/about/", name: "about" },
+  {
+    path: "/guides/beatbot-sora-robotic-pool-cleaner/",
+    name: "sora-comparison",
+  },
+  {
+    path: "/best-cordless-robotic-pool-cleaners/",
+    name: "cordless-comparison",
+  },
+  ...markdownArticles.map((slug) => ({
+    path: `/guides/${slug}/`,
+    name: slug,
+  })),
   { path: "/privacy-policy/", name: "privacy" },
   { path: "/terms/", name: "terms" },
   { path: "/affiliate-disclosure/", name: "affiliate-disclosure" },
   { path: "/thank-you/", name: "thank-you" },
-  { path: "/missing-page-for-qa/", name: "not-found", expectedStatus: 404 },
+  {
+    path: "/missing-page-for-qa/",
+    name: "not-found",
+    expectedStatus: 404,
+    expectedCanonical: "/404.html",
+  },
 ];
 
 const viewports = [
@@ -102,6 +128,15 @@ for (const target of pages) {
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForTimeout(60);
 
+    let mobileMenuWorks = null;
+    if (viewport.width <= 900) {
+      const menu = page.locator(".mobile-menu");
+      const summary = menu.locator("summary");
+      await summary.click();
+      mobileMenuWorks = await menu.locator(".mobile-menu-panel").isVisible();
+      await summary.click();
+    }
+
     const result = await page.evaluate(() => {
       const images = [...document.images];
       const resources = performance.getEntriesByType("resource");
@@ -142,6 +177,8 @@ for (const target of pages) {
       viewport: viewport.name,
       status: response?.status() ?? null,
       expectedStatus: target.expectedStatus ?? 200,
+      expectedCanonical: `https://trustedbuyerlab.com${target.expectedCanonical ?? target.path}`,
+      mobileMenuWorks,
       lastScrollPosition,
       screenshot,
       consoleErrors,
@@ -158,9 +195,11 @@ await writeFile(`${outputDir}/report.json`, JSON.stringify(report, null, 2));
 
 for (const item of report) {
   const overflow = item.scrollWidth > item.viewportWidth;
+  const canonicalMatches = item.canonical === item.expectedCanonical;
   console.log(
     `${item.page} ${item.viewport}: status=${item.status} ` +
       `expected=${item.expectedStatus} overflow=${overflow} ` +
+      `h1=${item.h1Count} canonical=${canonicalMatches} ` +
       `broken=${item.brokenImages.length} errors=${item.consoleErrors.length} ` +
       `transfer=${Math.round(item.transferBytes / 1024)}KB lcp=${Math.round(item.lcp)}ms ` +
       `cls=${item.cls.toFixed(3)}`,
@@ -170,6 +209,10 @@ for (const item of report) {
 const failures = report.filter(
   (item) =>
     item.status !== item.expectedStatus ||
+    item.h1Count !== 1 ||
+    !item.title ||
+    item.canonical !== item.expectedCanonical ||
+    item.mobileMenuWorks === false ||
     item.scrollWidth > item.viewportWidth ||
     item.brokenImages.length > 0 ||
     (item.expectedStatus < 400 && item.consoleErrors.length > 0) ||

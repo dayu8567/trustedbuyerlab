@@ -1,0 +1,114 @@
+---
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SECTIONS, type SectionKey } from "../../data/blog";
+import { SITE, disclosure } from "../../data/site";
+import { getAllArticles } from "../../lib/articles";
+
+const articles = await getAllArticles();
+const sectionKeys = Object.keys(SECTIONS) as SectionKey[];
+const title = "About Trusted Buyer Lab";
+const description =
+  "Learn how Trusted Buyer Lab researches pool products, structures its guides, and separates published specifications from hands-on testing claims.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "@id": `${SITE.url}/about/#about`,
+  url: `${SITE.url}/about/`,
+  name: title,
+  description,
+  inLanguage: "en",
+  mainEntity: {
+    "@type": "Organization",
+    name: SITE.name,
+    url: `${SITE.url}/`,
+    description: SITE.description,
+  },
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="/about/"
+  schema={schema}
+>
+  <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "About" }]} />
+
+  <header class="about-hero">
+    <div class="container about-hero-grid">
+      <div>
+        <p class="eyebrow">About the lab</p>
+        <h1>Useful research for the part after the product photo.</h1>
+      </div>
+      <p class="about-standfirst">
+        Trusted Buyer Lab is an independent editorial site for pool owners. The
+        work focuses on fit, tradeoffs, maintenance, and the details that remain
+        important after a purchase.
+      </p>
+    </div>
+  </header>
+
+  <section class="section paper">
+    <div class="narrow about-body">
+      <div class="about-statline">
+        <div><strong>{articles.length}</strong><span>Published guides</span></div>
+        <div><strong>3</strong><span>Editorial sections</span></div>
+        <div><strong>2026</strong><span>Current edition</span></div>
+      </div>
+
+      <h2>Why the library is organized by decisions</h2>
+      <p>
+        A robotic pool cleaner is not one purchase with one right answer. Pool
+        shape, surface, debris, wall coverage, runtime, storage, and budget all
+        change the sensible choice. The site separates those questions into
+        sections so a reader can start with the problem instead of a product
+        name.
+      </p>
+
+      <div class="about-section-list">
+        {
+          sectionKeys.map((key) => (
+            <a href={SECTIONS[key].href}>
+              <span>{SECTIONS[key].label}</span>
+              <p>{SECTIONS[key].description}</p>
+            </a>
+          ))
+        }
+      </div>
+
+      <h2>How the research is framed</h2>
+      <p>
+        Articles compare published manufacturer specifications, product claims,
+        pool-fit requirements, and ownership details. We distinguish those
+        sources from our own judgment and avoid presenting desk research as
+        hands-on laboratory testing.
+      </p>
+      <p>
+        A specification is useful only when it maps to a real pool. The
+        editorial approach is to explain those relationships, show where the
+        available evidence stops, and recommend confirming current retailer
+        details before purchase.
+      </p>
+
+      <h2>Independence and affiliate links</h2>
+      <p>{disclosure}</p>
+      <p>
+        Commercial relationships do not determine the structure of a guide.
+        Where a topic needs a limitation, tradeoff, or alternative, the guide
+        says so directly. Prices and availability are left to the retailer
+        because they change faster than the underlying buying advice.
+      </p>
+
+      <h2>Founder note</h2>
+      <p>
+        Trusted Buyer Lab began as a focused pool robot comparison and is now a
+        broader pool ownership publication. The expansion keeps the same
+        standard: each article should answer a question a reader can use before
+        spending money or time.
+      </p>
+      <p class="about-signoff">- The Trusted Buyer Lab editorial desk</p>
+    </div>
+  </section>
+</BaseLayout>
