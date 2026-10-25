@@ -1,0 +1,36 @@
+---
+import { Image } from "astro:assets";
+import type { ProductPick } from "../data/types";
+import AffiliateButton from "./AffiliateButton.astro";
+
+interface Props {
+  product: ProductPick;
+}
+
+const { product } = Astro.props;
+---
+
+<article class="product-card" id={product.id}>
+  <div class="product-media">
+    <Image
+      src={product.image}
+      alt={product.imageAlt}
+      widths={[320, 480, 680]}
+      sizes="(max-width: 940px) 38vw, 30vw"
+      format="webp"
+      quality={72}
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  <div class="product-body">
+    <span class="pick-kicker">{product.rankLabel}</span>
+    <h3 class="product-title">{product.name}</h3>
+    <p class="product-fit">{product.bestFor}</p>
+    <p class="product-summary">{product.summary}</p>
+    <ul class="spec-list">
+      {product.specs.map((spec) => <li>{spec}</li>)}
+    </ul>
+    <AffiliateButton link={product.cta} />
+  </div>
+</article>

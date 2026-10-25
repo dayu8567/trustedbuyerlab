@@ -1,0 +1,32 @@
+---
+import type { ComparisonRow } from "../data/types";
+
+interface Props {
+  caption: string;
+  headers: string[];
+  rows: ComparisonRow[];
+}
+
+const { caption, headers, rows } = Astro.props;
+---
+
+<div class="table-wrap" tabindex="0" role="region" aria-label={caption}>
+  <table class="comparison-table">
+    <caption>{caption}</caption>
+    <thead>
+      <tr>
+        {headers.map((header) => <th scope="col">{header}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((row) => (
+          <tr>
+            <th scope="row">{row.label}</th>
+            {row.values.map((value) => <td>{value}</td>)}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

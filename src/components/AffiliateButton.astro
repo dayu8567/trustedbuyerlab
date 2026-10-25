@@ -1,0 +1,33 @@
+---
+import type { AffiliateLink } from "../data/types";
+
+interface Props {
+  link: AffiliateLink;
+  variant?: "primary" | "secondary";
+  small?: boolean;
+}
+
+const { link, variant = "primary", small = false } = Astro.props;
+const classes = [
+  "button",
+  variant === "secondary" ? "secondary" : "",
+  small ? "small" : "",
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<a
+  class={`${classes} affiliate-link`}
+  href={link.href}
+  target="_blank"
+  rel="nofollow sponsored noopener"
+  data-affiliate-network={link.network}
+  data-product-name={link.productName}
+  data-product-rank={link.productRank}
+  data-category={link.category}
+  data-cta-text={link.label}
+  data-page-type={link.pageType}
+>
+  {link.label}
+</a>

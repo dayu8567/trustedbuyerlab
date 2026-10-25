@@ -1,0 +1,331 @@
+---
+import { Image } from "astro:assets";
+import AffiliateButton from "../../components/AffiliateButton.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import ComparisonTable from "../../components/ComparisonTable.astro";
+import Faq from "../../components/Faq.astro";
+import ProductCard from "../../components/ProductCard.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SITE, disclosure } from "../../data/site";
+import {
+  cordlessComparisonHeaders,
+  cordlessComparisonRows,
+  cordlessFaqs,
+  cordlessPicks,
+} from "../../data/cordless";
+import heroImage from "../../assets/images/scene-hero-beatbot.jpg";
+import scenarioImage from "../../assets/images/scene-wybot-c1.jpg";
+
+const title =
+  "Best Cordless Robotic Pool Cleaners 2026: Beatbot vs WYBOT";
+const description =
+  "Compare Beatbot Sora 30, WYBOT C1, and WYBOT C2 cordless robotic pool cleaners for 2026. See which fits large pools, wall and waterline cleaning, scheduling, and value.";
+const canonicalPath = "/best-cordless-robotic-pool-cleaners/";
+const topPick = cordlessPicks[0];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${SITE.url}${canonicalPath}#webpage`,
+      url: `${SITE.url}${canonicalPath}`,
+      name: title,
+      description,
+      inLanguage: "en",
+      dateModified: "2026-10-25",
+      author: {
+        "@type": "Organization",
+        name: SITE.name,
+      },
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${SITE.url}${canonicalPath}#itemlist`,
+      name: "Best cordless robotic pool cleaner picks",
+      itemListElement: cordlessPicks.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: `${SITE.url}${canonicalPath}#${product.id}`,
+      })),
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE.url}${canonicalPath}#faq`,
+      mainEntity: cordlessFaqs.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+  schema={schema}
+>
+  <Breadcrumbs
+    items={[
+      { href: "/", label: "Home" },
+      { label: "Best cordless robotic pool cleaners" },
+    ]}
+  />
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">2026 buying guide</p>
+        <h1>Best Cordless Robotic Pool Cleaners 2026</h1>
+        <p class="hero-lede">
+          Three credible cordless pool robots, separated by the decisions that
+          actually matter: large-pool coverage, wall and waterline work,
+          filtration, scheduling, and value.
+        </p>
+        <div class="hero-meta">
+          <span class="meta-item"><span class="meta-dot"></span>Updated {SITE.updated}</span>
+          <span class="meta-item"><span class="meta-dot"></span>3 finalists</span>
+          <span class="meta-item"><span class="meta-dot"></span>Research-led</span>
+        </div>
+        <div class="hero-meta">
+          <a class="button" href="#picks">See the best picks</a>
+          <AffiliateButton link={topPick.cta} variant="secondary" />
+        </div>
+        <p class="note">{disclosure}</p>
+      </div>
+
+      <figure class="hero-media">
+        <div class="hero-media-frame">
+          <Image
+            src={heroImage}
+            alt="Beatbot cordless robotic pool cleaner parked at the water surface"
+            widths={[480, 760, 1200]}
+            sizes="(max-width: 940px) 100vw, 46vw"
+            format="webp"
+            quality={72}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+        <div class="hero-picks" aria-label="Quick winners">
+          {
+            cordlessPicks.map((product) => (
+              <a class="hero-pick" href={`#${product.id}`}>
+                <span>{product.rankLabel}</span>
+                <strong>{product.shortName}</strong>
+              </a>
+            ))
+          }
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="trust-strip" aria-label="Comparison method">
+    <div class="container trust-grid">
+      <div class="trust-item">
+        <span class="trust-number">A</span>
+        <span>Published specifications and retailer listings</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-number">B</span>
+        <span>Pool size, cleaning zones, and ownership routine</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-number">C</span>
+        <span>Clear tradeoffs instead of a spec-sheet winner</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section mist" id="picks">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Best picks</p>
+          <h2>One for coverage, one for value, one for scheduling.</h2>
+        </div>
+        <p>
+          The right robot depends on pool size and how much manual cleaning you
+          want to remove from the weekly routine.
+        </p>
+      </div>
+      <div class="product-grid">
+        {cordlessPicks.map((product) => <ProductCard product={product} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section paper">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Method</p>
+          <h2>How we compared these pool robots</h2>
+        </div>
+        <p>
+          This is a buying-guide comparison built from public product
+          information and common pool-owner decisions, not hands-on testing.
+        </p>
+      </div>
+      <div class="method-grid">
+        <article class="method-card">
+          <strong>01</strong>
+          <h3>Use case</h3>
+          <p>
+            Large-pool coverage, smaller-pool value, wall and waterline work,
+            and app scheduling are evaluated separately.
+          </p>
+        </article>
+        <article class="method-card">
+          <strong>02</strong>
+          <h3>Core performance</h3>
+          <p>
+            Runtime, coverage, cleaning zones, filtration, capacity, and
+            navigation claims are compared as published.
+          </p>
+        </article>
+        <article class="method-card">
+          <strong>03</strong>
+          <h3>Ownership fit</h3>
+          <p>
+            A higher price is justified only when the added feature matches a
+            recurring problem in your pool.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section mist">
+    <div class="container split reverse">
+      <figure class="split-media">
+        <Image
+          src={scenarioImage}
+          alt="WYBOT C1 demonstrating wall, waterline, and floor cleaning"
+          widths={[480, 760, 1080]}
+          sizes="(max-width: 940px) 100vw, 46vw"
+          format="webp"
+          quality={72}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <div class="split-copy">
+        <p class="eyebrow">Buy the pool, not the poster</p>
+        <h2>Four questions remove most of the confusion.</h2>
+        <p>
+          A cleaner with a longer spec sheet is not a better cleaner for every
+          pool. Narrow the field before comparing price.
+        </p>
+        <div class="check-grid">
+          <div class="check-item">
+            <strong>How large is the pool?</strong>
+            <span>Coverage and runtime matter more as pool size increases.</span>
+          </div>
+          <div class="check-item">
+            <strong>What collects most often?</strong>
+            <span>Leaves, sand, pollen, and hair stress different parts.</span>
+          </div>
+          <div class="check-item">
+            <strong>Is wall grime visible?</strong>
+            <span>Wall and waterline coverage reduces manual brushing.</span>
+          </div>
+          <div class="check-item">
+            <strong>Will you use a schedule?</strong>
+            <span>App routines are valuable only when they match your habits.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section paper" id="compare">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Side by side</p>
+          <h2>Comparison table</h2>
+        </div>
+        <p>
+          Use this table to avoid paying for features your pool may never need.
+        </p>
+      </div>
+      <ComparisonTable
+        caption="Comparison of Beatbot Sora 30, WYBOT C1, and WYBOT C2"
+        headers={cordlessComparisonHeaders}
+        rows={cordlessComparisonRows}
+      />
+    </div>
+  </section>
+
+  <section class="section mist">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Buyer fit</p>
+          <h2>Which one should you buy?</h2>
+        </div>
+        <p>Match the cleaner to the pool and the weekly routine.</p>
+      </div>
+      <div class="scenario-grid">
+        <article class="scenario-card">
+          <h3>Choose Beatbot Sora 30 if...</h3>
+          <p>
+            You have a larger or more complex pool and want the strongest
+            published mix of runtime, coverage, capacity, and cleaning zones.
+          </p>
+        </article>
+        <article class="scenario-card">
+          <h3>Choose WYBOT C1 if...</h3>
+          <p>
+            You want a balanced cordless cleaner with app support and wall or
+            waterline coverage without paying for the broadest claims.
+          </p>
+        </article>
+        <article class="scenario-card">
+          <h3>Choose WYBOT C2 if...</h3>
+          <p>
+            App scheduling and dual filtration fit your routine, especially for
+            recurring in-ground pool maintenance.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="verdict">
+    <div class="section">
+      <div class="container">
+        <p class="eyebrow">Final verdict</p>
+        <h2>Sora 30 for coverage. WYBOT C1 for balance. WYBOT C2 for routine.</h2>
+        <p>
+          Start with Beatbot Sora 30 for the strongest overall spec profile.
+          WYBOT C1 is the more focused value option. WYBOT C2 makes sense when
+          scheduling and dual filtration are the features you will actually
+          use.
+        </p>
+        <div class="verdict-actions">
+          <AffiliateButton link={topPick.cta} />
+          <a class="button secondary" href="/">
+            Compare the Beatbot Sora lineup
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Faq
+    items={cordlessFaqs}
+    heading="Cordless pool cleaner FAQ"
+    intro="Practical answers before you choose a robot for your pool."
+  />
+</BaseLayout>

@@ -1,0 +1,36 @@
+---
+import type { FaqItem } from "../data/types";
+
+interface Props {
+  items: FaqItem[];
+  heading?: string;
+  intro?: string;
+}
+
+const {
+  items,
+  heading = "Frequently asked questions",
+  intro = "The details that usually decide the purchase.",
+} = Astro.props;
+---
+
+<section class="section paper" id="faq">
+  <div class="container">
+    <div class="section-header centered">
+      <h2>{heading}</h2>
+      <p>{intro}</p>
+    </div>
+    <div class="faq-list">
+      {
+        items.map((item) => (
+          <details class="faq-item">
+            <summary>{item.question}</summary>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

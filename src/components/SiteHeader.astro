@@ -1,0 +1,31 @@
+---
+import { SITE } from "../data/site";
+
+const path = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="/" aria-label="Trusted Buyer Lab home">
+      <span class="brand-mark" aria-hidden="true">TBL</span>
+      <span>Trusted Buyer Lab</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      {
+        SITE.navigation.map((item) => (
+          <a
+            href={item.href}
+            aria-current={
+              path === item.href ||
+              (item.href !== "/" && path.startsWith(item.href))
+                ? "page"
+                : undefined
+            }
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
