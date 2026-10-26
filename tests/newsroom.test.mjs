@@ -3,7 +3,10 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { resolve } from "node:path";
 import { buildArticleMarkdown } from "../scripts/newsroom/content.mjs";
-import { normalizeOffers } from "../scripts/newsroom/offers.mjs";
+import {
+  normalizeOffers,
+  opportunitiesFromPayload,
+} from "../scripts/newsroom/offers.mjs";
 import {
   appendHistory,
   selectCandidates,
@@ -29,6 +32,14 @@ test("normalizes PartnerBoost aliases into the internal offer contract", () => {
   assert.equal(offers[0].subcategory, "air-fryers");
   assert.equal(offers[0].price, 79.99);
   assert.equal(offers[1].subcategory, "robot-vacuums");
+});
+
+test("reads products from PartnerBoost's nested envelope", () => {
+  const products = opportunitiesFromPayload({
+    status: { code: 0, msg: "success" },
+    data: { list: feed.products, page: 1 },
+  });
+  assert.equal(products.length, 2);
 });
 
 test("selects only verified discounts and caps the daily volume", () => {

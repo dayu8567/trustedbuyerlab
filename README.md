@@ -59,6 +59,16 @@ offers, stores daily price history, selects at most two verified price drops,
 and asks Workers AI for a constrained JSON draft. Code controls product names,
 prices, links, timestamps, affiliate disclosure, and publication metadata.
 
+`PARTNERBOOST_FEED_URL` should be:
+
+```text
+https://app.partnerboost.com/api.php?mod=datafeed&op=list
+```
+
+`PARTNERBOOST_API_KEY` is the Partner-channel token from Token Manage. The
+workflow sends it in the documented POST body and can read up to five 100-item
+pages per run.
+
 Required GitHub Actions secrets:
 
 - `PARTNERBOOST_FEED_URL`

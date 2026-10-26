@@ -2,7 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { generateDraft } from "./ai.mjs";
 import { writeGeneratedArticle } from "./content.mjs";
-import { normalizeOffers } from "./offers.mjs";
+import { normalizeOffers, opportunitiesFromPayload } from "./offers.mjs";
 import { appendHistory, selectCandidates } from "./selection.mjs";
 import { validateAiDraft } from "./validation.mjs";
 
@@ -32,18 +32,42 @@ const fetchFeed = async () => {
     console.log("Newsroom skipped: PartnerBoost credentials are not configured.");
     return null;
   }
-  const response = await fetch(feedUrl, {
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${apiKey}`,
-      "X-API-Key": apiKey,
-    },
-    signal: AbortSignal.timeout(30_000),
-  });
-  if (!response.ok) {
-    throw new Error(`PartnerBoost feed failed: ${response.status} ${await response.text()}`);
+
+  const endpoint = new URL(feedUrl);
+  if (!endpoint.searchParams.has("mod")) endpoint.searchParams.set("mod", "datafeed");
+  if (!endpoint.searchParams.has("op")) endpoint.searchParams.set("op", "list");
+  const maxPages = Math.max(
+    1,
+    Math.min(10, Number(process.env.PARTNERBOOST_MAX_PAGES ?? 5)),
+  );
+  const products = [];
+
+  for (let page = 1; page <= maxPages; page += 1) {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: apiKey, type: "json", page, limit: 100 }),
+      signal: AbortSignal.timeout(30_000),
+    });
+    if (!response.ok) {
+      throw new Error(
+        `PartnerBoost feed failed: ${response.status} ${await response.text()}`,
+      );
+    }
+    const payload = await response.json();
+    if (payload?.status?.code !== undefined && payload.status.code !== 0) {
+      throw new Error(
+        `PartnerBoost API ${payload.status.code}: ${payload.status.msg ?? "unknown error"}`,
+      );
+    }
+    const pageProducts = opportunitiesFromPayload(payload);
+    products.push(...pageProducts);
+    if (pageProducts.length < 100) break;
   }
-  return response.json();
+  return { data: products };
 };
 
 const main = async () => {

@@ -139,9 +139,15 @@ const isValidImage = (value) =>
 
 export function opportunitiesFromPayload(payload) {
   if (Array.isArray(payload)) return payload;
-  for (const key of ["products", "items", "offers", "data", "results"]) {
+  for (const key of ["products", "items", "offers", "data", "results", "list"]) {
     if (Array.isArray(payload?.[key])) return payload[key];
-    if (Array.isArray(payload?.data?.[key])) return payload.data[key];
+  }
+  for (const container of ["data", "result", "results"]) {
+    const nested = payload?.[container];
+    if (!nested || Array.isArray(nested)) continue;
+    for (const key of ["list", "products", "items", "offers", "data", "results"]) {
+      if (Array.isArray(nested[key])) return nested[key];
+    }
   }
   throw new Error("PartnerBoost response did not contain a product array.");
 }
