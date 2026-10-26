@@ -1,0 +1,55 @@
+name: Cloudflare Observatory validation
+
+on:
+  push:
+    branches:
+      - refactor/home-appliance-blog
+    paths:
+      - ".github/workflows/observatory-validation.yml"
+      - "scripts/observatory/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: trustedbuyerlab-observatory
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ZONE_ID: d4f2313d85c52c5f7c54a9c4e8b30679
+      OBSERVATORY_REGION: us-central1
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          ref: refactor/home-appliance-blog
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build exact release artifact
+        run: npm run build
+
+      - name: Run Observatory and clean temporary resources
+        run: node scripts/observatory/validate.mjs
+
+      - name: Upload Observatory result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: observatory-result
+          path: docs/observatory-result.json
+          if-no-files-found: warn
