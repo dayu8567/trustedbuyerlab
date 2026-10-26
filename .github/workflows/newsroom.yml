@@ -79,7 +79,7 @@ jobs:
             exit 0
           fi
           npm run newsroom
-          if git diff --quiet -- src/content/articles; then
+          if [ -z "$(git status --porcelain -- src/content/articles)" ]; then
             echo "has_articles=false" >> "$GITHUB_OUTPUT"
           else
             echo "has_articles=true" >> "$GITHUB_OUTPUT"
