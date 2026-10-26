@@ -87,14 +87,22 @@ Generated articles:
 The final URL for the second generated article is recorded in
 `data/newsroom/published.json`.
 
-The three workflow files were added to the default branch in commit `576e4a4`
-without merging the Astro site into `main`. This enables GitHub's manual
-`Run workflow` controls and the recurring Newsroom schedule. The workflows still
-check out `refactor/home-appliance-blog` for the actual content and deployment.
+The automation workflows were added to the default branch without merging the
+Astro site into `main`. This enables GitHub's manual `Run workflow` controls and
+the recurring Newsroom schedule. The workflows still check out
+`refactor/home-appliance-blog` for the actual content and deployment.
+
+- Initial workflow activation: `576e4a4`
+- Newsroom production deployment and release workflows: `11b9018`
 
 The branch workflow also supports explicit live push runs with
 `[newsroom-live]`; ordinary newsroom code pushes run the fixture and read-only
 PartnerBoost probe without publishing.
+
+Successful live Newsroom runs now deploy both:
+
+- the `refactor/home-appliance-blog` preview environment
+- the `main` production environment used by `trustedbuyerlab.com`
 
 ## Production Release
 
