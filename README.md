@@ -84,6 +84,9 @@ npm run newsroom
 ```
 
 The dry run writes to `.newsroom-dry-run/` and never commits or deploys.
+Push-triggered workflow smoke tests are dry runs by default. Add
+`[newsroom-live]` to the commit message when a push should execute the live
+newsroom.
 
 Automated publishing rules:
 
