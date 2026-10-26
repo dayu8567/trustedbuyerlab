@@ -106,7 +106,7 @@ jobs:
           git commit -m "[automated] Publish verified appliance price briefs"
           git push origin "HEAD:${TARGET_BRANCH}"
 
-      - name: Deploy preview
+      - name: Deploy preview and production
         if: ${{ env.DRY_RUN != 'true' && steps.newsroom.outputs.has_articles == 'true' }}
         shell: bash
         run: |
@@ -117,3 +117,6 @@ jobs:
           npx wrangler pages deploy dist \
             --project-name="$CLOUDFLARE_PAGES_PROJECT" \
             --branch="$TARGET_BRANCH"
+          npx wrangler pages deploy dist \
+            --project-name="$CLOUDFLARE_PAGES_PROJECT" \
+            --branch=main

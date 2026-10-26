@@ -44,7 +44,8 @@ Validated on the public preview:
 - Cloudflare adds `X-Robots-Tag: noindex` to this branch preview, which is
   appropriate for a non-production deployment.
 
-No production DNS or custom-domain attachment was changed.
+No production DNS or custom-domain attachment was changed during this preview
+stage. The later production release is recorded below.
 
 ## Observatory Status
 
@@ -94,3 +95,23 @@ check out `refactor/home-appliance-blog` for the actual content and deployment.
 The branch workflow also supports explicit live push runs with
 `[newsroom-live]`; ordinary newsroom code pushes run the fixture and read-only
 PartnerBoost probe without publishing.
+
+## Production Release
+
+- Release workflow:
+  <https://github.com/dayu8567/trustedbuyerlab/actions/runs/40342991327>
+- Release commit: `b197ce2`
+- Production branch in Cloudflare Pages: `main`
+- `trustedbuyerlab.com`: HTTP 200, new Trusted Buyer Lab home-appliance site
+- `www.trustedbuyerlab.com`: HTTP 200, new Trusted Buyer Lab home-appliance site
+- Both hostnames are served by the `trustedbuyerlab` Cloudflare Pages project.
+- CSP, HSTS, frame protection, permissions policy, and other security headers
+  are active.
+- Production responses use `index, follow`; Cloudflare preview `noindex` does not
+  apply to the custom domains.
+- Production sitemap: 55 URLs, all using `https://trustedbuyerlab.com`
+- Production RSS: 17 articles, including both automated price briefs
+
+The release workflow saved the original apex and `www` routing records in the
+`production-release` artifact before replacing them. The original GitHub Pages
+A records and `www` CNAME are no longer active.
