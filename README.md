@@ -118,3 +118,19 @@ horizontal overflow, and mobile navigation.
 Work on `refactor/home-appliance-blog` and deploy only to the Cloudflare Pages
 preview branch until Observatory desktop and mobile both reach 100. The
 production domain and DNS must stay unchanged during preview validation.
+
+## Observatory Validation
+
+`.github/workflows/observatory-validation.yml` deploys the exact build to a
+unique temporary Pages project, attaches a unique proxied subdomain under
+`trustedbuyerlab.com`, runs the Speed API in `us-central1`, stores the JSON
+result, and removes the temporary DNS record, custom domain, and Pages project.
+
+The Cloudflare API token needs these additional permissions on the
+`trustedbuyerlab.com` zone:
+
+- `DNS` → `Edit`
+- `Zone Settings` → `Edit`
+
+The workflow snapshots apex and `www` DNS records before the run and verifies
+they are unchanged during cleanup.
