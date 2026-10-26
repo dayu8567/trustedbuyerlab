@@ -108,10 +108,15 @@ Successful live Newsroom runs now deploy both:
 
 - Release workflow:
   <https://github.com/dayu8567/trustedbuyerlab/actions/runs/40342991327>
+- Production Observatory run:
+  <https://github.com/dayu8567/trustedbuyerlab/actions/runs/40344617377>
 - Release commit: `b197ce2`
 - Production branch in Cloudflare Pages: `main`
 - `trustedbuyerlab.com`: HTTP 200, new Trusted Buyer Lab home-appliance site
 - `www.trustedbuyerlab.com`: HTTP 200, new Trusted Buyer Lab home-appliance site
+- Production Observatory desktop score: **100**
+- Production Observatory mobile score: **100**
+- Production Observatory region: `us-central1`
 - Both hostnames are served by the `trustedbuyerlab` Cloudflare Pages project.
 - CSP, HSTS, frame protection, permissions policy, and other security headers
   are active.
