@@ -2,6 +2,7 @@ import { spawnSync } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
+// Requires Pages Write, Workers AI Read/Write, Zone DNS Write, and Zone Settings Write.
 const apiBase = "https://api.cloudflare.com/client/v4";
 const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
 const apiToken = process.env.CLOUDFLARE_API_TOKEN;
