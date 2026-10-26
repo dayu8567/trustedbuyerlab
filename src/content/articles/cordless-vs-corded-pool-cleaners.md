@@ -6,6 +6,7 @@ category: "buying-guides"
 readingTime: "6 min read"
 imageKey: "inground"
 imageAlt: "Large in-ground swimming pool in a landscaped backyard"
+legacy: true
 ---
 
 Cordless robots are convenient because there is no power cable running across the pool deck. Corded robots avoid battery runtime limits and can run from a continuous power source, but they introduce a cable that must be routed and managed. Neither format wins for every pool.

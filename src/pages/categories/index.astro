@@ -1,0 +1,84 @@
+---
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SITE } from "../../data/site";
+import {
+  CATEGORIES,
+  FORMATS,
+  subcategoriesFor,
+  type CategoryKey,
+  type FormatKey,
+} from "../../data/taxonomy";
+import { getAllArticles, getCategoryCounts } from "../../lib/articles";
+
+const articles = await getAllArticles();
+const counts = await getCategoryCounts();
+const categoryKeys = Object.keys(CATEGORIES) as CategoryKey[];
+const formatKeys = Object.keys(FORMATS) as FormatKey[];
+const title = "Browse home appliance categories";
+const description =
+  "Browse Trusted Buyer Lab by kitchen, laundry, cleaning, air and climate, or smart-home appliance category.";
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${SITE.url}/categories/#collection`,
+  url: `${SITE.url}/categories/`,
+  name: title,
+  description,
+  inLanguage: "en",
+};
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/categories/" schema={schema}>
+  <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Categories" }]} />
+  <header class="page-intro">
+    <div class="container page-intro-grid">
+      <div>
+        <p class="eyebrow">Browse by room and routine</p>
+        <h1>Find the appliance question you need to answer.</h1>
+      </div>
+      <div class="page-intro-aside">
+        <p>
+          {articles.length} published articles across five categories. Product
+          families sit inside each category so the navigation can grow without
+          turning the header into a product index.
+        </p>
+        <nav class="topic-links" aria-label="Editorial formats">
+          {formatKeys.map((key) => <a href={FORMATS[key].href}>{FORMATS[key].label}</a>)}
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="section paper">
+    <div class="container category-catalog">
+      {
+        categoryKeys.map((key, index) => (
+          <article class="category-catalog-item">
+            <a class="category-catalog-media" href={CATEGORIES[key].href}>
+              <img
+                src={CATEGORIES[key].image}
+                alt={CATEGORIES[key].imageAlt}
+                width="800"
+                height="500"
+                loading={index === 0 ? "eager" : "lazy"}
+                decoding="async"
+              />
+            </a>
+            <div class="category-catalog-copy">
+              <p class="article-kicker">{CATEGORIES[key].eyebrow}</p>
+              <h2><a href={CATEGORIES[key].href}>{CATEGORIES[key].label}</a></h2>
+              <p>{CATEGORIES[key].description}</p>
+              <div class="category-subcategory-list">
+                {subcategoriesFor(key).map((subcategory) => (
+                  <a href={subcategory.href}>{subcategory.label}</a>
+                ))}
+              </div>
+              <p class="article-meta"><span>{counts[key]} articles</span></p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

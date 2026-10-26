@@ -1,0 +1,247 @@
+const categoryRules = [
+  {
+    category: "kitchen-appliances",
+    subcategory: "air-fryers",
+    pattern: /air\s*fry|airfry/i,
+  },
+  {
+    category: "kitchen-appliances",
+    subcategory: "coffee-makers",
+    pattern: /coffee|espresso/i,
+  },
+  {
+    category: "kitchen-appliances",
+    subcategory: "dishwashers",
+    pattern: /dishwash/i,
+  },
+  {
+    category: "kitchen-appliances",
+    subcategory: "microwaves",
+    pattern: /microwave/i,
+  },
+  {
+    category: "kitchen-appliances",
+    subcategory: "refrigerators",
+    pattern: /refrigerator|fridge/i,
+  },
+  {
+    category: "laundry",
+    subcategory: "washing-machines",
+    pattern: /washing\s*machine|washer/i,
+  },
+  {
+    category: "laundry",
+    subcategory: "dryers",
+    pattern: /dryer|tumble\s*dry/i,
+  },
+  {
+    category: "laundry",
+    subcategory: "garment-care",
+    pattern: /garment|steamer|iron/i,
+  },
+  {
+    category: "cleaning",
+    subcategory: "robot-vacuums",
+    pattern: /robot\s*vac|robotic\s*vac/i,
+  },
+  {
+    category: "cleaning",
+    subcategory: "cordless-vacuums",
+    pattern: /cordless\s*vac|stick\s*vac/i,
+  },
+  {
+    category: "cleaning",
+    subcategory: "carpet-cleaners",
+    pattern: /carpet\s*clean|extractor/i,
+  },
+  {
+    category: "cleaning",
+    subcategory: "steam-mops",
+    pattern: /steam\s*mop/i,
+  },
+  {
+    category: "air-climate",
+    subcategory: "humidifiers",
+    pattern: /humidifier/i,
+  },
+  {
+    category: "air-climate",
+    subcategory: "dehumidifiers",
+    pattern: /dehumidifier/i,
+  },
+  {
+    category: "air-climate",
+    subcategory: "air-purifiers",
+    pattern: /air\s*purifier|air\s*cleaner/i,
+  },
+  {
+    category: "air-climate",
+    subcategory: "fans-heaters",
+    pattern: /fan|heater|space\s*heater/i,
+  },
+  {
+    category: "smart-home",
+    subcategory: "security-cameras",
+    pattern: /security\s*camera|indoor\s*camera|outdoor\s*camera/i,
+  },
+  {
+    category: "smart-home",
+    subcategory: "video-doorbells",
+    pattern: /doorbell/i,
+  },
+  {
+    category: "smart-home",
+    subcategory: "smart-locks",
+    pattern: /smart\s*lock|door\s*lock/i,
+  },
+  {
+    category: "smart-home",
+    subcategory: "smart-home-hubs",
+    pattern: /smart\s*home\s*hub|home\s*hub|bridge|hub/i,
+  },
+];
+
+const pick = (object, keys) => {
+  for (const key of keys) {
+    const value = object[key];
+    if (value !== undefined && value !== null && value !== "") return value;
+  }
+  return undefined;
+};
+
+const parsePrice = (value) => {
+  if (typeof value === "number") return Number.isFinite(value) ? value : null;
+  if (typeof value !== "string") return null;
+  const match = value.replaceAll(",", "").match(/-?\d+(?:\.\d+)?/);
+  if (!match) return null;
+  const price = Number(match[0]);
+  return Number.isFinite(price) && price > 0 ? price : null;
+};
+
+const parseAvailability = (value, stockValue) => {
+  if (stockValue === false || stockValue === 0) return "Out of stock";
+  if (stockValue === true) return "In stock";
+  if (typeof value !== "string" || !value.trim()) return "Availability not stated";
+  return value.trim().slice(0, 80);
+};
+
+const isHttpUrl = (value, protocols = ["http:", "https:"]) => {
+  try {
+    return protocols.includes(new URL(value).protocol);
+  } catch {
+    return false;
+  }
+};
+
+const isValidImage = (value) =>
+  typeof value === "string" &&
+  (value.startsWith("local:") || isHttpUrl(value));
+
+export function opportunitiesFromPayload(payload) {
+  if (Array.isArray(payload)) return payload;
+  for (const key of ["products", "items", "offers", "data", "results"]) {
+    if (Array.isArray(payload?.[key])) return payload[key];
+    if (Array.isArray(payload?.data?.[key])) return payload.data[key];
+  }
+  throw new Error("PartnerBoost response did not contain a product array.");
+}
+
+export function normalizeOffer(raw, now = new Date()) {
+  if (!raw || typeof raw !== "object") return null;
+  const id = String(
+    pick(raw, ["id", "product_id", "productId", "sku", "asin"]) ?? "",
+  ).trim();
+  const title = String(
+    pick(raw, ["name", "title", "product_name", "productName"]) ?? "",
+  ).trim();
+  const price = parsePrice(
+    pick(raw, ["price", "sale_price", "salePrice", "current_price"]),
+  );
+  const listPrice = parsePrice(
+    pick(raw, [
+      "list_price",
+      "listPrice",
+      "original_price",
+      "originalPrice",
+      "compare_at_price",
+    ]),
+  );
+  const affiliateUrl = pick(raw, [
+    "affiliate_url",
+    "affiliateUrl",
+    "tracking_url",
+    "trackingUrl",
+    "click_url",
+  ]);
+  const imageUrl = pick(raw, [
+    "image_url",
+    "imageUrl",
+    "image",
+    "image_link",
+    "thumbnail",
+  ]);
+  const sourceUrl = pick(raw, [
+    "product_url",
+    "productUrl",
+    "landing_url",
+    "canonical_url",
+  ]);
+  const updatedAtRaw = pick(raw, [
+    "updated_at",
+    "updatedAt",
+    "last_updated",
+    "lastUpdated",
+    "modified_at",
+  ]);
+  const updatedAt = updatedAtRaw ? new Date(updatedAtRaw) : new Date(NaN);
+
+  if (
+    !id ||
+    !title ||
+    !price ||
+    !isHttpUrl(affiliateUrl) ||
+    !isValidImage(imageUrl) ||
+    Number.isNaN(updatedAt.getTime())
+  ) {
+    return null;
+  }
+
+  const categoryText = `${title} ${pick(raw, ["category", "category_name", "categories"]) ?? ""}`;
+  const rule = categoryRules.find((candidate) => candidate.pattern.test(categoryText));
+  if (!rule) return null;
+
+  const ageHours = (now.getTime() - updatedAt.getTime()) / 3_600_000;
+  if (ageHours < -2 || ageHours > 48) return null;
+
+  return {
+    id,
+    title,
+    brand: String(pick(raw, ["brand", "manufacturer", "vendor"]) ?? "Unknown").trim(),
+    model: String(pick(raw, ["model", "model_number", "modelNumber"]) ?? "").trim(),
+    category: rule.category,
+    subcategory: rule.subcategory,
+    retailer: String(
+      pick(raw, ["retailer", "merchant", "store", "network"]) ?? "Affiliate retailer",
+    ).trim(),
+    affiliateUrl: String(affiliateUrl),
+    sourceUrl: isHttpUrl(sourceUrl) ? String(sourceUrl) : String(affiliateUrl),
+    imageUrl: String(imageUrl),
+    price,
+    listPrice: listPrice && listPrice > price ? listPrice : undefined,
+    currency: String(pick(raw, ["currency", "currency_code"]) ?? "USD")
+      .trim()
+      .toUpperCase()
+      .slice(0, 3),
+    availability: parseAvailability(
+      pick(raw, ["availability", "stock_status", "stockStatus"]),
+      pick(raw, ["in_stock", "inStock"]),
+    ),
+    updatedAt: updatedAt.toISOString(),
+  };
+}
+
+export function normalizeOffers(payload, now = new Date()) {
+  return opportunitiesFromPayload(payload)
+    .map((raw) => normalizeOffer(raw, now))
+    .filter(Boolean);
+}

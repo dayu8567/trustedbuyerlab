@@ -8,7 +8,10 @@
     "build": "node scripts/run-astro.mjs build",
     "preview": "node scripts/run-astro.mjs preview",
     "check": "node scripts/run-astro.mjs check",
-    "optimize:images": "node scripts/optimize-images.mjs"
+    "optimize:images": "node scripts/optimize-images.mjs",
+    "newsroom": "node scripts/newsroom/run.mjs",
+    "newsroom:dry": "node scripts/newsroom/run.mjs --dry-run",
+    "test": "node --test tests/newsroom.test.mjs"
   },
   "dependencies": {
     "astro": "^7.4.2"

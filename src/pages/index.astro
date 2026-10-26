@@ -1,26 +1,29 @@
 ---
-import { Image } from "astro:assets";
 import ArticleGrid from "../components/ArticleGrid.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { SECTIONS, type SectionKey } from "../data/blog";
+import {
+  CATEGORIES,
+  FORMATS,
+  subcategoriesFor,
+  type CategoryKey,
+} from "../data/taxonomy";
 import { SITE } from "../data/site";
 import {
   getAllArticles,
-  getArticleCounts,
+  getCategoryCounts,
 } from "../lib/articles";
 
 const articles = await getAllArticles();
-const counts = await getArticleCounts();
-const featured = articles.find((article) => article.featured) ?? articles[0];
-const latest = articles
-  .filter((article) => article.id !== featured.id)
-  .slice(0, 6);
-const sectionKeys = Object.keys(SECTIONS) as SectionKey[];
-const totalCount = articles.length;
-
-const title = "Pool care and buying guides";
+const counts = await getCategoryCounts();
+const featured =
+  articles.find((article) => article.featured) ?? articles[0];
+const latest = articles.filter((article) => article.id !== featured.id).slice(0, 6);
+const priceBriefs = articles.filter((article) => article.format === "deals").slice(0, 3);
+const categoryKeys = Object.keys(CATEGORIES) as CategoryKey[];
+const trending = articles.slice(0, 5);
+const title = "Home appliance guides, reviews, and price briefs";
 const description =
-  "Independent research, practical buying guides, and straightforward pool care advice for smarter ownership decisions.";
+  "Practical buying guides, maintenance advice, and time-stamped price briefs for kitchen, laundry, cleaning, air, and smart-home appliances.";
 
 const schema = {
   "@context": "https://schema.org",
@@ -62,52 +65,58 @@ const schema = {
 };
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  canonicalPath="/"
-  schema={schema}
->
-  <section class="blog-hero">
-    <div class="container blog-hero-grid">
-      <div class="blog-hero-copy">
-        <p class="eyebrow">Independent pool research</p>
-        <h1>Pool care advice built around better decisions.</h1>
+<BaseLayout title={title} description={description} canonicalPath="/" schema={schema}>
+  <section class="trending-strip" aria-label="Trending appliance stories">
+    <div class="container">
+      <span class="trending-label">Trending now</span>
+      <div class="trending-links">
+        {
+          trending.map((article) => (
+            <a href={article.href}>{article.title}</a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="editorial-hero">
+    <div class="container editorial-hero-grid">
+      <div class="editorial-hero-copy">
+        <p class="eyebrow">Independent home appliance research</p>
+        <h1>Make the next household purchase easier to live with.</h1>
         <p class="hero-lede">
-          Plain-spoken buying guides, model comparisons, and maintenance
-          explainers for pool owners who want the useful details without the
-          sales language.
+          Clear buying guides, practical maintenance advice, and price briefs
+          for the appliances that do the daily work at home.
         </p>
         <div class="hero-meta">
-          <span class="meta-item"><span class="meta-dot"></span>{totalCount} published guides</span>
-          <span class="meta-item"><span class="meta-dot"></span>3 focused sections</span>
+          <span class="meta-item"><span class="meta-dot"></span>{articles.length} published articles</span>
+          <span class="meta-item"><span class="meta-dot"></span>5 appliance categories</span>
         </div>
         <div class="hero-meta">
-          <a class="button" href="/guides/">Browse the full library</a>
-          <a class="button secondary" href="/about/">How we research</a>
+          <a class="button" href="/articles/">Browse every article</a>
+          <a class="button secondary" href="/deals/">See price briefs</a>
         </div>
       </div>
 
-      <article class="home-feature">
-        <a class="home-feature-media" href={featured.href} tabindex="-1" aria-hidden="true">
-          <Image
+      <article class="home-lead">
+        <a class="home-lead-media" href={featured.href} tabindex="-1" aria-hidden="true">
+          <img
             src={featured.image}
             alt={featured.imageAlt}
-            widths={[560, 820, 1120]}
-            sizes="(max-width: 860px) 100vw, 46vw"
-            format="webp"
-            quality={72}
+            width="1200"
+            height="750"
             loading="eager"
             fetchpriority="high"
             decoding="async"
           />
         </a>
-        <div class="home-feature-body">
-          <p class="article-kicker">Editor's starting point</p>
+        <div class="home-lead-body">
+          <p class="article-kicker">
+            {FORMATS[featured.format].label} / {CATEGORIES[featured.category].label}
+          </p>
           <h2><a href={featured.href}>{featured.title}</a></h2>
           <p>{featured.description}</p>
           <p class="article-meta">
-            <span>{SECTIONS[featured.category].label}</span>
             <span>{featured.dateLabel}</span>
             <span>{featured.readingTime}</span>
           </p>
@@ -116,39 +125,109 @@ const schema = {
     </div>
   </section>
 
-  <nav class="section-index" aria-label="Browse by topic">
-    <div class="container section-index-grid">
-      {
-        sectionKeys.map((key, index) => (
-          <a class="section-index-item" href={SECTIONS[key].href}>
-            <span class="section-index-number">{String(index + 1).padStart(2, "0")}</span>
-            <span class="section-index-copy">
-              <strong>{SECTIONS[key].label}</strong>
-              <span>{SECTIONS[key].description}</span>
-            </span>
-            <span class="section-index-count">{counts[key]} guides</span>
-          </a>
-        ))
-      }
+  <nav class="category-directory" aria-label="Explore appliance categories">
+    <div class="container">
+      <div class="category-directory-head">
+        <p class="eyebrow">Explore the house</p>
+        <p>Choose a room or product family, then narrow down by the decision you need to make.</p>
+      </div>
+      <div class="category-directory-grid">
+        {
+          categoryKeys.map((key) => (
+            <a class="category-tile" href={CATEGORIES[key].href}>
+              <img
+                src={CATEGORIES[key].image}
+                alt={CATEGORIES[key].imageAlt}
+                width="640"
+                height="400"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="category-tile-copy">
+                <span>{CATEGORIES[key].eyebrow}</span>
+                <strong>{CATEGORIES[key].label}</strong>
+                <small>{counts[key]} articles</small>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+      <div class="subcategory-strip">
+        {
+          categoryKeys.flatMap((key) =>
+            subcategoriesFor(key)
+              .slice(0, 2)
+              .map((subcategory) => (
+                <a href={subcategory.href}>{subcategory.label}</a>
+              )),
+          )
+        }
+        <a class="subcategory-all" href="/categories/">All categories</a>
+      </div>
     </div>
   </nav>
 
   <section class="section paper">
-    <div class="container">
-      <div class="section-header">
-        <div>
-          <p class="eyebrow">Latest from the lab</p>
-          <h2>New guides and field notes</h2>
+    <div class="container home-content-grid">
+      <div>
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Latest from the lab</p>
+            <h2>New guides and useful answers</h2>
+          </div>
+          <div>
+            <p>
+              Start with the decision in front of you, from capacity and
+              installation to cleaning and long-term upkeep.
+            </p>
+            <a class="text-link section-header-link" href="/articles/">View all articles</a>
+          </div>
         </div>
-        <div>
-          <p>
-            Start with the newest research, then follow a section for the
-            decisions closest to your pool.
-          </p>
-          <a class="text-link section-header-link" href="/guides/">View every guide</a>
-        </div>
+        <ArticleGrid articles={latest} />
       </div>
-      <ArticleGrid articles={latest} />
+
+      <aside class="popular-rail" aria-label="Popular and price content">
+        <section>
+          <p class="rail-heading">Price watch</p>
+          {
+            priceBriefs.length > 0 ? (
+              <div class="rail-list">
+                {priceBriefs.map((article, index) => (
+                  <a href={article.href}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <strong>{article.title}</strong>
+                    <small>{article.dateLabel}</small>
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <div class="rail-empty">
+                <strong>Automated briefs are ready to run.</strong>
+                <p>
+                  Price posts appear only when the affiliate feed has a
+                  verified offer and enough price history to make a useful
+                  comparison.
+                </p>
+                <a class="text-link" href="/deals/">How price watch works</a>
+              </div>
+            )
+          }
+        </section>
+        <section>
+          <p class="rail-heading">Browse by format</p>
+          <div class="rail-list">
+            {
+              Object.values(FORMATS).map((format, index) => (
+                <a href={format.href}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{format.label}</strong>
+                  <small>{format.eyebrow}</small>
+                </a>
+              ))
+            }
+          </div>
+        </section>
+      </aside>
     </div>
   </section>
 
@@ -156,14 +235,13 @@ const schema = {
     <div class="container editorial-band">
       <div>
         <p class="eyebrow">What belongs here</p>
-        <h2>A pool library, not a single product page.</h2>
+        <h2>A home library, not a feed of product slogans.</h2>
       </div>
       <div class="editorial-band-copy">
         <p>
           The library follows the questions that come before and after a
-          purchase: which cleaner fits the pool, what each specification
-          changes, and how to keep the equipment working without adding a
-          second maintenance project.
+          purchase: what a specification changes, how installation affects the
+          choice, and which maintenance habits protect the appliance.
         </p>
         <a class="button secondary" href="/about/">Read our editorial approach</a>
       </div>

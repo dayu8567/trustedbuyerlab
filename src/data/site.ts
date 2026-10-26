@@ -3,15 +3,16 @@ export const SITE = {
   url: "https://trustedbuyerlab.com",
   title: "Trusted Buyer Lab",
   description:
-    "Independent, research-led buying guides for pool robots and home equipment.",
-  updated: "October 25, 2026",
+    "Independent buying guides, practical explainers, and time-stamped price briefs for household appliances.",
+  updated: "October 26, 2026",
   gtmId: import.meta.env.PUBLIC_GTM_ID ?? "",
   navigation: [
     { href: "/", label: "Home" },
-    { href: "/guides/", label: "All Guides" },
-    { href: "/pool-robots/", label: "Pool Robots" },
-    { href: "/pool-care/", label: "Pool Care" },
+    { href: "/deals/", label: "Deals" },
+    { href: "/reviews/", label: "Reviews" },
     { href: "/buying-guides/", label: "Buying Guides" },
+    { href: "/how-to/", label: "How To" },
+    { href: "/categories/", label: "Categories" },
     { href: "/about/", label: "About" },
   ],
   legalLinks: [

@@ -1,0 +1,270 @@
+---
+import { render, type CollectionEntry } from "astro:content";
+import ArticleGrid from "../../components/ArticleGrid.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { AUTHORS } from "../../data/authors";
+import { articleFromEntry } from "../../data/blog";
+import { CATEGORIES, FORMATS, SUBCATEGORIES } from "../../data/taxonomy";
+import { SITE } from "../../data/site";
+import {
+  articleSlug,
+  getPublishedEntries,
+  getRelatedArticles,
+} from "../../lib/articles";
+
+export async function getStaticPaths() {
+  const entries = await getPublishedEntries();
+  return entries.map((entry) => ({
+    params: { slug: articleSlug(entry.id) },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<"articles">;
+}
+
+const { entry } = Astro.props;
+const article = articleFromEntry(entry);
+const { Content, headings } = await render(entry);
+const related = await getRelatedArticles(article);
+const category = CATEGORIES[article.category];
+const subcategory = SUBCATEGORIES[article.subcategory];
+const format = FORMATS[article.format];
+const author = AUTHORS[article.author];
+const toc = headings.filter(
+  (heading) => heading.depth === 2 || heading.depth === 3,
+);
+const product = article.products[0];
+const schemaType = article.format === "deals" ? "NewsArticle" : "Article";
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": schemaType,
+      "@id": `${SITE.url}${article.href}#article`,
+      headline: article.title,
+      description: article.description,
+      datePublished: article.date,
+      dateModified: entry.data.updatedAt ?? article.date,
+      inLanguage: "en",
+      image: new URL(article.image, SITE.url).href,
+      author: {
+        "@type": "Organization",
+        name: author.name,
+        url: `${SITE.url}/about/`,
+      },
+      publisher: {
+        "@type": "Organization",
+        name: SITE.name,
+        url: `${SITE.url}/`,
+      },
+      mainEntityOfPage: `${SITE.url}${article.href}`,
+      articleSection: category.label,
+      citation: article.sources.map((source) => source.url),
+      isAccessibleForFree: true,
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${SITE.url}${article.href}#breadcrumbs`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${SITE.url}/` },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "All articles",
+          item: `${SITE.url}/articles/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: category.label,
+          item: `${SITE.url}${category.href}`,
+        },
+        {
+          "@type": "ListItem",
+          position: 4,
+          name: article.title,
+          item: `${SITE.url}${article.href}`,
+        },
+      ],
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={article.title}
+  description={article.description}
+  canonicalPath={article.href}
+  schema={schema}
+>
+  <Breadcrumbs
+    items={[
+      { href: "/", label: "Home" },
+      { href: "/articles/", label: "All articles" },
+      { href: category.href, label: category.label },
+      { label: article.title },
+    ]}
+  />
+
+  <article class:list={["article-page", article.format === "deals" && "deal-article"]}>
+    <header class="article-header">
+      <div class="article-header-inner">
+        <p class="article-kicker">
+          {category.label} / {format.label}
+          {article.editorialStatus === "automated" && " / Automated price brief"}
+        </p>
+        <h1>{article.title}</h1>
+        <p class="article-deck">{article.description}</p>
+        <p class="article-byline">
+          <span>By {author.name}</span>
+          <span>Published {article.dateLabel}</span>
+          {article.updatedLabel && <span>Updated {article.updatedLabel}</span>}
+          <span>{article.readingTime}</span>
+        </p>
+      </div>
+    </header>
+
+    <figure class="article-cover">
+      <img
+        src={article.image}
+        alt={article.imageAlt}
+        width="1200"
+        height="750"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <figcaption>
+        {article.imageAlt}
+        {article.imageCredit && ` / ${article.imageCredit}`}
+      </figcaption>
+    </figure>
+
+    <div class="container article-layout">
+      <article class="article-content prose">
+        <p class="article-disclosure">
+          {article.editorialStatus === "automated"
+            ? "This brief is assembled from structured affiliate-feed data and AI-assisted drafting. Product facts, price, and links are validated by code before publication."
+            : "Independent editorial based on published specifications, manufacturer documentation, and ownership constraints. Retailer details can change, so confirm current information before purchase."}
+        </p>
+
+        {product && (
+          <aside class="deal-snapshot" aria-label="Price snapshot">
+            <div>
+              <p class="article-kicker">Verified offer snapshot</p>
+              <h2>{product.name}</h2>
+              <p>
+                {product.availability} at {product.retailer}. Price checked{" "}
+                {new Intl.DateTimeFormat("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                  timeZone: "UTC",
+                  timeZoneName: "short",
+                }).format(new Date(product.checkedAt))}.
+              </p>
+            </div>
+            <div class="deal-price">
+              <strong>
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: product.currency,
+                }).format(product.price)}
+              </strong>
+              {product.listPrice && (
+                <span>
+                  Listed{" "}
+                  {new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: product.currency,
+                  }).format(product.listPrice)}
+                </span>
+              )}
+              <a
+                class="button"
+                href={product.affiliateUrl}
+                target="_blank"
+                rel="nofollow sponsored noopener"
+                data-affiliate-network="partnerboost"
+                data-product-name={product.name}
+                data-page-type="deal"
+              >
+                Check current price
+              </a>
+            </div>
+          </aside>
+        )}
+
+        <Content />
+
+        {article.sources.length > 0 && (
+          <section class="source-list" aria-labelledby="sources-heading">
+            <h2 id="sources-heading">Sources and further reading</h2>
+            <ol>
+              {article.sources.map((source) => (
+                <li>
+                  <a href={source.url} rel="noopener noreferrer">
+                    {source.label}
+                  </a>
+                  {source.publisher && <span>{source.publisher}</span>}
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+
+        <footer class="article-endnote">
+          <strong>Research note</strong>
+          <p>
+            This article uses published information and practical ownership
+            criteria. It is not a hands-on laboratory test unless the article
+            explicitly says otherwise.
+          </p>
+        </footer>
+      </article>
+
+      <aside class="article-side">
+        {toc.length > 0 && (
+          <nav class="article-toc" aria-label="In this article">
+            <p>In this article</p>
+            <ol>
+              {toc.map((heading) => (
+                <li class:list={[heading.depth === 3 ? "toc-subitem" : ""]}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
+        <div class="article-side-links">
+          <p>Keep exploring</p>
+          <a href={category.href}>More {category.label}</a>
+          <a href={subcategory.href}>{subcategory.label}</a>
+          <a href="/articles/">All appliance articles</a>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  {related.length > 0 && (
+    <section class="section mist">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Related reading</p>
+            <h2>Continue with {category.label.toLowerCase()}</h2>
+          </div>
+          <a class="text-link section-header-link" href={category.href}>
+            See the full category
+          </a>
+        </div>
+        <ArticleGrid articles={related} />
+      </div>
+    </section>
+  )}
+</BaseLayout>

@@ -1,0 +1,108 @@
+---
+import ArticleGrid from "../../../components/ArticleGrid.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { SITE } from "../../../data/site";
+import {
+  CATEGORIES,
+  SUBCATEGORIES,
+  type CategoryKey,
+  type SubcategoryKey,
+} from "../../../data/taxonomy";
+import { getArticlesBySubcategory } from "../../../lib/articles";
+
+export function getStaticPaths() {
+  return (Object.entries(SUBCATEGORIES) as [
+    SubcategoryKey,
+    (typeof SUBCATEGORIES)[SubcategoryKey],
+  ][]).map(([subcategory, definition]) => ({
+    params: {
+      category: definition.category,
+      subcategory,
+    },
+    props: { category: definition.category, subcategory },
+  }));
+}
+
+interface Props {
+  category: CategoryKey;
+  subcategory: SubcategoryKey;
+}
+
+const { category, subcategory } = Astro.props as Props;
+const categoryDefinition = CATEGORIES[category];
+const definition = SUBCATEGORIES[subcategory];
+const articles = await getArticlesBySubcategory(subcategory);
+const title = `${definition.label} guides`;
+const description = definition.description;
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${SITE.url}${definition.href}#collection`,
+  url: `${SITE.url}${definition.href}`,
+  name: title,
+  description,
+  inLanguage: "en",
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: articles.length,
+    itemListElement: articles.map((article, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: `${SITE.url}${article.href}`,
+      name: article.title,
+    })),
+  },
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={definition.href}
+  schema={schema}
+>
+  <Breadcrumbs
+    items={[
+      { href: "/", label: "Home" },
+      { href: "/categories/", label: "Categories" },
+      { href: categoryDefinition.href, label: categoryDefinition.label },
+      { label: definition.label },
+    ]}
+  />
+  <header class="subcategory-hero">
+    <div class="container subcategory-hero-grid">
+      <div>
+        <p class="eyebrow">{categoryDefinition.label}</p>
+        <h1>{definition.label}</h1>
+        <p class="hero-lede">{definition.description}</p>
+      </div>
+      <div class="subcategory-stat">
+        <strong>{articles.length}</strong>
+        <span>{articles.length === 1 ? "article" : "articles"} in this guide</span>
+        <a class="text-link" href={categoryDefinition.href}>
+          All {categoryDefinition.label}
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="section paper">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Current coverage</p>
+          <h2>{definition.label} articles</h2>
+        </div>
+        <p>
+          Focused buying advice and maintenance guidance for this product
+          family.
+        </p>
+      </div>
+      <ArticleGrid
+        articles={articles}
+        emptyMessage={`The first ${definition.label.toLowerCase()} guide is in progress.`}
+      />
+    </div>
+  </section>
+</BaseLayout>

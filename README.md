@@ -1,60 +1,110 @@
 # Trusted Buyer Lab
 
-Static Astro site for Trusted Buyer Lab, deployed to Cloudflare Pages.
+Static Astro home-appliance publication deployed to Cloudflare Pages.
 
 ## Site Structure
 
-- `/` - editorial blog home with a lead story, latest articles, and section navigation
-- `/guides/` - complete article library
-- `/pool-robots/` - robotic cleaner and equipment coverage
-- `/pool-care/` - maintenance and ownership guidance
-- `/buying-guides/` - purchase frameworks and model comparisons
-- `/guides/<slug>/` - Markdown article detail pages
-- `/about/` - editorial approach and disclosure information
+- `/` - editorial home with trending stories, category directory, latest content, and price watch
+- `/articles/` - complete article library
+- `/categories/` - five appliance categories and twenty product subcategories
+- `/deals/`, `/reviews/`, `/buying-guides/`, `/how-to/`, `/comparisons/` - editorial format hubs
+- `/articles/<slug>/` - research-led Markdown article
+- `/feed.xml` - RSS feed
+- `/sitemap.xml` - generated XML sitemap
+- `/about/` - editorial method, AI disclosure, and affiliate policy
+- `/image-credits/` - licensed image attribution
 
-The two in-depth legacy comparison pages retain their established URLs:
+The five top-level categories are Kitchen Appliances, Laundry, Cleaning,
+Air & Climate, and Smart Home.
 
-- `/guides/beatbot-sora-robotic-pool-cleaner/`
-- `/best-cordless-robotic-pool-cleaners/`
+Legacy pool articles remain available at their existing `/guides/...` URLs but
+are `noindex`, excluded from navigation, RSS, and sitemap. `/pool-robots/` and
+`/pool-care/` redirect to the home page.
 
-## Add An Article
+## Add An Editorial Article
 
-Create a Markdown file in `src/content/articles/`. The filename becomes the URL
-slug under `/guides/`.
+Create a Markdown file in `src/content/articles/`. New articles publish at
+`/articles/<filename>/`.
 
 ```yaml
 ---
 title: "Article title"
 description: "Search and card summary"
-date: "2026-10-25"
-category: "pool-robots" # pool-robots | pool-care | buying-guides
-readingTime: "6 min read"
-imageKey: "hero" # see src/data/blog.ts
+date: "2026-10-26"
+category: "kitchen-appliances"
+subcategory: "air-fryers"
+format: "buying-guides"
+readingTime: "7 min read"
+image: "/images/articles/article-slug.webp"
 imageAlt: "Accessible image description"
+imageCredit: "Photo attribution"
 featured: false
-draft: false
+editorialStatus: "human-reviewed"
+author: "editorial"
+sources:
+  - label: "Source title"
+    url: "https://example.com/source"
+    publisher: "Publisher"
+products: []
 ---
 ```
 
-The home page, library page, section pages, article route, related articles, and
-sitemap all update automatically. Add new image keys in `src/data/blog.ts` when
-an article needs another image.
+Allowed categories, subcategories, and formats live in
+`src/data/taxonomy.ts`.
+
+## Automated Price Briefs
+
+`scripts/newsroom/run.mjs` fetches the PartnerBoost product feed, normalizes
+offers, stores daily price history, selects at most two verified price drops,
+and asks Workers AI for a constrained JSON draft. Code controls product names,
+prices, links, timestamps, affiliate disclosure, and publication metadata.
+
+Required GitHub Actions secrets:
+
+- `PARTNERBOOST_FEED_URL`
+- `PARTNERBOOST_API_KEY`
+- `CLOUDFLARE_ACCOUNT_ID`
+- `CLOUDFLARE_API_TOKEN`
+
+The Workers AI model is `@cf/meta/llama-3.3-70b-instruct-fp8-fast`.
+
+```powershell
+npm run newsroom:dry
+npm run newsroom
+```
+
+The dry run writes to `.newsroom-dry-run/` and never commits or deploys.
+
+Automated publishing rules:
+
+- Offer updated within 48 hours and currently available.
+- At least 10% below the trailing 30-day median or 15% below the supplied list price.
+- No repeat for 14 days unless the price improves another 5%.
+- Maximum two briefs per UTC day.
+- Draft must pass prohibited-claim, price, source, schema, duplicate, and build checks.
+
+Product-feed images are validated, resized, metadata-stripped, and stored
+locally as WebP. Invalid or undersized images cause the offer to fail rather
+than hotlink a remote resource.
 
 ## Commands
 
 ```powershell
+npm test
 npm run check
 npm run build
 npm run preview
+npm run newsroom:dry
 node scripts/qa.mjs
 ```
 
-Playwright QA runs at 1440, 390, and 320 px. It checks all published articles,
-section pages, legal routes, the 404 page, canonical URLs, H1 counts, images,
-console errors, failed requests, horizontal overflow, and the mobile menu.
+Playwright QA covers 1440, 768, 390, and 320 px. It checks pages, subcategories,
+format hubs, all published articles, legacy noindex behavior, RSS, sitemap,
+canonical URLs, H1 counts, image loading, console errors, failed requests,
+horizontal overflow, and mobile navigation.
 
 ## Deployment Guard
 
-Work on `refactor/astro-observatory-100` and deploy only as a Cloudflare Pages
-Preview until desktop and mobile Observatory scores are both 100. Do not attach
-the production domain or change production DNS during the preview phase.
+Work on `refactor/home-appliance-blog` and deploy only to the Cloudflare Pages
+preview branch until Observatory desktop and mobile both reach 100. The
+production domain and DNS must stay unchanged during preview validation.

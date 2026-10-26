@@ -1,6 +1,6 @@
 ---
 import { getImage } from "astro:assets";
-import socialSource from "../assets/images/scene-hero-beatbot.jpg";
+import socialSource from "../assets/images/appliance/air-fryer.jpg";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import { SITE } from "../data/site";
@@ -55,6 +55,12 @@ const jsonLd = schema
     <meta name="partnerboostverifycode" content="32dc01246faccb7f5b3cad5016dd5033" />
     <link rel="canonical" href={canonical} />
     <link rel="sitemap" href="/sitemap.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Trusted Buyer Lab"
+      href="/feed.xml"
+    />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />

@@ -11,40 +11,84 @@ const articleFiles = await readdir("src/content/articles");
 const markdownArticles = articleFiles
   .filter((file) => file.endsWith(".md"))
   .map((file) => file.replace(/\.md$/, ""));
+const legacyArticleSlugs = new Set([
+  "above-ground-pool-robot-guide",
+  "cordless-pool-robot-buying-checklist",
+  "cordless-vs-corded-pool-cleaners",
+  "pool-robot-maintenance-and-storage",
+  "pool-robot-runtime-and-coverage",
+  "wall-and-waterline-cleaning-guide",
+]);
 
 const pages = [
   { path: "/", name: "home" },
-  { path: "/guides/", name: "all-guides" },
-  { path: "/pool-robots/", name: "pool-robots" },
-  { path: "/pool-care/", name: "pool-care" },
+  { path: "/articles/", name: "all-articles" },
+  { path: "/categories/", name: "categories" },
+  { path: "/kitchen-appliances/", name: "kitchen-appliances" },
+  { path: "/laundry/", name: "laundry" },
+  { path: "/cleaning/", name: "cleaning" },
+  { path: "/air-climate/", name: "air-climate" },
+  { path: "/smart-home/", name: "smart-home" },
+  { path: "/deals/", name: "deals" },
+  { path: "/reviews/", name: "reviews" },
   { path: "/buying-guides/", name: "buying-guides" },
+  { path: "/how-to/", name: "how-to" },
+  { path: "/comparisons/", name: "comparisons" },
+  { path: "/kitchen-appliances/air-fryers/", name: "air-fryers" },
+  { path: "/laundry/washing-machines/", name: "washing-machines" },
+  { path: "/cleaning/robot-vacuums/", name: "robot-vacuums" },
+  { path: "/air-climate/humidifiers/", name: "humidifiers" },
+  { path: "/smart-home/video-doorbells/", name: "video-doorbells" },
   { path: "/about/", name: "about" },
+  { path: "/image-credits/", name: "image-credits" },
   {
     path: "/guides/beatbot-sora-robotic-pool-cleaner/",
     name: "sora-comparison",
+    expectedRobots: "noindex",
   },
   {
     path: "/best-cordless-robotic-pool-cleaners/",
     name: "cordless-comparison",
+    expectedRobots: "noindex",
   },
-  ...markdownArticles.map((slug) => ({
-    path: `/guides/${slug}/`,
-    name: slug,
-  })),
+  ...markdownArticles.map((slug) => {
+    const legacy = legacyArticleSlugs.has(slug);
+    return {
+      path: legacy ? `/guides/${slug}/` : `/articles/${slug}/`,
+      name: slug,
+      expectedRobots: legacy ? "noindex" : "index",
+    };
+  }),
+  {
+    path: "/feed.xml",
+    name: "rss",
+    expectedCanonical: null,
+    expectedH1: null,
+    expectedRobots: null,
+  },
+  {
+    path: "/sitemap.xml",
+    name: "sitemap",
+    expectedCanonical: null,
+    expectedH1: null,
+    expectedRobots: null,
+  },
   { path: "/privacy-policy/", name: "privacy" },
   { path: "/terms/", name: "terms" },
   { path: "/affiliate-disclosure/", name: "affiliate-disclosure" },
-  { path: "/thank-you/", name: "thank-you" },
+  { path: "/thank-you/", name: "thank-you", expectedRobots: "noindex" },
   {
     path: "/missing-page-for-qa/",
     name: "not-found",
     expectedStatus: 404,
     expectedCanonical: "/404.html",
+    expectedRobots: "noindex",
   },
 ];
 
 const viewports = [
   { name: "desktop", width: 1440, height: 1000 },
+  { name: "tablet", width: 768, height: 900 },
   { name: "mobile", width: 390, height: 844 },
   { name: "small", width: 320, height: 700 },
 ];
@@ -95,7 +139,8 @@ for (const target of pages) {
     });
 
     const response = await page.goto(`${baseUrl}${target.path}`, {
-      waitUntil: "networkidle",
+      waitUntil: "domcontentloaded",
+      timeout: 60_000,
     });
     await page.evaluate(() => document.fonts.ready);
 
@@ -129,7 +174,7 @@ for (const target of pages) {
     await page.waitForTimeout(60);
 
     let mobileMenuWorks = null;
-    if (viewport.width <= 900) {
+    if (viewport.width <= 900 && target.expectedH1 !== null) {
       const menu = page.locator(".mobile-menu");
       const summary = menu.locator("summary");
       await summary.click();
@@ -166,6 +211,9 @@ for (const target of pages) {
           type: script.type,
         })),
         canonical: document.querySelector('link[rel="canonical"]')?.href,
+        robots: document
+          .querySelector('meta[name="robots"]')
+          ?.getAttribute("content"),
       };
     });
 
@@ -177,7 +225,13 @@ for (const target of pages) {
       viewport: viewport.name,
       status: response?.status() ?? null,
       expectedStatus: target.expectedStatus ?? 200,
-      expectedCanonical: `https://trustedbuyerlab.com${target.expectedCanonical ?? target.path}`,
+      expectedCanonical:
+        target.expectedCanonical === null
+          ? null
+          : `https://trustedbuyerlab.com${target.expectedCanonical ?? target.path}`,
+      expectedRobots:
+        target.expectedRobots === null ? null : (target.expectedRobots ?? "index"),
+      expectedH1: target.expectedH1 === null ? null : (target.expectedH1 ?? 1),
       mobileMenuWorks,
       lastScrollPosition,
       screenshot,
@@ -195,11 +249,15 @@ await writeFile(`${outputDir}/report.json`, JSON.stringify(report, null, 2));
 
 for (const item of report) {
   const overflow = item.scrollWidth > item.viewportWidth;
-  const canonicalMatches = item.canonical === item.expectedCanonical;
+  const canonicalMatches =
+    item.expectedCanonical === null || item.canonical === item.expectedCanonical;
+  const robotsMatches =
+    item.expectedRobots === null || item.robots?.startsWith(item.expectedRobots);
+  const h1Matches = item.expectedH1 === null || item.h1Count === item.expectedH1;
   console.log(
     `${item.page} ${item.viewport}: status=${item.status} ` +
       `expected=${item.expectedStatus} overflow=${overflow} ` +
-      `h1=${item.h1Count} canonical=${canonicalMatches} ` +
+      `h1=${item.h1Count} h1ok=${h1Matches} canonical=${canonicalMatches} robots=${robotsMatches} ` +
       `broken=${item.brokenImages.length} errors=${item.consoleErrors.length} ` +
       `transfer=${Math.round(item.transferBytes / 1024)}KB lcp=${Math.round(item.lcp)}ms ` +
       `cls=${item.cls.toFixed(3)}`,
@@ -207,16 +265,31 @@ for (const item of report) {
 }
 
 const failures = report.filter(
-  (item) =>
-    item.status !== item.expectedStatus ||
-    item.h1Count !== 1 ||
-    !item.title ||
-    item.canonical !== item.expectedCanonical ||
-    item.mobileMenuWorks === false ||
-    item.scrollWidth > item.viewportWidth ||
-    item.brokenImages.length > 0 ||
-    (item.expectedStatus < 400 && item.consoleErrors.length > 0) ||
-    item.failedRequests.length > 0,
+  (item) => {
+    const h1Matches =
+      item.expectedH1 === null || item.h1Count === item.expectedH1;
+    const canonicalMatches =
+      item.expectedCanonical === null ||
+      item.canonical === item.expectedCanonical;
+    const robotsMatches =
+      item.expectedRobots === null ||
+      item.robots?.startsWith(item.expectedRobots);
+    return (
+      item.status !== item.expectedStatus ||
+      !h1Matches ||
+      (item.expectedH1 !== null && !item.title) ||
+      !canonicalMatches ||
+      !robotsMatches ||
+      item.mobileMenuWorks === false ||
+      (item.expectedH1 !== null &&
+        item.scrollWidth > item.viewportWidth) ||
+      item.brokenImages.length > 0 ||
+      (item.expectedStatus < 400 &&
+        item.expectedH1 !== null &&
+        item.consoleErrors.length > 0) ||
+      item.failedRequests.length > 0
+    );
+  },
 );
 
 if (failures.length > 0) {

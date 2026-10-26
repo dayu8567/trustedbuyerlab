@@ -7,6 +7,7 @@ readingTime: "6 min read"
 imageKey: "cordless"
 imageAlt: "Cordless robotic pool cleaner being used in a backyard pool"
 featured: true
+legacy: true
 ---
 
 A pool robot can look impressive in a product photo and still be a poor fit for the pool behind your house. The useful questions are less about the longest feature list and more about how the machine will handle your pool shape, the debris you actually get, and the amount of attention you want to give it.

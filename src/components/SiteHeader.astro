@@ -1,7 +1,9 @@
 ---
 import { SITE } from "../data/site";
+import { CATEGORIES } from "../data/taxonomy";
 
 const path = Astro.url.pathname;
+const categories = Object.values(CATEGORIES);
 const isActive = (href: string) =>
   path === href || (href !== "/" && path.startsWith(href));
 ---
@@ -44,7 +46,29 @@ const isActive = (href: string) =>
             ))
           }
         </nav>
+        <p class="mobile-menu-heading">Appliance categories</p>
+        <nav class="mobile-category-links" aria-label="Appliance categories">
+          {
+            categories.map((category) => (
+              <a href={category.href}>{category.label}</a>
+            ))
+          }
+        </nav>
       </div>
     </details>
   </div>
+  <nav class="category-bar" aria-label="Appliance categories">
+    <div class="container">
+      {
+        categories.map((category) => (
+          <a
+            href={category.href}
+            aria-current={path.startsWith(category.href) ? "page" : undefined}
+          >
+            {category.shortLabel}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
 </header>

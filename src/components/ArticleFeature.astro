@@ -1,7 +1,6 @@
 ---
-import { Image } from "astro:assets";
 import type { ArticleSummary } from "../data/blog";
-import { SECTIONS } from "../data/blog";
+import { CATEGORIES, FORMATS } from "../data/taxonomy";
 
 interface Props {
   article: ArticleSummary;
@@ -13,13 +12,11 @@ const { article, priority = false } = Astro.props;
 
 <article class="feature-story">
   <a class="feature-story-media" href={article.href} tabindex="-1" aria-hidden="true">
-    <Image
+    <img
       src={article.image}
       alt={article.imageAlt}
-      widths={[560, 840, 1200]}
-      sizes="(max-width: 940px) 100vw, 55vw"
-      format="webp"
-      quality={72}
+      width="1200"
+      height="750"
       loading={priority ? "eager" : "lazy"}
       fetchpriority={priority ? "high" : undefined}
       decoding="async"
@@ -30,10 +27,13 @@ const { article, priority = false } = Astro.props;
     <h2><a href={article.href}>{article.title}</a></h2>
     <p>{article.description}</p>
     <p class="article-meta">
-      <span>{SECTIONS[article.category].label}</span>
+      <span>{CATEGORIES[article.category].label}</span>
+      <span>{FORMATS[article.format].label}</span>
       <span>{article.dateLabel}</span>
       <span>{article.readingTime}</span>
     </p>
-    <a class="button" href={article.href}>Read the guide</a>
+    <a class="button" href={article.href}>
+      {article.format === "deals" ? "See the price details" : "Read the guide"}
+    </a>
   </div>
 </article>

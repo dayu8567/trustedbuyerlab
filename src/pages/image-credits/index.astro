@@ -1,0 +1,47 @@
+---
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { IMAGE_CREDITS } from "../../data/imageCredits";
+
+const title = "Image credits";
+const description =
+  "Attribution and license details for editorial photographs used by Trusted Buyer Lab.";
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/image-credits/">
+  <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Image credits" }]} />
+  <header class="page-intro">
+    <div class="container page-intro-grid">
+      <div>
+        <p class="eyebrow">Attribution</p>
+        <h1>Image credits and licenses.</h1>
+      </div>
+      <div class="page-intro-aside">
+        <p>
+          Editorial photographs are stored locally and served as optimized WebP
+          assets. Product-feed images, when automated, retain the source and
+          verification data attached to the offer.
+        </p>
+      </div>
+    </div>
+  </header>
+  <section class="section paper">
+    <div class="narrow">
+      <div class="credit-list">
+        {IMAGE_CREDITS.map((credit) => (
+          <article>
+            <h2>{credit.asset}</h2>
+            <p>{credit.title} by {credit.creator}.</p>
+            <p>
+              <a href={credit.licenseUrl} rel="license noopener noreferrer">
+                {credit.license}
+              </a>
+              {" / "}
+              <a href={credit.sourceUrl} rel="noopener noreferrer">Source</a>
+            </p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

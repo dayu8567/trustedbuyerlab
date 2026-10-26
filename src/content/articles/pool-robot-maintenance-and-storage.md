@@ -6,6 +6,7 @@ category: "pool-care"
 readingTime: "5 min read"
 imageKey: "debris"
 imageAlt: "Pool cleaner working near leaves and debris in a backyard pool"
+legacy: true
 ---
 
 A pool robot is a tool, not a permanent fixture. Small maintenance habits protect its battery, filtration, and moving parts, and they also make each cleaning run more effective. The exact steps depend on the manufacturer, so treat its manual as the authority. The routine below is a practical checklist to build around it.

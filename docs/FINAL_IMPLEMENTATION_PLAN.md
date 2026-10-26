@@ -1,148 +1,96 @@
-# Trusted Buyer Lab Final Implementation Plan
+# Trusted Buyer Lab Home Appliance Blog
 
-## 1. Objective
+## Objective
 
-Rebuild Trusted Buyer Lab as a static-first Astro site for Cloudflare Pages while
-preserving the existing affiliate content, URLs, disclosures, and analytics
-contract. The release gate is a Cloudflare Observatory score of 100 for both
-desktop and mobile before production DNS is changed.
+Transform Trusted Buyer Lab from a pool-product publication into an English
+home-appliance blog with five categories, orthogonal editorial formats, original
+seed content, and an automated price-brief newsroom. Astro remains a static
+Cloudflare Pages site with no runtime SSR or client framework.
 
-## 2. Delivery Guards
+## Delivery Guard
 
-- Work only on `refactor/astro-observatory-100`.
-- Deploy the branch as a Cloudflare Pages Preview deployment.
-- Do not attach `trustedbuyerlab.com` or change production DNS in this phase.
-- Keep `main` as the live branch until the preview passes all release gates.
-- Preserve all affiliate destinations and their `nofollow sponsored` attributes.
+- Branch: `refactor/home-appliance-blog`
+- Preview deployments only until final approval
+- Never change apex or `www` DNS during preview
+- Preserve existing affiliate destinations and legal pages
+- Legacy pool URLs remain available with `noindex`
 
-## 3. Route Map
+## Route Map
 
-| Route | Purpose | Source |
-| --- | --- | --- |
-| `/` | Editorial blog home, lead story, latest articles, and section navigation | New |
-| `/guides/` | Complete article library organized by section | New |
-| `/pool-robots/` | Pool robot section index | New |
-| `/pool-care/` | Pool care section index | New |
-| `/buying-guides/` | Buying guide section index | New |
-| `/guides/<slug>/` | Markdown article detail route | New content collection |
-| `/guides/beatbot-sora-robotic-pool-cleaner/` | Beatbot Sora 70 / 30 / 10 comparison | Previous home page |
-| `/best-cordless-robotic-pool-cleaners/` | Three-model cordless pool robot comparison | Existing `best-robotic-pool-cleaners-2026.html` |
-| `/about/` | Editorial method and disclosure | New |
-| `/privacy-policy/` | Privacy policy | Existing legal page |
-| `/terms/` | Terms of use | Existing legal page |
-| `/affiliate-disclosure/` | Affiliate disclosure | Existing legal page |
-| `/thank-you/` | Affiliate redirect completion page | Existing page |
-| `/404.html` | Branded not-found page | New |
-
-Legacy `.html` URLs and `/best-cordless-robotic-pool-cleaners.html` receive 301
-redirects to the canonical slash-terminated routes. Keep the Google verification
-file and merchant verification meta tag.
-
-## 4. Architecture
-
-- Astro static output with no SSR adapter and no Pages Functions.
-- Shared layouts and components for metadata, navigation, footer, product cards,
-  comparison tables, disclosures, and structured data.
-- Markdown articles in Astro Content Collections for the blog library and article
-  routes.
-- Typed TypeScript modules for section definitions, image mapping, product copy,
-  links, specs, and rankings.
-- Small reusable CSS layer with design tokens and responsive layout primitives.
-- Native `<details>` elements for FAQ behavior. No Alpine, no client framework,
-  and no CDN-hosted CSS.
-- One tiny local module may collect affiliate-click data. Google Tag Manager is
-  loaded only after user interaction and only when a public container ID is set.
-
-## 5. Performance Budget
-
-| Metric | Budget |
+| Route | Purpose |
 | --- | --- |
-| First-party CSS | <= 24 KB gzip |
-| First-party JS | <= 2 KB gzip |
-| Hero image | <= 120 KB at the delivered breakpoint |
-| Total initial transfer | <= 450 KB |
-| Render-blocking third-party requests | 0 |
-| Layout shift | 0 |
-| LCP target | <= 1.2 s on Observatory mobile profile |
-| TBT target | < 50 ms |
+| `/` | Trending, lead article, category directory, latest content, price rail |
+| `/articles/` | Complete article library |
+| `/categories/` | Five-category directory |
+| `/kitchen-appliances/` | Kitchen appliance category |
+| `/laundry/` | Laundry category |
+| `/cleaning/` | Cleaning category |
+| `/air-climate/` | Air and climate category |
+| `/smart-home/` | Smart-home category |
+| `/category/subcategory/` | Product-family listing |
+| `/deals/` | Automated price briefs |
+| `/reviews/` | Research reviews |
+| `/buying-guides/` | Buying guides |
+| `/how-to/` | Maintenance and setup guides |
+| `/comparisons/` | Adjacent product comparisons |
+| `/articles/<slug>/` | New article detail |
+| `/feed.xml` | RSS |
+| `/sitemap.xml` | Static sitemap |
+| `/about/` | Method, AI, and affiliate disclosure |
 
-- Use locally hosted AVIF or WebP images with `srcset`, `sizes`, explicit
-  dimensions, and `loading="lazy"` below the fold.
-- Preload the selected hero image and use `fetchpriority="high"`.
-- Inline the production stylesheet during the build.
-- Use only system fonts.
-- Keep all decorative effects within CSS and honor reduced-motion.
-- Avoid fixed overlays that obscure content on small screens.
+## Content Model
 
-## 6. Accessibility And UX
+The Astro Content Collection tracks category, subcategory, format, publication
+dates, editorial status, author, sources, product snapshots, image path, and
+automation metadata. Human-reviewed and automated content use the same schema
+but have distinct layouts and labels.
 
-- Semantic header, nav, main, section, article, and footer landmarks.
-- A visible-on-focus skip link and visible focus states.
-- One H1 per page with a logical heading order.
-- WCAG AA color contrast for body text, buttons, labels, and disclosures.
-- Descriptive link text; icon-only controls are avoided.
-- Tables include captions and scoped headers.
-- Touches at least 44 by 44 CSS pixels on mobile.
-- Text and controls must not overlap at 320 px, 375 px, 768 px, or 1440 px.
-- Responsive tables may scroll horizontally, but page-level horizontal overflow
-  is forbidden.
+The first release includes fifteen human-reviewed seed articles, three per
+category, covering buying guides, reviews, comparisons, and maintenance.
 
-## 7. SEO And Metadata
+## Newsroom
 
-- Canonical URL on every indexable page.
-- Unique title, description, Open Graph, and Twitter metadata.
-- `Organization`, `WebPage`, `ItemList`, and `FAQPage` JSON-LD where applicable.
-- XML sitemap generated at build time.
-- `robots.txt` references the production sitemap.
-- Stable 301 redirects for legacy routes.
-- Keep the existing Google site verification token.
+1. A scheduled GitHub Actions workflow fetches the PartnerBoost JSON feed.
+2. Offers are normalized into a provider-independent contract.
+3. Daily price snapshots accumulate in `data/newsroom/price-history.json`.
+4. Deterministic code applies freshness, discount, availability, blocklist,
+   duplicate, and daily-cap rules.
+5. Workers AI returns constrained JSON with an English draft.
+6. Validation rejects invented prices, unsupported testing claims, unsafe HTML,
+   duplicate titles, or malformed metadata.
+7. The workflow runs tests, Astro checks, and the production build.
+8. Successful content is committed to the preview branch and deployed with
+   Wrangler Direct Upload.
 
-## 8. Security And Cloudflare Pages
+Schedule: `05:10`, `13:10`, and `21:10` UTC. Maximum two published briefs per
+UTC day. Failed generation remains in the workflow log and is never published.
 
-- `_headers` provides CSP, HSTS, frame protection, MIME sniffing protection,
-  referrer policy, permissions policy, and immutable asset caching.
-- CSP blocks unknown scripts and third-party images; navigation to affiliate
-  domains remains allowed.
-- `_redirects` handles legacy paths.
-- Cloudflare Pages project uses `npm run build` and output directory `dist`.
-- Preview deployment is created from `refactor/astro-observatory-100`.
-- Custom domain attachment is intentionally out of scope for this phase.
+## Performance And Accessibility
 
-## 9. Content And Conversion
+- Local system fonts
+- No hydration framework or global client JavaScript
+- Pre-optimized local WebP images with explicit dimensions
+- One eager above-the-fold image per page
+- Responsive CSS with 320, 390, 768, and 1440 px coverage
+- Semantic landmarks, one H1 per HTML page, skip link, and visible focus
+- Reduced-motion support
+- Horizontal overflow forbidden at page level
 
-- Organize content into Pool Robots, Pool Care, and Buying Guides sections.
-- Keep the home page focused on the publication and its newest useful guides,
-  not on one product model.
-- Preserve product order, affiliate links, current disclosures, and research-only
-  disclaimers on commercial comparison pages.
-- Use consistent CTA language and track outbound affiliate clicks with product,
-  rank, category, network, page type, and destination data.
-- Keep the buyer guidance specific: pool size, wall and waterline needs, runtime,
-  filtration, retrieval, and scheduling.
+## SEO And Trust
 
-## 10. Implementation Sequence
+- Unique title and description per route
+- Canonical URLs
+- Article and CollectionPage JSON-LD
+- RSS and sitemap
+- Visible sources and price verification timestamps on automated briefs
+- `nofollow sponsored noopener` affiliate links
+- No "hands-on tested" claim without testing
+- Image attribution page
 
-1. Create and push `refactor/astro-observatory-100`.
-2. Add Astro project configuration, article collection, section data, layouts,
-   and shared blog components.
-3. Localize and optimize all visual assets used above the fold.
-4. Build the home, article library, section indexes, article detail template,
-   legal pages, thank-you, 404, sitemap, robots, and redirects.
-5. Add security headers and deferred analytics behavior.
-6. Run Astro checks, production build, local route checks, and Playwright visual
-   checks at desktop and mobile widths.
-7. Create a Cloudflare Pages project and deploy the branch to a Preview URL.
-8. Run Cloudflare Observatory on the Preview URL for desktop and mobile.
-9. Tune until both runs report 100 in every category.
-10. Stop before custom-domain or production DNS changes and report the preview
-    URL plus evidence for the release gate.
+## Release Gates
 
-## 11. Acceptance Criteria
-
-- `npm run check` and `npm run build` pass.
-- No broken internal links or missing assets on the preview.
-- No console errors and no hydration or framework JavaScript.
-- Observatory desktop score: 100.
-- Observatory mobile score: 100.
-- Production DNS remains unchanged.
-- Preview is accessible from a `*.pages.dev` deployment URL.
+- `npm test`, `npm run check`, and `npm run build` pass.
+- Playwright full-site matrix passes.
+- Cloudflare preview matches the tested commit.
+- Legacy URLs return their expected content and noindex directive.
+- Observatory desktop and mobile score 100 before production DNS changes.

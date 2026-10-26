@@ -6,6 +6,7 @@ category: "pool-robots"
 readingTime: "5 min read"
 imageKey: "aboveGround"
 imageAlt: "Above-ground backyard pool with clear water"
+legacy: true
 ---
 
 Above-ground pools can be excellent candidates for a robotic cleaner, but the purchase should start with the pool structure rather than the robot's feature list. Wall construction, liner condition, obstacles, and access all affect how a cleaner can be used safely and effectively.

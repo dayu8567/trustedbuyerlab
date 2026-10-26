@@ -1,0 +1,94 @@
+---
+import ArticleFeature from "../../components/ArticleFeature.astro";
+import ArticleGrid from "../../components/ArticleGrid.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { CATEGORIES, FORMATS, type CategoryKey, type FormatKey } from "../../data/taxonomy";
+import { SITE } from "../../data/site";
+import { getAllArticles } from "../../lib/articles";
+
+const articles = await getAllArticles();
+const featured = articles.find((article) => article.featured) ?? articles[0];
+const rest = articles.filter((article) => article.id !== featured.id);
+const categoryKeys = Object.keys(CATEGORIES) as CategoryKey[];
+const formatKeys = Object.keys(FORMATS) as FormatKey[];
+const title = "All home appliance articles";
+const description =
+  "Browse every Trusted Buyer Lab guide to kitchen, laundry, cleaning, air, and smart-home appliances.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${SITE.url}/articles/#collection`,
+  url: `${SITE.url}/articles/`,
+  name: title,
+  description,
+  inLanguage: "en",
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: articles.length,
+    itemListElement: articles.map((article, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: `${SITE.url}${article.href}`,
+      name: article.title,
+    })),
+  },
+};
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/articles/" schema={schema}>
+  <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "All articles" }]} />
+  <header class="page-intro">
+    <div class="container page-intro-grid">
+      <div>
+        <p class="eyebrow">The complete library</p>
+        <h1>Every appliance guide, organized around a real decision.</h1>
+      </div>
+      <div class="page-intro-aside">
+        <p>
+          {articles.length} research-led articles across five appliance
+          categories and five editorial formats.
+        </p>
+        <nav class="topic-links" aria-label="Article categories">
+          {categoryKeys.map((key) => <a href={CATEGORIES[key].href}>{CATEGORIES[key].label}</a>)}
+        </nav>
+        <nav class="topic-links" aria-label="Article formats">
+          {formatKeys.map((key) => <a href={FORMATS[key].href}>{FORMATS[key].label}</a>)}
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="section paper">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Start here</p>
+          <h2>The current lead article</h2>
+        </div>
+        <p>
+          A broad, practical entry point into the appliance library, selected
+          to help readers choose with less guesswork.
+        </p>
+      </div>
+      <ArticleFeature article={featured} priority />
+    </div>
+  </section>
+
+  <section class="section mist">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Newest first</p>
+          <h2>More from Trusted Buyer Lab</h2>
+        </div>
+        <p>
+          Automated price briefs are labeled separately from research-led
+          reviews, comparisons, buying guides, and maintenance advice.
+        </p>
+      </div>
+      <ArticleGrid articles={rest} />
+    </div>
+  </section>
+</BaseLayout>

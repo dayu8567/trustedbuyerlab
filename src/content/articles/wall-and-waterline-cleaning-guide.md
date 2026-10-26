@@ -7,6 +7,7 @@ readingTime: "5 min read"
 imageKey: "wall"
 imageAlt: "Robotic pool cleaner working along a pool wall and waterline"
 featured: true
+legacy: true
 ---
 
 Floor coverage is easy to understand: debris falls, the robot passes over it, and the filter captures it. Wall and waterline coverage asks more from the machine. It has to navigate a vertical surface, maintain traction, and reach the area where water meets the pool shell.

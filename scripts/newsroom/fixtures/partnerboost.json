@@ -1,0 +1,36 @@
+{
+  "products": [
+    {
+      "id": "fixture-air-fryer-001",
+      "name": "AeroCrisp 6-Quart Digital Air Fryer",
+      "brand": "Fixture Home",
+      "model": "AF-600",
+      "price": 79.99,
+      "list_price": 119.99,
+      "currency": "USD",
+      "image_url": "local:air-fryer-size-guide.webp",
+      "affiliate_url": "https://example.com/affiliate/air-fryer-001",
+      "product_url": "https://example.com/products/air-fryer-001",
+      "category": "Kitchen Appliances > Air Fryers",
+      "availability": "In stock",
+      "retailer": "Fixture Retail",
+      "updated_at": "2026-10-26T05:00:00Z"
+    },
+    {
+      "id": "fixture-robot-vacuum-002",
+      "name": "PathFinder LiDAR Robot Vacuum",
+      "brand": "Fixture Home",
+      "model": "RV-L2",
+      "price": 249,
+      "list_price": 349,
+      "currency": "USD",
+      "image_url": "local:robot-vacuum-pet-guide.webp",
+      "affiliate_url": "https://example.com/affiliate/robot-vacuum-002",
+      "product_url": "https://example.com/products/robot-vacuum-002",
+      "category": "Cleaning > Robot Vacuums",
+      "availability": "In stock",
+      "retailer": "Fixture Retail",
+      "updated_at": "2026-10-26T05:00:00Z"
+    }
+  ]
+}

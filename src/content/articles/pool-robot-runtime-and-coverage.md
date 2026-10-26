@@ -6,6 +6,7 @@ category: "pool-robots"
 readingTime: "6 min read"
 imageKey: "sora"
 imageAlt: "Beatbot Sora robotic pool cleaner shown from the side"
+legacy: true
 ---
 
 Cordless pool robot listings often put runtime near the top of the specification sheet. It is an important number, but it is not a complete description of coverage. Two cleaners with the same maximum runtime can behave differently depending on the cleaning mode, navigation pattern, filtration load, and pool shape.

@@ -1,0 +1,196 @@
+---
+import ArticleFeature from "../../components/ArticleFeature.astro";
+import ArticleGrid from "../../components/ArticleGrid.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SITE } from "../../data/site";
+import {
+  CATEGORIES,
+  FORMATS,
+  subcategoriesFor,
+  type CategoryKey,
+  type FormatKey,
+} from "../../data/taxonomy";
+import {
+  getArticlesByCategory,
+  getArticlesByFormat,
+} from "../../lib/articles";
+
+type CategoryProps = { kind: "category"; key: CategoryKey };
+type FormatProps = { kind: "format"; key: FormatKey };
+type Props = CategoryProps | FormatProps;
+
+export async function getStaticPaths() {
+  const categoryPaths = (Object.keys(CATEGORIES) as CategoryKey[]).map((key) => ({
+    params: { listing: key },
+    props: { kind: "category" as const, key },
+  }));
+  const formatPaths = (Object.keys(FORMATS) as FormatKey[]).map((key) => ({
+    params: { listing: key },
+    props: { kind: "format" as const, key },
+  }));
+  return [...categoryPaths, ...formatPaths];
+}
+
+const props = Astro.props as Props;
+const articles =
+  props.kind === "category"
+    ? await getArticlesByCategory(props.key)
+    : await getArticlesByFormat(props.key);
+const definition =
+  props.kind === "category" ? CATEGORIES[props.key] : FORMATS[props.key];
+const featured = articles[0];
+const rest = articles.slice(1);
+const title =
+  props.kind === "category"
+    ? `${definition.label} guides and reviews`
+    : `${definition.label} for home appliances`;
+const description =
+  props.kind === "category"
+    ? definition.description
+    : definition.description;
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${SITE.url}${definition.href}#collection`,
+  url: `${SITE.url}${definition.href}`,
+  name: title,
+  description,
+  inLanguage: "en",
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: articles.length,
+    itemListElement: articles.map((article, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: `${SITE.url}${article.href}`,
+      name: article.title,
+    })),
+  },
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={definition.href}
+  schema={schema}
+>
+  <Breadcrumbs
+    items={[
+      { href: "/", label: "Home" },
+      { href: "/categories/", label: "Browse" },
+      { label: definition.label },
+    ]}
+  />
+
+  <header class="section-intro">
+    <div class="container section-intro-grid">
+      <div>
+        <p class="eyebrow">{definition.eyebrow}</p>
+        <h1>{definition.label}</h1>
+        <p class="hero-lede">{definition.description}</p>
+      </div>
+      <aside class="section-facts" aria-label={`${definition.label} details`}>
+        <div>
+          <strong>{articles.length}</strong>
+          <span>{props.kind === "category" ? "Articles in this category" : "Articles in this format"}</span>
+        </div>
+        <div>
+          <strong>{props.kind === "category" ? subcategoriesFor(props.key).length : 5}</strong>
+          <span>{props.kind === "category" ? "Product subcategories" : "Editorial formats"}</span>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <nav class="section-tabs" aria-label="Browse categories and formats">
+    <div class="container">
+      <a href="/categories/">All categories</a>
+      {
+        (Object.keys(CATEGORIES) as CategoryKey[]).map((key) => (
+          <a
+            href={CATEGORIES[key].href}
+            aria-current={
+              props.kind === "category" && props.key === key ? "page" : undefined
+            }
+          >
+            {CATEGORIES[key].label}
+          </a>
+        ))
+      }
+      {
+        (Object.keys(FORMATS) as FormatKey[]).map((key) => (
+          <a
+            href={FORMATS[key].href}
+            aria-current={
+              props.kind === "format" && props.key === key ? "page" : undefined
+            }
+          >
+            {FORMATS[key].label}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+
+  {featured ? (
+    <section class="section paper">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Latest in {definition.label.toLowerCase()}</p>
+            <h2>Lead article</h2>
+          </div>
+          <p>{featured.description}</p>
+        </div>
+        <ArticleFeature article={featured} priority />
+      </div>
+    </section>
+  ) : (
+    <section class="section paper">
+      <div class="container">
+        <div class="empty-listing">
+          <p class="eyebrow">Nothing published here yet</p>
+          <h2>{definition.label} will fill as verified content arrives.</h2>
+          <p>
+            The automatic price workflow publishes only when an offer passes
+            freshness, link, image, price, and duplicate checks. It does not
+            fill a quota with thin posts.
+          </p>
+          <a class="button secondary" href="/articles/">Browse current articles</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {
+    props.kind === "category" && (
+      <section class="subsection-links">
+        <div class="container">
+          <p class="rail-heading">Narrow the category</p>
+          <div class="subcategory-strip">
+            {subcategoriesFor(props.key).map((subcategory) => (
+              <a href={subcategory.href}>{subcategory.label}</a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {rest.length > 0 && (
+    <section class="section mist">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Continue reading</p>
+            <h2>More {definition.label.toLowerCase()}</h2>
+          </div>
+          <p>Follow the question, not a fixed product feed.</p>
+        </div>
+        <ArticleGrid articles={rest} />
+      </div>
+    </section>
+  )}
+</BaseLayout>
