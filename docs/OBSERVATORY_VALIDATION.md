@@ -4,18 +4,18 @@
 
 - Date: 2026-10-26
 - Branch: `refactor/home-appliance-blog`
-- Local production build: 63 pages
-- Indexable sitemap URLs: 53
-- RSS items: 15
+- Local production build: 65 pages
+- Indexable sitemap URLs: 55
+- RSS items: 17
 - Cloudflare Pages project: `trustedbuyerlab`
 - Target preview branch: `refactor/home-appliance-blog`
 - Preview URL: <https://refactor-home-appliance-blog.trustedbuyerlab.pages.dev/>
 
 ## Local Release Checks
 
-- `npm test`: 7 tests passed.
+- `npm test`: 8 tests passed.
 - `npm run check`: 57 files, 0 errors, 0 warnings, 0 hints.
-- `npm run build`: 63 static pages generated.
+- `npm run build`: 65 static pages generated.
 - Playwright: 50 route/resource targets at 1440, 768, 390, and 320 px, 200 checks total.
 - No broken images, page-level horizontal overflow, unexpected console errors,
   failed requests, canonical mismatches, robots mismatches, or missing H1 tags.
@@ -65,3 +65,28 @@ After the test, the temporary DNS record, Pages custom domain, and isolated Page
 project were removed. A public DNS lookup for the temporary hostname no longer
 returns an address. The apex `trustedbuyerlab.com` and `www` records remain in
 place, and no production DNS change was made.
+
+## Automated Newsroom
+
+- PartnerBoost read-only probe: 163 normalized appliance offers
+  - Run: <https://github.com/dayu8567/trustedbuyerlab/actions/runs/40338344879>
+- Successful live run:
+  <https://github.com/dayu8567/trustedbuyerlab/actions/runs/40339496924>
+- Automated content commit: `ecc291d`
+- Cloudflare preview deployment:
+  <https://github.com/dayu8567/trustedbuyerlab/actions/runs/40339962030>
+- Published articles: 2, matching the configured daily cap
+- Generated pages return HTTP 200 and appear in `/deals/`, RSS, and sitemap
+
+Generated articles:
+
+- `/articles/price-watch-vza01a124-8531642515653-45490383585477-2026-10-26/`
+- `/articles/price-watch-vza01b103agd-ble-8502103474373-45329773854917-2026-10-26/`
+
+The final URL for the second generated article is recorded in
+`data/newsroom/published.json`.
+
+The scheduled workflow still needs to be present on the repository's default
+branch before GitHub will run it automatically. The branch workflow supports
+explicit live push runs with `[newsroom-live]`; ordinary newsroom code pushes
+run the fixture and read-only PartnerBoost probe without publishing.
