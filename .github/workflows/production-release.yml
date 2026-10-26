@@ -1,0 +1,59 @@
+name: Production release
+
+on:
+  push:
+    branches:
+      - refactor/home-appliance-blog
+    paths:
+      - ".github/workflows/production-release.yml"
+      - "scripts/production/release.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: trustedbuyerlab-production-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ZONE_ID: d4f2313d85c52c5f7c54a9c4e8b30679
+    steps:
+      - name: Check out preview branch
+        uses: actions/checkout@v6
+        with:
+          ref: refactor/home-appliance-blog
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test and build release artifact
+        run: |
+          npm test
+          npm run check
+          npm run build
+
+      - name: Deploy production and switch DNS
+        run: node scripts/production/release.mjs
+
+      - name: Upload production audit
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: production-release
+          path: |
+            docs/production-preflight.json
+            docs/production-release.json
+          if-no-files-found: warn
