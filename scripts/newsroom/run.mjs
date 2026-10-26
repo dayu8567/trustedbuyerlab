@@ -8,6 +8,7 @@ import { validateAiDraft } from "./validation.mjs";
 
 const root = resolve(import.meta.dirname, "../..");
 const dryRun = process.argv.includes("--dry-run");
+const probeOnly = process.argv.includes("--probe");
 const outputRoot = dryRun ? resolve(root, ".newsroom-dry-run") : root;
 
 const readJson = async (path, fallback) => {
@@ -78,6 +79,31 @@ const main = async () => {
   const offers = normalizeOffers(payload, now);
   if (offers.length === 0) {
     console.log("Newsroom: no normalized offers were eligible.");
+    if (probeOnly) {
+      console.log(
+        "::notice title=PartnerBoost probe::Feed request succeeded but returned zero normalized appliance offers.",
+      );
+    }
+    return;
+  }
+
+  if (probeOnly) {
+    console.log(
+      `::notice title=PartnerBoost probe::Feed request succeeded with ${offers.length} normalized appliance offers.`,
+    );
+    console.log(
+      JSON.stringify(
+        {
+          probeOnly: true,
+          normalizedOffers: offers.length,
+          sampleCategories: [
+            ...new Set(offers.map((offer) => offer.subcategory)),
+          ].slice(0, 10),
+        },
+        null,
+        2,
+      ),
+    );
     return;
   }
 

@@ -57,6 +57,16 @@ jobs:
           npm run newsroom:dry
           echo "::notice title=Newsroom smoke test::Push-triggered fixture run completed without publishing."
 
+      - name: Probe PartnerBoost feed without publishing
+        if: ${{ env.DRY_RUN == 'true' }}
+        shell: bash
+        run: |
+          if [ -z "$PARTNERBOOST_FEED_URL" ] || [ -z "$PARTNERBOOST_API_KEY" ]; then
+            echo "::notice title=PartnerBoost probe skipped::PARTNERBOOST_FEED_URL or PARTNERBOOST_API_KEY is not configured."
+            exit 0
+          fi
+          npm run newsroom:probe
+
       - name: Generate live price briefs
         id: newsroom
         if: ${{ env.DRY_RUN != 'true' }}
