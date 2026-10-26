@@ -337,10 +337,18 @@ async function main() {
 
 try {
   await main();
+} catch (error) {
+  const message = error instanceof Error ? error.message : String(error);
+  console.error(error);
+  console.log(`::error title=Observatory validation::${message.replaceAll("\n", " ")}`);
+  process.exitCode = 1;
 } finally {
   await cleanup();
   if (cleanupErrors.length > 0) {
     console.error(`Cleanup issues:\n- ${cleanupErrors.join("\n- ")}`);
+    for (const error of cleanupErrors) {
+      console.log(`::error title=Observatory cleanup::${error.replaceAll("\n", " ")}`);
+    }
     process.exitCode = 1;
   }
 }
