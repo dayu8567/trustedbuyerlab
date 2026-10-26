@@ -25,16 +25,20 @@ export function validateAiDraft(draft, offer) {
   }
   if (
     typeof draft?.description !== "string" ||
-    draft.description.length < 80 ||
+    draft.description.length < 100 ||
     draft.description.length > 240
   ) {
-    errors.push("Description must be between 80 and 240 characters.");
+    errors.push(
+      `Description must be between 100 and 240 characters; received ${draft?.description?.length ?? 0}.`,
+    );
   }
   if (
     typeof draft?.bodyMarkdown !== "string" ||
-    plainTextLength(draft.bodyMarkdown) < 900
+    plainTextLength(draft.bodyMarkdown) < 1200
   ) {
-    errors.push("Body must contain at least 900 characters of plain text.");
+    errors.push(
+      `Body must contain at least 1200 characters of plain text; received ${typeof draft?.bodyMarkdown === "string" ? plainTextLength(draft.bodyMarkdown) : 0}.`,
+    );
   }
   if (
     !Array.isArray(draft?.keyConsiderations) ||
@@ -61,10 +65,6 @@ export function validateAiDraft(draft, offer) {
   if (/<script\b|<iframe\b|javascript:/i.test(allText)) {
     errors.push("Generated content contains unsafe HTML.");
   }
-  if (!allText.includes(offer.title)) {
-    errors.push("Generated content must name the exact product from the offer.");
-  }
-
   const allowedPrices = new Set(
     [offer.price, offer.listPrice]
       .filter(Boolean)

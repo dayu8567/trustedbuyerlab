@@ -26,11 +26,11 @@ Use only the structured offer facts supplied by the user. Never invent a specifi
 
 Return one JSON object with:
 - title: 25-100 characters, specific and non-clickbait
-- description: 80-240 characters
-- bodyMarkdown: 900-1800 characters of plain Markdown with 3 or 4 level-two headings
+- description: 100-220 characters
+- bodyMarkdown: 1200-2200 characters of plain Markdown with 3 or 4 level-two headings
 - keyConsiderations: 3-5 sentences of practical pre-purchase checks
 
-The article must explain that the price is a snapshot, distinguish the offer price from the listed price, and tell the reader to verify fit, seller, warranty, and current terms.`;
+The article must explain that the price is a snapshot, distinguish the offer price from the listed price, and tell the reader to verify fit, seller, warranty, and current terms. Include the exact productName from the user payload in the bodyMarkdown.`;
 
 export function buildMessages(offer) {
   return [
@@ -61,6 +61,7 @@ export function buildMessages(offer) {
 export async function generateDraft({
   offer,
   dryRun = false,
+  feedback = "",
   env = process.env,
   fetchImpl = fetch,
 }) {
@@ -78,6 +79,14 @@ export async function generateDraft({
     throw new Error("Missing CLOUDFLARE_ACCOUNT_ID or CLOUDFLARE_API_TOKEN.");
   }
 
+  const messages = buildMessages(offer);
+  if (feedback) {
+    messages.push({
+      role: "user",
+      content: `The previous draft failed validation with these errors: ${feedback}\nRewrite the complete JSON object and satisfy every length and content requirement.`,
+    });
+  }
+
   const response = await fetchImpl(
     `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/${MODEL}`,
     {
@@ -87,7 +96,7 @@ export async function generateDraft({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        messages: buildMessages(offer),
+        messages,
         response_format: {
           type: "json_schema",
           json_schema: responseSchema,

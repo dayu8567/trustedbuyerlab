@@ -133,8 +133,22 @@ const main = async () => {
   const publishCandidates = dryRun ? candidates.slice(0, 1) : candidates;
 
   for (const candidate of publishCandidates) {
-    const draft = await generateDraft({ offer: candidate.offer, dryRun });
-    const validation = validateAiDraft(draft, candidate.offer);
+    let draft;
+    let validation;
+    let feedback = "";
+    for (let attempt = 1; attempt <= 3; attempt += 1) {
+      draft = await generateDraft({
+        offer: candidate.offer,
+        dryRun,
+        feedback,
+      });
+      validation = validateAiDraft(draft, candidate.offer);
+      if (validation.valid) break;
+      feedback = validation.errors.join(" ");
+      console.log(
+        `Draft attempt ${attempt} failed validation for ${candidate.offer.id}: ${feedback}`,
+      );
+    }
     if (!validation.valid) {
       throw new Error(
         `Generated draft failed validation for ${candidate.offer.id}: ${validation.errors.join("; ")}`,
