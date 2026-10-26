@@ -8,6 +8,7 @@ import { validateAiDraft } from "./validation.mjs";
 
 const root = resolve(import.meta.dirname, "../..");
 const dryRun = process.argv.includes("--dry-run");
+// Probe mode validates the live Partner feed without generating or publishing.
 const probeOnly = process.argv.includes("--probe");
 const outputRoot = dryRun ? resolve(root, ".newsroom-dry-run") : root;
 
