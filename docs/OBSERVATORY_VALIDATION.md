@@ -13,8 +13,8 @@
 
 ## Local Release Checks
 
-- `npm test`: 6 tests passed.
-- `npm run check`: 56 files, 0 errors, 0 warnings, 0 hints.
+- `npm test`: 7 tests passed.
+- `npm run check`: 57 files, 0 errors, 0 warnings, 0 hints.
 - `npm run build`: 63 static pages generated.
 - Playwright: 50 route/resource targets at 1440, 768, 390, and 320 px, 200 checks total.
 - No broken images, page-level horizontal overflow, unexpected console errors,
@@ -48,9 +48,20 @@ No production DNS or custom-domain attachment was changed.
 
 ## Observatory Status
 
-Observatory has not been run for this candidate. It must be tested on a temporary
-custom-domain hostname after a preview deployment exists. Desktop and mobile must
-both score 100 before any production DNS change.
+Observatory was run on an isolated Pages project serving the exact build from
+commit `8bd3184`:
 
-The temporary test hostname, DNS record, and isolated project must be removed
-after validation while apex and `www` records remain unchanged.
+- GitHub Actions run: <https://github.com/dayu8567/trustedbuyerlab/actions/runs/40324088730>
+- Test region: `us-central1`
+- Temporary host: `observatory-40324088730.trustedbuyerlab.com`
+- Desktop performance score: **100**
+- Mobile performance score: **100**
+- Result artifact: `observatory-result`
+
+The validation script only exits successfully after both device reports reach
+100 and cleanup reports no errors.
+
+After the test, the temporary DNS record, Pages custom domain, and isolated Pages
+project were removed. A public DNS lookup for the temporary hostname no longer
+returns an address. The apex `trustedbuyerlab.com` and `www` records remain in
+place, and no production DNS change was made.
