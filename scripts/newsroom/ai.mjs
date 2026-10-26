@@ -27,7 +27,7 @@ Use only the structured offer facts supplied by the user. Never invent a specifi
 Return one JSON object with:
 - title: 25-100 characters, specific and non-clickbait
 - description: 100-220 characters
-- bodyMarkdown: 1200-2200 characters of plain Markdown with 3 or 4 level-two headings
+- bodyMarkdown: 350-800 characters of plain Markdown analysis; deterministic code adds the complete price snapshot and editorial sections
 - keyConsiderations: 3-5 sentences of practical pre-purchase checks
 
 The article must explain that the price is a snapshot, distinguish the offer price from the listed price, and tell the reader to verify fit, seller, warranty, and current terms. Include the exact productName from the user payload in the bodyMarkdown.`;

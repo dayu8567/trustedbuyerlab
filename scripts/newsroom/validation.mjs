@@ -20,8 +20,8 @@ const plainTextLength = (value) =>
 export function validateAiDraft(draft, offer) {
   const errors = [];
   if (!draft || typeof draft !== "object") errors.push("Draft must be an object.");
-  if (typeof draft?.title !== "string" || draft.title.length < 25 || draft.title.length > 100) {
-    errors.push("Title must be between 25 and 100 characters.");
+  if (typeof draft?.title !== "string" || draft.title.length < 15 || draft.title.length > 100) {
+    errors.push("Title must be between 15 and 100 characters.");
   }
   if (
     typeof draft?.description !== "string" ||
@@ -34,10 +34,10 @@ export function validateAiDraft(draft, offer) {
   }
   if (
     typeof draft?.bodyMarkdown !== "string" ||
-    plainTextLength(draft.bodyMarkdown) < 1200
+    plainTextLength(draft.bodyMarkdown) < 300
   ) {
     errors.push(
-      `Body must contain at least 1200 characters of plain text; received ${typeof draft?.bodyMarkdown === "string" ? plainTextLength(draft.bodyMarkdown) : 0}.`,
+      `Body analysis must contain at least 300 characters of plain text; received ${typeof draft?.bodyMarkdown === "string" ? plainTextLength(draft.bodyMarkdown) : 0}.`,
     );
   }
   if (

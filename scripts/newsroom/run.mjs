@@ -24,6 +24,35 @@ const readJson = async (path, fallback) => {
 const writeJson = (path, value) =>
   writeFile(path, `${JSON.stringify(value, null, 2)}\n`, "utf8");
 
+const labelFromSlug = (value) =>
+  value
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+
+const applyDraftFallbacks = (draft, offer) => {
+  const fallbackTitle = `Price snapshot: ${offer.brand} ${labelFromSlug(offer.subcategory)} at ${offer.retailer}`.slice(
+    0,
+    100,
+  );
+  const fallbackDescription = `A time-stamped price snapshot for ${offer.title} at ${offer.retailer}, with availability, listed price, and current affiliate-feed details recorded before publication.`;
+  return {
+    ...draft,
+    title:
+      typeof draft?.title === "string" &&
+      draft.title.length >= 15 &&
+      draft.title.length <= 100
+        ? draft.title
+        : fallbackTitle,
+    description:
+      typeof draft?.description === "string" &&
+      draft.description.length >= 80 &&
+      draft.description.length <= 240
+        ? draft.description
+        : fallbackDescription,
+  };
+};
+
 const fetchFeed = async () => {
   if (dryRun) {
     return readJson(resolve(import.meta.dirname, "fixtures/partnerboost.json"));
@@ -142,6 +171,7 @@ const main = async () => {
         dryRun,
         feedback,
       });
+      draft = applyDraftFallbacks(draft, candidate.offer);
       validation = validateAiDraft(draft, candidate.offer);
       if (validation.valid) break;
       feedback = validation.errors.join(" ");
