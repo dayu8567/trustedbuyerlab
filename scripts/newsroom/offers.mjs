@@ -125,6 +125,19 @@ const parseAvailability = (value, stockValue) => {
   return value.trim().slice(0, 80);
 };
 
+const parseDate = (value) => {
+  if (typeof value === "number") {
+    const milliseconds = value < 1_000_000_000_000 ? value * 1000 : value;
+    return new Date(milliseconds);
+  }
+  if (typeof value === "string" && /^\d+$/.test(value.trim())) {
+    const numeric = Number(value);
+    const milliseconds = numeric < 1_000_000_000_000 ? numeric * 1000 : numeric;
+    return new Date(milliseconds);
+  }
+  return value ? new Date(value) : new Date(Number.NaN);
+};
+
 const isHttpUrl = (value, protocols = ["http:", "https:"]) => {
   try {
     return protocols.includes(new URL(value).protocol);
@@ -167,6 +180,8 @@ export function normalizeOffer(raw, now = new Date()) {
     pick(raw, [
       "list_price",
       "listPrice",
+      "old_price",
+      "oldPrice",
       "original_price",
       "originalPrice",
       "compare_at_price",
@@ -187,6 +202,7 @@ export function normalizeOffer(raw, now = new Date()) {
     "thumbnail",
   ]);
   const sourceUrl = pick(raw, [
+    "url",
     "product_url",
     "productUrl",
     "landing_url",
@@ -199,7 +215,7 @@ export function normalizeOffer(raw, now = new Date()) {
     "lastUpdated",
     "modified_at",
   ]);
-  const updatedAt = updatedAtRaw ? new Date(updatedAtRaw) : new Date(NaN);
+  const updatedAt = parseDate(updatedAtRaw);
 
   if (
     !id ||
@@ -223,11 +239,19 @@ export function normalizeOffer(raw, now = new Date()) {
     id,
     title,
     brand: String(pick(raw, ["brand", "manufacturer", "vendor"]) ?? "Unknown").trim(),
-    model: String(pick(raw, ["model", "model_number", "modelNumber"]) ?? "").trim(),
+    model: String(
+      pick(raw, ["model", "model_number", "modelNumber", "mpn"]) ?? "",
+    ).trim(),
     category: rule.category,
     subcategory: rule.subcategory,
     retailer: String(
-      pick(raw, ["retailer", "merchant", "store", "network"]) ?? "Affiliate retailer",
+      pick(raw, [
+        "retailer",
+        "merchant_name",
+        "merchant",
+        "store",
+        "network",
+      ]) ?? "Affiliate retailer",
     ).trim(),
     affiliateUrl: String(affiliateUrl),
     sourceUrl: isHttpUrl(sourceUrl) ? String(sourceUrl) : String(affiliateUrl),

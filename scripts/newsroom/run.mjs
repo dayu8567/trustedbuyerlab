@@ -77,12 +77,13 @@ const main = async () => {
   if (!payload) return;
 
   const now = new Date();
+  const rawOffers = opportunitiesFromPayload(payload);
   const offers = normalizeOffers(payload, now);
   if (offers.length === 0) {
     console.log("Newsroom: no normalized offers were eligible.");
     if (probeOnly) {
       console.log(
-        "::notice title=PartnerBoost probe::Feed request succeeded but returned zero normalized appliance offers.",
+        `::notice title=PartnerBoost probe::Feed returned ${rawOffers.length} raw products but zero normalized appliance offers.`,
       );
     }
     return;
@@ -96,6 +97,7 @@ const main = async () => {
       JSON.stringify(
         {
           probeOnly: true,
+          rawProducts: rawOffers.length,
           normalizedOffers: offers.length,
           sampleCategories: [
             ...new Set(offers.map((offer) => offer.subcategory)),

@@ -42,6 +42,39 @@ test("reads products from PartnerBoost's nested envelope", () => {
   assert.equal(products.length, 2);
 });
 
+test("maps documented PartnerBoost fields and Unix-second timestamps", () => {
+  const offers = normalizeOffers(
+    {
+      data: {
+        list: [
+          {
+            name: "Documented Field Humidifier",
+            sku: "PB-DOC-001",
+            merchant_name: "PartnerBoost Merchant",
+            url: "https://example.com/product",
+            image: "https://example.com/image.jpg",
+            category: "Home > Humidifiers",
+            price: "89.99",
+            old_price: "119.99",
+            currency: "usd",
+            brand: "Example",
+            mpn: "HUM-1",
+            availability: "in stock",
+            tracking_url: "https://example.com/tracking",
+            updated_at: 1_792_990_800,
+          },
+        ],
+      },
+    },
+    new Date("2026-10-26T06:00:00Z"),
+  );
+  assert.equal(offers.length, 1);
+  assert.equal(offers[0].retailer, "PartnerBoost Merchant");
+  assert.equal(offers[0].listPrice, 119.99);
+  assert.equal(offers[0].sourceUrl, "https://example.com/product");
+  assert.equal(offers[0].model, "HUM-1");
+});
+
 test("selects only verified discounts and caps the daily volume", () => {
   const offers = normalizeOffers(feed, now);
   const history = {
