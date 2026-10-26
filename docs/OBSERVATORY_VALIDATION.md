@@ -9,6 +9,7 @@
 - RSS items: 15
 - Cloudflare Pages project: `trustedbuyerlab`
 - Target preview branch: `refactor/home-appliance-blog`
+- Preview URL: <https://refactor-home-appliance-blog.trustedbuyerlab.pages.dev/>
 
 ## Local Release Checks
 
@@ -26,13 +27,23 @@
 
 ## Preview Deployment Status
 
-The GitHub Actions `Cloudflare Pages preview` workflow completed, but its deploy
-step was skipped because these repository secrets are not configured:
+The GitHub Actions `Cloudflare Pages preview` workflow completed and published
+the preview branch successfully after these repository secrets were configured:
 
 - `CLOUDFLARE_ACCOUNT_ID`
 - `CLOUDFLARE_API_TOKEN`
 
-No Cloudflare Pages deployment was created from this branch by the local agent.
+Validated on the public preview:
+
+- `/`, `/articles/`, `/categories/`, a subcategory listing, and an article page
+  all return HTTP 200 with one H1.
+- `/pool-robots/` returns HTTP 301 to `/`.
+- Legacy pool articles remain available with `noindex, nofollow`.
+- CSP, HSTS, frame protection, MIME sniffing protection, referrer policy, and
+  permissions policy are present.
+- Cloudflare adds `X-Robots-Tag: noindex` to this branch preview, which is
+  appropriate for a non-production deployment.
+
 No production DNS or custom-domain attachment was changed.
 
 ## Observatory Status
