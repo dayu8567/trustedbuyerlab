@@ -1,3 +1,18 @@
 {
-  "posts": []
+  "posts": [
+    {
+      "productId": "VZA01A124_8531642515653_45490383585477",
+      "slug": "price-watch-vza01a124-8531642515653-45490383585477-2026-10-26",
+      "price": 169,
+      "currency": "USD",
+      "publishedAt": "2026-10-26"
+    },
+    {
+      "productId": "VZA01B103AGD-BLE_8502103474373_45329773854917",
+      "slug": "price-watch-vza01b103agd-ble-8502103474373-45329773854917-2026-10-26",
+      "price": 99,
+      "currency": "USD",
+      "publishedAt": "2026-10-26"
+    }
+  ]
 }
