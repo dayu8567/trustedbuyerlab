@@ -176,5 +176,7 @@ const main = async () => {
 
 main().catch((error) => {
   console.error(error);
+  const message = error instanceof Error ? error.message : String(error);
+  console.log(`::error title=Newsroom validation::${message.replaceAll("\n", " ")}`);
   process.exitCode = 1;
 });
