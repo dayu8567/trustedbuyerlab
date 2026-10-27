@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { resolve } from "node:path";
 import { buildArticleMarkdown } from "../scripts/newsroom/content.mjs";
+import { applyDraftFallbacks } from "../scripts/newsroom/draft.mjs";
 import {
   normalizeOffers,
   opportunitiesFromPayload,
@@ -165,6 +166,32 @@ test("accepts the fixed AI fixture and rejects unsupported test claims", () => {
   const validation = validateAiDraft(unsafe, offer);
   assert.equal(validation.valid, false);
   assert.match(validation.errors.join(" "), /hands-on|tested/i);
+});
+
+test("repairs an oversized AI description with a bounded fallback", () => {
+  const offer = {
+    ...normalizeOffers(feed, now)[0],
+    title: "An unusually long product name ".repeat(20),
+  };
+  const oversized = {
+    ...draft,
+    title: "short",
+    description: "An excessively long summary sentence. ".repeat(10),
+  };
+
+  const repaired = applyDraftFallbacks(oversized, offer);
+  assert.ok(repaired.description.length >= 100);
+  assert.ok(repaired.description.length <= 240);
+  assert.equal(validateAiDraft(repaired, offer).valid, true);
+});
+
+test("runs the newsroom twice daily at 13:10 and 21:10 UTC", async () => {
+  const workflow = await readFile(
+    resolve(import.meta.dirname, "../.github/workflows/newsroom.yml"),
+    "utf8",
+  );
+  assert.match(workflow, /cron: "10 13,21 \* \* \*"/);
+  assert.doesNotMatch(workflow, /cron: "10 5,13,21 \* \* \*"/);
 });
 
 test("writes deterministic product facts into the article frontmatter", () => {

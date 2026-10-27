@@ -62,8 +62,8 @@ category, covering buying guides, reviews, comparisons, and maintenance.
 8. Successful content is committed to the preview branch and deployed with
    Wrangler Direct Upload.
 
-Schedule: `05:10`, `13:10`, and `21:10` UTC. Maximum two published briefs per
-UTC day. Failed generation remains in the workflow log and is never published.
+Schedule: `13:10` and `21:10` UTC. Maximum two published briefs per UTC day.
+Failed generation remains in the workflow log and is never published.
 
 ## Performance And Accessibility
 
