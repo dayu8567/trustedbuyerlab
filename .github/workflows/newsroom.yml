@@ -73,10 +73,8 @@ jobs:
         shell: bash
         run: |
           if [ -z "$PARTNERBOOST_FEED_URL" ] || [ -z "$PARTNERBOOST_API_KEY" ]; then
-            echo "PartnerBoost secrets are not configured; skipping."
-            echo "::notice title=Newsroom skipped::PartnerBoost secrets are not configured."
-            echo "skipped=true" >> "$GITHUB_OUTPUT"
-            exit 0
+            echo "::error title=Newsroom blocked::PartnerBoost secrets are not configured; the daily update cannot run."
+            exit 1
           fi
           npm run newsroom
           if [ -z "$(git status --porcelain -- src/content/articles)" ]; then

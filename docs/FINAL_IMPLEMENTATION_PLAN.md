@@ -63,7 +63,8 @@ category, covering buying guides, reviews, comparisons, and maintenance.
    Wrangler Direct Upload.
 
 Schedule: `13:10` and `21:10` UTC. Maximum two published briefs per UTC day.
-Failed generation remains in the workflow log and is never published.
+The first run publishes at least one price check when no offer meets the discount
+thresholds. Failed generation remains in the workflow log and is never published.
 
 ## Performance And Accessibility
 

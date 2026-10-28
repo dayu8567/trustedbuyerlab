@@ -30,6 +30,7 @@ export interface ProductSnapshot {
 export interface AutomationMeta {
   model: string;
   promptVersion: string;
+  selectionBasis?: "discount" | "daily-snapshot";
   generatedAt: string;
 }
 

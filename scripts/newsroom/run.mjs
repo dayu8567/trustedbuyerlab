@@ -2,7 +2,10 @@ import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { generateDraft } from "./ai.mjs";
 import { writeGeneratedArticle } from "./content.mjs";
-import { applyDraftFallbacks } from "./draft.mjs";
+import {
+  applyDailyPriceCheckTitle,
+  applyDraftFallbacks,
+} from "./draft.mjs";
 import { normalizeOffers, opportunitiesFromPayload } from "./offers.mjs";
 import { appendHistory, selectCandidates } from "./selection.mjs";
 import { validateAiDraft } from "./validation.mjs";
@@ -32,8 +35,9 @@ const fetchFeed = async () => {
   const feedUrl = process.env.PARTNERBOOST_FEED_URL;
   const apiKey = process.env.PARTNERBOOST_API_KEY;
   if (!feedUrl || !apiKey) {
-    console.log("Newsroom skipped: PartnerBoost credentials are not configured.");
-    return null;
+    throw new Error(
+      "Daily publishing requirement not met: PartnerBoost credentials are not configured.",
+    );
   }
 
   const endpoint = new URL(feedUrl);
@@ -75,19 +79,22 @@ const fetchFeed = async () => {
 
 const main = async () => {
   const payload = await fetchFeed();
-  if (!payload) return;
 
-  const now = new Date();
+  const now = dryRun
+    ? new Date("2026-10-27T00:00:00Z")
+    : new Date();
   const rawOffers = opportunitiesFromPayload(payload);
   const offers = normalizeOffers(payload, now);
   if (offers.length === 0) {
-    console.log("Newsroom: no normalized offers were eligible.");
     if (probeOnly) {
       console.log(
         `::notice title=PartnerBoost probe::Feed returned ${rawOffers.length} raw products but zero normalized appliance offers.`,
       );
+      return;
     }
-    return;
+    throw new Error(
+      "Daily publishing requirement not met: the feed returned no usable appliance offers.",
+    );
   }
 
   if (probeOnly) {
@@ -129,6 +136,15 @@ const main = async () => {
     now,
     dailyCap: 2,
   });
+  const today = now.toISOString().slice(0, 10);
+  const hasDailyArticle = published.posts.some(
+    (post) => post.publishedAt === today,
+  );
+  if (!dryRun && candidates.length === 0 && !hasDailyArticle) {
+    throw new Error(
+      "Daily publishing requirement not met: no eligible offer is available for today's article.",
+    );
+  }
   const nextHistory = appendHistory(history, offers, now);
   const generated = [];
   const publishCandidates = dryRun ? candidates.slice(0, 1) : candidates;
@@ -137,12 +153,19 @@ const main = async () => {
     let draft;
     let validation;
     let feedback = "";
+    const prepareDraft = (value) =>
+      candidate.selectionBasis === "daily-snapshot"
+        ? applyDailyPriceCheckTitle(value, candidate.offer)
+        : value;
     for (let attempt = 1; attempt <= 3; attempt += 1) {
-      draft = await generateDraft({
-        offer: candidate.offer,
-        dryRun,
-        feedback,
-      });
+      draft = prepareDraft(
+        await generateDraft({
+          offer: candidate.offer,
+          dryRun,
+          feedback,
+          selectionBasis: candidate.selectionBasis,
+        }),
+      );
       validation = validateAiDraft(draft, candidate.offer);
       if (validation.valid) break;
       feedback = validation.errors.join(" ");
@@ -151,7 +174,9 @@ const main = async () => {
       );
     }
     if (!validation.valid) {
-      const repairedDraft = applyDraftFallbacks(draft, candidate.offer);
+      const repairedDraft = prepareDraft(
+        applyDraftFallbacks(draft, candidate.offer),
+      );
       const repairedValidation = validateAiDraft(repairedDraft, candidate.offer);
       if (repairedValidation.valid) {
         draft = repairedDraft;
@@ -174,6 +199,7 @@ const main = async () => {
       draft,
       now,
       outputRoot,
+      selectionBasis: candidate.selectionBasis,
     });
     generated.push(result);
     published.posts.push({
@@ -182,6 +208,7 @@ const main = async () => {
       price: candidate.offer.price,
       currency: candidate.offer.currency,
       publishedAt: result.publishedAt,
+      selectionBasis: candidate.selectionBasis,
     });
   }
 
@@ -196,6 +223,7 @@ const main = async () => {
         dryRun,
         normalizedOffers: offers.length,
         candidates: candidates.length,
+        hasDailyArticle,
         generated: generated.map((item) => item.slug),
         outputRoot,
       },

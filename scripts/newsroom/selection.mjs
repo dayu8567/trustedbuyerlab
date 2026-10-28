@@ -60,6 +60,7 @@ export function selectCandidates({
     (blocklist.brands ?? []).map((brand) => brand.toLowerCase()),
   );
   const eligible = [];
+  const dailySnapshots = [];
 
   for (const offer of offers) {
     if (blockedIds.has(offer.id)) continue;
@@ -84,23 +85,51 @@ export function selectCandidates({
       facts.medianDrop !== null && facts.medianDrop >= minimumMedianDrop;
     const passesList =
       facts.listDrop !== null && facts.listDrop >= minimumListDrop;
-    if (!passesMedian && !passesList) continue;
 
     const freshnessHours =
       (now.getTime() - new Date(offer.updatedAt).getTime()) / 3_600_000;
-    const discountStrength = Math.max(facts.medianDrop ?? 0, facts.listDrop ?? 0);
-    const score =
-      discountStrength * 100 +
-      Math.max(0, 24 - freshnessHours) / 4 +
+    const freshnessScore = Math.max(0, 48 - Math.max(0, freshnessHours));
+    const snapshotScore =
+      Math.max(0, facts.listDrop ?? 0) * 40 +
+      freshnessScore +
       (offer.listPrice ? 3 : 0) +
       (offer.model ? 1 : 0);
 
-    eligible.push({ offer, facts, score });
+    dailySnapshots.push({
+      offer,
+      facts,
+      score: snapshotScore,
+      selectionBasis: "daily-snapshot",
+    });
+
+    if (!passesMedian && !passesList) continue;
+
+    const discountStrength = Math.max(facts.medianDrop ?? 0, facts.listDrop ?? 0);
+    const score =
+      discountStrength * 100 +
+      freshnessScore / 4 +
+      (offer.listPrice ? 3 : 0) +
+      (offer.model ? 1 : 0);
+
+    eligible.push({ offer, facts, score, selectionBasis: "discount" });
   }
 
-  return eligible
-    .sort((a, b) => b.score - a.score)
-    .slice(0, dailyCap - todaysCount);
+  const byScore = (a, b) =>
+    b.score - a.score ||
+    b.offer.updatedAt.localeCompare(a.offer.updatedAt) ||
+    a.offer.id.localeCompare(b.offer.id);
+
+  if (eligible.length > 0) {
+    return eligible.sort(byScore).slice(0, dailyCap - todaysCount);
+  }
+
+  // The first run of a UTC day always publishes one verified price snapshot.
+  // It is explicitly labeled as a price check, never as a discount or deal.
+  if (todaysCount === 0 && dailySnapshots.length > 0) {
+    return dailySnapshots.sort(byScore).slice(0, 1);
+  }
+
+  return [];
 }
 
 export function appendHistory(history, offers, now = new Date()) {

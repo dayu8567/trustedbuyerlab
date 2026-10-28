@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 export const MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
-export const PROMPT_VERSION = "price-brief-v1";
+export const PROMPT_VERSION = "price-brief-v2";
 
 const responseSchema = {
   type: "object",
@@ -32,7 +32,11 @@ Return one JSON object with:
 
 The article must explain that the price is a snapshot, distinguish the offer price from the listed price, and tell the reader to verify fit, seller, warranty, and current terms. Include the exact productName from the user payload in the bodyMarkdown.`;
 
-export function buildMessages(offer) {
+export function buildMessages(offer, selectionBasis = "discount") {
+  const coverageInstruction =
+    selectionBasis === "daily-snapshot"
+      ? "This update did not meet a verified discount threshold. Write a daily current-price check. Do not call it a deal, sale, discount, drop, saving, limited-time offer, or lowest price. State that it is a price snapshot and avoid implying that the current amount is unusually low."
+      : "This offer met at least one verified discount threshold in structured feed data. Keep the language factual and do not imply a permanent price, universal availability, or hands-on testing.";
   return [
     { role: "system", content: systemPrompt },
     {
@@ -50,6 +54,8 @@ export function buildMessages(offer) {
           currency: offer.currency,
           availability: offer.availability,
           priceCheckedAt: offer.updatedAt,
+          selectionBasis,
+          coverageInstruction,
         },
         null,
         2,
@@ -62,6 +68,7 @@ export async function generateDraft({
   offer,
   dryRun = false,
   feedback = "",
+  selectionBasis = "discount",
   env = process.env,
   fetchImpl = fetch,
 }) {
@@ -79,7 +86,7 @@ export async function generateDraft({
     throw new Error("Missing CLOUDFLARE_ACCOUNT_ID or CLOUDFLARE_API_TOKEN.");
   }
 
-  const messages = buildMessages(offer);
+  const messages = buildMessages(offer, selectionBasis);
   if (feedback) {
     messages.push({
       role: "user",

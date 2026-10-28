@@ -2,8 +2,12 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { resolve } from "node:path";
+import { buildMessages } from "../scripts/newsroom/ai.mjs";
 import { buildArticleMarkdown } from "../scripts/newsroom/content.mjs";
-import { applyDraftFallbacks } from "../scripts/newsroom/draft.mjs";
+import {
+  applyDailyPriceCheckTitle,
+  applyDraftFallbacks,
+} from "../scripts/newsroom/draft.mjs";
 import {
   normalizeOffers,
   opportunitiesFromPayload,
@@ -107,6 +111,47 @@ test("selects only verified discounts and caps the daily volume", () => {
   assert.deepEqual(capped, []);
 });
 
+test("publishes one daily price check when no discount clears the thresholds", () => {
+  const offers = normalizeOffers(feed, now).map((offer) => ({
+    ...offer,
+    listPrice: undefined,
+  }));
+  const history = Object.fromEntries(
+    offers.map((offer) => [
+      offer.id,
+      [{ date: "2026-10-20", price: offer.price }],
+    ]),
+  );
+  const published = { posts: [] };
+  const candidates = selectCandidates({
+    offers,
+    history,
+    published,
+    blocklist: { productIds: [], brands: [] },
+    now,
+  });
+
+  assert.equal(candidates.length, 1);
+  assert.equal(candidates[0].selectionBasis, "daily-snapshot");
+
+  const capped = selectCandidates({
+    offers,
+    history,
+    published: {
+      posts: [
+        {
+          productId: candidates[0].offer.id,
+          publishedAt: "2026-10-26",
+          price: candidates[0].offer.price,
+        },
+      ],
+    },
+    blocklist: { productIds: [], brands: [] },
+    now,
+  });
+  assert.deepEqual(capped, []);
+});
+
 test("suppresses repeat posts unless the price improves by five percent", () => {
   const offers = normalizeOffers(feed, now);
   const history = {
@@ -185,6 +230,17 @@ test("repairs an oversized AI description with a bounded fallback", () => {
   assert.equal(validateAiDraft(repaired, offer).valid, true);
 });
 
+test("forces a transparent daily price-check title for snapshot coverage", () => {
+  const offer = normalizeOffers(feed, now)[0];
+  const titled = applyDailyPriceCheckTitle(draft, offer);
+  assert.match(titled.title, /^Daily price check:/);
+  assert.equal(validateAiDraft(titled, offer).valid, true);
+
+  const messages = buildMessages(offer, "daily-snapshot");
+  assert.match(messages[1].content, /did not meet a verified discount threshold/);
+  assert.match(messages[1].content, /Do not call it a deal/);
+});
+
 test("runs the newsroom twice daily at 13:10 and 21:10 UTC", async () => {
   const workflow = await readFile(
     resolve(import.meta.dirname, "../.github/workflows/newsroom.yml"),
@@ -206,4 +262,18 @@ test("writes deterministic product facts into the article frontmatter", () => {
   assert.match(markdown, /format: "deals"/);
   assert.match(markdown, /price: 79.99/);
   assert.match(markdown, /editorialStatus: "automated"/);
+});
+
+test("marks non-discount daily articles as price checks in the article body", () => {
+  const offer = normalizeOffers(feed, now)[0];
+  const markdown = buildArticleMarkdown({
+    offer,
+    draft: applyDailyPriceCheckTitle(draft, offer),
+    now,
+    imagePath: "/images/articles/example.webp",
+    selectionBasis: "daily-snapshot",
+  });
+  assert.match(markdown, /selectionBasis: "daily-snapshot"/);
+  assert.match(markdown, /No verified 30-day median discount threshold/);
+  assert.match(markdown, /## Daily price check/);
 });

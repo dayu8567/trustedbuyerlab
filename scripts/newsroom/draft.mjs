@@ -67,6 +67,16 @@ export function buildFallbackDescription(offer) {
   return clipAtWord(description, MAX_DESCRIPTION_LENGTH);
 }
 
+export function applyDailyPriceCheckTitle(draft, offer) {
+  const product =
+    offer.title ||
+    `${offer.brand || "Home appliance"} ${labelFromSlug(offer.subcategory)}`;
+  return {
+    ...draft,
+    title: clipAtWord(`Daily price check: ${product}`, MAX_TITLE_LENGTH),
+  };
+}
+
 export function applyDraftFallbacks(draft, offer) {
   const title = collapseWhitespace(draft?.title);
   const description = collapseWhitespace(draft?.description);

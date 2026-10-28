@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import sharp from "sharp";
+import { PROMPT_VERSION } from "./ai.mjs";
 
 const root = resolve(import.meta.dirname, "../..");
 
@@ -29,7 +30,13 @@ export function articleSlugForOffer(offer, now = new Date()) {
   return `price-watch-${slugify(offer.id)}-${date}`;
 }
 
-export function buildArticleMarkdown({ offer, draft, now = new Date(), imagePath }) {
+export function buildArticleMarkdown({
+  offer,
+  draft,
+  now = new Date(),
+  imagePath,
+  selectionBasis = "discount",
+}) {
   const date = now.toISOString().slice(0, 10);
   const checkedAt = formatCheckedAt(offer.updatedAt);
   const listPriceLine = offer.listPrice
@@ -39,6 +46,14 @@ export function buildArticleMarkdown({ offer, draft, now = new Date(), imagePath
   const considerations = draft.keyConsiderations
     .map((item) => `- ${item}`)
     .join("\n");
+  const selectionNote =
+    selectionBasis === "daily-snapshot"
+      ? `## Daily price check
+
+No verified 30-day median discount threshold or source list-price discount threshold was met for this update. This article records a current price snapshot rather than labeling the offer as a deal.
+
+`
+      : "";
 
   return `---
 title: ${yamlString(draft.title)}
@@ -70,13 +85,14 @@ ${offer.listPrice ? `    listPrice: ${offer.listPrice}\n` : ""}    availability:
     checkedAt: ${yamlString(offer.updatedAt)}
 automation:
   model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
-  promptVersion: "price-brief-v1"
+  promptVersion: ${yamlString(PROMPT_VERSION)}
+  selectionBasis: ${yamlString(selectionBasis)}
   generatedAt: ${yamlString(new Date(now).toISOString())}
 ---
 
 ${draft.bodyMarkdown.trim()}
 
-## Price snapshot
+${selectionNote}## Price snapshot
 
 The offer price was ${offer.currency} ${offer.price.toFixed(2)} when the feed data was checked on ${checkedAt}. ${listPriceLine}
 
@@ -136,6 +152,7 @@ export async function writeGeneratedArticle({
   draft,
   now = new Date(),
   outputRoot = root,
+  selectionBasis = "discount",
 }) {
   const slug = articleSlugForOffer(offer, now);
   const imagePath = await writeProductImage({
@@ -146,7 +163,13 @@ export async function writeGeneratedArticle({
   const articleDir = resolve(outputRoot, "src/content/articles");
   await mkdir(articleDir, { recursive: true });
   const filePath = resolve(articleDir, `${slug}.md`);
-  const markdown = buildArticleMarkdown({ offer, draft, now, imagePath });
+  const markdown = buildArticleMarkdown({
+    offer,
+    draft,
+    now,
+    imagePath,
+    selectionBasis,
+  });
   await writeFile(filePath, markdown, "utf8");
   return {
     slug,
