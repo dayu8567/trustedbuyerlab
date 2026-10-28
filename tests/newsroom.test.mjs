@@ -80,6 +80,17 @@ test("maps documented PartnerBoost fields and Unix-second timestamps", () => {
   assert.equal(offers[0].model, "HUM-1");
 });
 
+test("rejects automotive parts that contain heater or fan words", () => {
+  const automotive = {
+    ...feed.products[0],
+    name: "DPF EGR Delete Combo Kit with Grid Heater Delete Plate for Dodge Ram",
+    sku: "AUTO-PART-001",
+    category: "Automotive > Engine Parts",
+  };
+  const offers = normalizeOffers({ data: { list: [automotive] } }, now);
+  assert.equal(offers.length, 0);
+});
+
 test("selects only verified discounts and caps the daily volume", () => {
   const offers = normalizeOffers(feed, now);
   const history = {

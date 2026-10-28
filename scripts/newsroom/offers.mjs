@@ -1,3 +1,6 @@
+const unsupportedProductPattern =
+  /\b(?:automotive|vehicle|truck|car|cummins|dodge|ford|chevrolet|chevy|toyota|dpf|egr|exhaust\s+system|engine\s+(?:part|kit|cover|mount)|turbocharger|brake\s+(?:pad|rotor|kit)|suspension|pressure\s+washer|pool\s+(?:cleaner|pump|heater|vacuum))\b/i;
+
 const categoryRules = [
   {
     category: "kitchen-appliances",
@@ -7,7 +10,7 @@ const categoryRules = [
   {
     category: "kitchen-appliances",
     subcategory: "coffee-makers",
-    pattern: /coffee|espresso/i,
+    pattern: /coffee\s+(?:maker|machine|grinder|press|brewer)|espresso\s+(?:machine|maker)/i,
   },
   {
     category: "kitchen-appliances",
@@ -27,7 +30,7 @@ const categoryRules = [
   {
     category: "laundry",
     subcategory: "washing-machines",
-    pattern: /washing\s*machine|washer/i,
+    pattern: /washing\s*machine|clothes\s*washer|front[- ]load\s*washer|top[- ]load\s*washer|portable\s*washer/i,
   },
   {
     category: "laundry",
@@ -37,7 +40,7 @@ const categoryRules = [
   {
     category: "laundry",
     subcategory: "garment-care",
-    pattern: /garment|steamer|iron/i,
+    pattern: /(?:garment|clothes)\s+(?:steamer|dryer)|steam\s+iron|handheld\s+iron|ironing\s+(?:station|system)/i,
   },
   {
     category: "cleaning",
@@ -52,7 +55,7 @@ const categoryRules = [
   {
     category: "cleaning",
     subcategory: "carpet-cleaners",
-    pattern: /carpet\s*clean|extractor/i,
+    pattern: /carpet\s+(?:cleaner|cleaning|extractor)|upholstery\s+cleaner/i,
   },
   {
     category: "cleaning",
@@ -72,12 +75,12 @@ const categoryRules = [
   {
     category: "air-climate",
     subcategory: "air-purifiers",
-    pattern: /air\s*purifier|air\s*cleaner/i,
+    pattern: /air\s*purifier/i,
   },
   {
     category: "air-climate",
     subcategory: "fans-heaters",
-    pattern: /fan|heater|space\s*heater/i,
+    pattern: /(?:ceiling|floor|tower|pedestal|box|desk|oscillating|misting|window|exhaust)\s+fan|fandelier|(?:space|ceramic|oil[- ]filled|radiant|electric|portable|garage)\s+heater|fan\s+heater/i,
   },
   {
     category: "smart-home",
@@ -97,7 +100,7 @@ const categoryRules = [
   {
     category: "smart-home",
     subcategory: "smart-home-hubs",
-    pattern: /smart\s*home\s*hub|home\s*hub|bridge|hub/i,
+    pattern: /smart\s*home\s*hub|home\s+hub|smart\s+hub|home\s+bridge/i,
   },
 ];
 
@@ -229,6 +232,7 @@ export function normalizeOffer(raw, now = new Date()) {
   }
 
   const categoryText = `${title} ${pick(raw, ["category", "category_name", "categories"]) ?? ""}`;
+  if (unsupportedProductPattern.test(categoryText)) return null;
   const rule = categoryRules.find((candidate) => candidate.pattern.test(categoryText));
   if (!rule) return null;
 
