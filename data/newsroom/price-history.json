@@ -1145,11 +1145,21 @@
       "date": "2026-10-27",
       "price": 144,
       "listPrice": null
+    },
+    {
+      "date": "2026-10-28",
+      "price": 144,
+      "listPrice": null
     }
   ],
   "WDCS006BLK_10205270343944_51338853548296": [
     {
       "date": "2026-10-27",
+      "price": 75.99,
+      "listPrice": 84.99
+    },
+    {
+      "date": "2026-10-28",
       "price": 75.99,
       "listPrice": 84.99
     }
