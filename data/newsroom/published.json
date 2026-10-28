@@ -13,6 +13,22 @@
       "price": 99,
       "currency": "USD",
       "publishedAt": "2026-10-26"
+    },
+    {
+      "productId": "SjpV1LhYin51_7974002262315_43678004576555",
+      "slug": "price-watch-sjpv1lhyin51-7974002262315-43678004576555-2026-10-28",
+      "price": 9.99,
+      "currency": "USD",
+      "publishedAt": "2026-10-28",
+      "selectionBasis": "discount"
+    },
+    {
+      "productId": "FzV1Sbl51_54_7974001639723_43677989601579",
+      "slug": "price-watch-fzv1sbl51-54-7974001639723-43677989601579-2026-10-28",
+      "price": 89.99,
+      "currency": "USD",
+      "publishedAt": "2026-10-28",
+      "selectionBasis": "discount"
     }
   ]
 }
