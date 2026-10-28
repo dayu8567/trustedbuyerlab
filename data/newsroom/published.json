@@ -13,6 +13,14 @@
       "price": 99,
       "currency": "USD",
       "publishedAt": "2026-10-26"
+    },
+    {
+      "productId": "R-PP-01-D17_15445937160507_67795781943611",
+      "slug": "price-watch-r-pp-01-d17-15445937160507-67795781943611-2026-10-28",
+      "price": 387.99,
+      "currency": "USD",
+      "publishedAt": "2026-10-28",
+      "selectionBasis": "daily-snapshot"
     }
   ]
 }
