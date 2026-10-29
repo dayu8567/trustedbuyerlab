@@ -1,5 +1,5 @@
 const unsupportedProductPattern =
-  /\b(?:automotive|vehicle|truck|car|cummins|dodge|ford|chevrolet|chevy|toyota|dpf|egr|exhaust\s+system|engine\s+(?:part|kit|cover|mount)|turbocharger|brake\s+(?:pad|rotor|kit)|suspension|pressure\s+washer|pool\s+(?:cleaner|pump|heater|vacuum))\b/i;
+  /\b(?:automotive|vehicle|truck|car|cummins|dodge|ford|chevrolet|chevy|toyota|dpf|egr|exhaust\s+system|engine\s+(?:part|kit|cover|mount)|turbocharger|brake\s+(?:pad|rotor|kit)|suspension|pressure\s+washer|pool\s+(?:cleaner|pump|heater|vacuum)|dining\s+(?:table|chair|set)|side\s+chair|sofa|mattress|furniture)\b/i;
 
 const categoryRules = [
   {
@@ -10,7 +10,7 @@ const categoryRules = [
   {
     category: "kitchen-appliances",
     subcategory: "coffee-makers",
-    pattern: /coffee\s+(?:maker|machine|grinder|press|brewer|filter|pod|tamper|knock\s*box|puck\s*screen|accessor)|espresso/i,
+    pattern: /coffee\s+(?:maker|machine|grinder|press|brewer|filter|pod|tamper|knock\s*box|puck\s*screen|accessor)|espresso\b.*\b(?:machine|maker|grinder|press|filter|pod|tamper|knock\s*box|puck\s*screen|accessor)\b/i,
   },
   {
     category: "kitchen-appliances",

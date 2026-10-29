@@ -29,15 +29,6 @@
       "currency": "USD",
       "publishedAt": "2026-10-28",
       "selectionBasis": "discount"
-    },
-    {
-      "productId": "FM32003AK-T-5PC-PU_8866139832517_46285957398725",
-      "slug": "price-watch-fm32003ak-t-5pc-pu-8866139832517-46285957398725-2026-10-29",
-      "price": 369,
-      "currency": "USD",
-      "publishedAt": "2026-10-29",
-      "selectionBasis": "daily-snapshot",
-      "seasonalTopic": "coffee-makers"
     }
   ]
 }

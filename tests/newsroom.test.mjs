@@ -92,6 +92,17 @@ test("rejects automotive parts that contain heater or fan words", () => {
   assert.equal(offers.length, 0);
 });
 
+test("rejects furniture that uses espresso as a color name", () => {
+  const diningSet = {
+    ...feed.products[0],
+    name: "Worland 43 Inch Espresso 5-Piece Rectangle Dining Table with 4 Side Chairs",
+    sku: "FURNITURE-001",
+    category: "Home > Dining Room Furniture",
+  };
+  const offers = normalizeOffers({ data: { list: [diningSet] } }, now);
+  assert.equal(offers.length, 0);
+});
+
 test("accepts espresso accessories in the coffee category", () => {
   const espressoAccessory = {
     ...feed.products[0],
