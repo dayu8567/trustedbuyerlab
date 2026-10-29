@@ -29,6 +29,13 @@
       "currency": "USD",
       "publishedAt": "2026-10-28",
       "selectionBasis": "discount"
+    },
+    {
+      "productId": null,
+      "slug": "seasonal-humidifier-heating-season-check-2026-10-29",
+      "publishedAt": "2026-10-29",
+      "selectionBasis": "seasonal-editorial",
+      "seasonalTopic": "humidifiers"
     }
   ]
 }
