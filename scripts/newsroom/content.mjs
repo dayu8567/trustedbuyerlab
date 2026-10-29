@@ -36,6 +36,8 @@ export function buildArticleMarkdown({
   now = new Date(),
   imagePath,
   selectionBasis = "discount",
+  seasonalTopic = "",
+  seasonalContext = "",
 }) {
   const date = now.toISOString().slice(0, 10);
   const checkedAt = formatCheckedAt(offer.updatedAt);
@@ -54,6 +56,13 @@ No verified 30-day median discount threshold or source list-price discount thres
 
 `
       : "";
+  const seasonalNote = seasonalContext
+    ? `## Why it matters now
+
+${seasonalContext}
+
+`
+    : "";
 
   return `---
 title: ${yamlString(draft.title)}
@@ -87,12 +96,13 @@ automation:
   model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
   promptVersion: ${yamlString(PROMPT_VERSION)}
   selectionBasis: ${yamlString(selectionBasis)}
+${seasonalTopic ? `  seasonalTopic: ${yamlString(seasonalTopic)}\n` : ""}  editorialContext: ${yamlString(seasonalContext)}
   generatedAt: ${yamlString(new Date(now).toISOString())}
 ---
 
 ${draft.bodyMarkdown.trim()}
 
-${selectionNote}## Price snapshot
+${seasonalNote}${selectionNote}## Price snapshot
 
 The offer price was ${offer.currency} ${offer.price.toFixed(2)} when the feed data was checked on ${checkedAt}. ${listPriceLine}
 
@@ -153,6 +163,8 @@ export async function writeGeneratedArticle({
   now = new Date(),
   outputRoot = root,
   selectionBasis = "discount",
+  seasonalTopic = "",
+  seasonalContext = "",
 }) {
   const slug = articleSlugForOffer(offer, now);
   const imagePath = await writeProductImage({
@@ -169,6 +181,8 @@ export async function writeGeneratedArticle({
     now,
     imagePath,
     selectionBasis,
+    seasonalTopic,
+    seasonalContext,
   });
   await writeFile(filePath, markdown, "utf8");
   return {

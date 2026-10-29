@@ -30,9 +30,13 @@ Return one JSON object with:
 - bodyMarkdown: 350-800 characters of plain Markdown analysis; deterministic code adds the complete price snapshot and editorial sections
 - keyConsiderations: 3-5 sentences of practical pre-purchase checks
 
-The article must explain that the price is a snapshot, distinguish the offer price from the listed price, and tell the reader to verify fit, seller, warranty, and current terms. Include the exact productName from the user payload in the bodyMarkdown.`;
+The article must explain that the price is a snapshot, distinguish the offer price from the listed price, and tell the reader to verify fit, seller, warranty, and current terms. Include the exact productName from the user payload in the bodyMarkdown. Use seasonalContext to frame why this type of appliance matters now, but never present calendar context as live search-trend data.`;
 
-export function buildMessages(offer, selectionBasis = "discount") {
+export function buildMessages(
+  offer,
+  selectionBasis = "discount",
+  seasonalContext = "",
+) {
   const coverageInstruction =
     selectionBasis === "daily-snapshot"
       ? "This update did not meet a verified discount threshold. Write a daily current-price check. Do not call it a deal, sale, discount, drop, saving, limited-time offer, or lowest price. State that it is a price snapshot and avoid implying that the current amount is unusually low."
@@ -56,6 +60,7 @@ export function buildMessages(offer, selectionBasis = "discount") {
           priceCheckedAt: offer.updatedAt,
           selectionBasis,
           coverageInstruction,
+          seasonalContext,
         },
         null,
         2,
@@ -69,6 +74,7 @@ export async function generateDraft({
   dryRun = false,
   feedback = "",
   selectionBasis = "discount",
+  seasonalContext = "",
   env = process.env,
   fetchImpl = fetch,
 }) {
@@ -86,7 +92,7 @@ export async function generateDraft({
     throw new Error("Missing CLOUDFLARE_ACCOUNT_ID or CLOUDFLARE_API_TOKEN.");
   }
 
-  const messages = buildMessages(offer, selectionBasis);
+  const messages = buildMessages(offer, selectionBasis, seasonalContext);
   if (feedback) {
     messages.push({
       role: "user",

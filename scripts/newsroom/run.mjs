@@ -164,6 +164,7 @@ const main = async () => {
           dryRun,
           feedback,
           selectionBasis: candidate.selectionBasis,
+          seasonalContext: candidate.seasonalContext,
         }),
       );
       validation = validateAiDraft(draft, candidate.offer);
@@ -200,6 +201,8 @@ const main = async () => {
       now,
       outputRoot,
       selectionBasis: candidate.selectionBasis,
+      seasonalTopic: candidate.seasonalTopic,
+      seasonalContext: candidate.seasonalContext,
     });
     generated.push(result);
     published.posts.push({
@@ -209,6 +212,7 @@ const main = async () => {
       currency: candidate.offer.currency,
       publishedAt: result.publishedAt,
       selectionBasis: candidate.selectionBasis,
+      seasonalTopic: candidate.seasonalTopic,
     });
   }
 

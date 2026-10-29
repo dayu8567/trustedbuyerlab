@@ -1,3 +1,5 @@
+import { seasonalProfile } from "./seasonal.mjs";
+
 const DAY_MS = 86_400_000;
 
 const median = (values) => {
@@ -66,6 +68,8 @@ export function selectCandidates({
     if (blockedIds.has(offer.id)) continue;
     if (blockedBrands.has(offer.brand.toLowerCase())) continue;
     if (!isAvailable(offer)) continue;
+    const seasonal = seasonalProfile(offer, now);
+    if (!seasonal.inSeason) continue;
 
     const previous = posts
       .filter((post) => post.productId === offer.id)
@@ -98,6 +102,7 @@ export function selectCandidates({
       Math.max(0, facts.listDrop ?? 0) * 40 +
       freshnessScore +
       noveltyScore +
+      seasonal.score +
       (offer.listPrice ? 3 : 0) +
       (offer.model ? 1 : 0);
 
@@ -106,6 +111,8 @@ export function selectCandidates({
       facts,
       score: snapshotScore,
       selectionBasis: "daily-snapshot",
+      seasonalTopic: seasonal.topic,
+      seasonalContext: seasonal.context,
     });
 
     if (recentRepeat) continue;
@@ -115,10 +122,18 @@ export function selectCandidates({
     const score =
       discountStrength * 100 +
       freshnessScore / 4 +
+      seasonal.score +
       (offer.listPrice ? 3 : 0) +
       (offer.model ? 1 : 0);
 
-    eligible.push({ offer, facts, score, selectionBasis: "discount" });
+    eligible.push({
+      offer,
+      facts,
+      score,
+      selectionBasis: "discount",
+      seasonalTopic: seasonal.topic,
+      seasonalContext: seasonal.context,
+    });
   }
 
   const byScore = (a, b) =>

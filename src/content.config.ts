@@ -73,6 +73,8 @@ const articles = defineCollection({
         model: z.string(),
         promptVersion: z.string(),
         selectionBasis: z.enum(["discount", "daily-snapshot"]).optional(),
+        seasonalTopic: z.string().optional(),
+        editorialContext: z.string().optional(),
         generatedAt: z.string(),
       })
       .optional(),

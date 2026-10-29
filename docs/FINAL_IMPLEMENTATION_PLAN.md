@@ -65,6 +65,9 @@ category, covering buying guides, reviews, comparisons, and maintenance.
 Schedule: `13:10` and `21:10` UTC. Maximum two published briefs per UTC day.
 The first run publishes at least one price check when no offer meets the discount
 thresholds. Failed generation remains in the workflow log and is never published.
+Offer selection also follows a North American seasonal calendar so coverage
+matches current household use, such as heating and indoor air in winter rather
+than cooling products.
 
 ## Performance And Accessibility
 

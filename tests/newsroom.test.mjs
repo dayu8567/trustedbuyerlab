@@ -16,6 +16,7 @@ import {
   appendHistory,
   selectCandidates,
 } from "../scripts/newsroom/selection.mjs";
+import { seasonalProfile } from "../scripts/newsroom/seasonal.mjs";
 import { validateAiDraft } from "../scripts/newsroom/validation.mjs";
 
 const fixtureDir = resolve(
@@ -101,6 +102,38 @@ test("accepts espresso accessories in the coffee category", () => {
   const offers = normalizeOffers({ data: { list: [espressoAccessory] } }, now);
   assert.equal(offers.length, 1);
   assert.equal(offers[0].subcategory, "coffee-makers");
+});
+
+test("excludes fans in autumn while keeping seasonal appliance topics", () => {
+  const autumn = new Date("2026-10-29T12:00:00Z");
+  const base = normalizeOffers(feed, now)[0];
+  const fan = {
+    ...base,
+    title: "52 Inch Ceiling Fan with Light",
+    category: "air-climate",
+    subcategory: "fans-heaters",
+  };
+  const coffee = {
+    ...base,
+    title: "Espresso Machine with Milk Frother",
+    category: "kitchen-appliances",
+    subcategory: "coffee-makers",
+  };
+
+  assert.equal(seasonalProfile(fan, autumn).inSeason, false);
+  const coffeeProfile = seasonalProfile(coffee, autumn);
+  assert.equal(coffeeProfile.inSeason, true);
+  assert.match(coffeeProfile.context, /autumn in the US/);
+  assert.match(coffeeProfile.context, /holiday hosting/);
+
+  const fanCandidates = selectCandidates({
+    offers: [fan],
+    history: { [fan.id]: [{ date: "2026-10-20", price: fan.price * 2 }] },
+    published: { posts: [] },
+    blocklist: { productIds: [], brands: [] },
+    now: autumn,
+  });
+  assert.deepEqual(fanCandidates, []);
 });
 
 test("selects only verified discounts and caps the daily volume", () => {
@@ -301,4 +334,21 @@ test("marks non-discount daily articles as price checks in the article body", ()
   assert.match(markdown, /selectionBasis: "daily-snapshot"/);
   assert.match(markdown, /No verified 30-day median discount threshold/);
   assert.match(markdown, /## Daily price check/);
+});
+
+test("adds the seasonal editorial angle to automated articles", () => {
+  const offer = normalizeOffers(feed, now)[0];
+  const seasonalContext =
+    "It is autumn in the US, when more indoor time changes appliance use.";
+  const markdown = buildArticleMarkdown({
+    offer,
+    draft,
+    now,
+    imagePath: "/images/articles/example.webp",
+    seasonalTopic: "air-fryers",
+    seasonalContext,
+  });
+  assert.match(markdown, /seasonalTopic: "air-fryers"/);
+  assert.match(markdown, /## Why it matters now/);
+  assert.match(markdown, /more indoor time changes appliance use/);
 });

@@ -31,6 +31,8 @@ export interface AutomationMeta {
   model: string;
   promptVersion: string;
   selectionBasis?: "discount" | "daily-snapshot";
+  seasonalTopic?: string;
+  editorialContext?: string;
   generatedAt: string;
 }
 
