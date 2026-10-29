@@ -29,6 +29,22 @@
       "currency": "USD",
       "publishedAt": "2026-10-28",
       "selectionBasis": "discount"
+    },
+    {
+      "productId": "BBF8010BK_8451372744901_45267334037701",
+      "slug": "price-watch-bbf8010bk-8451372744901-45267334037701-2026-10-29",
+      "price": 299,
+      "currency": "USD",
+      "publishedAt": "2026-10-29",
+      "selectionBasis": "discount"
+    },
+    {
+      "productId": "VZA01B103ABN-BLE_8502103474373_45329773887685",
+      "slug": "price-watch-vza01b103abn-ble-8502103474373-45329773887685-2026-10-29",
+      "price": 99,
+      "currency": "USD",
+      "publishedAt": "2026-10-29",
+      "selectionBasis": "discount"
     }
   ]
 }
