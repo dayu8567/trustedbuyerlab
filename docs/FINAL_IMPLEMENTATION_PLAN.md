@@ -68,6 +68,8 @@ thresholds. Failed generation remains in the workflow log and is never published
 Offer selection also follows a North American seasonal calendar so coverage
 matches current household use, such as heating and indoor air in winter rather
 than cooling products.
+When the feed has no suitable in-season appliance, the newsroom publishes a
+maintained seasonal guide instead of forcing an unrelated product article.
 
 ## Performance And Accessibility
 

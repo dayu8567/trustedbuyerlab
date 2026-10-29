@@ -2,6 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import sharp from "sharp";
 import { PROMPT_VERSION } from "./ai.mjs";
+import { seasonalEditorialFor } from "./editorial.mjs";
 
 const root = resolve(import.meta.dirname, "../..");
 
@@ -95,6 +96,7 @@ ${offer.listPrice ? `    listPrice: ${offer.listPrice}\n` : ""}    availability:
 automation:
   model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
   promptVersion: ${yamlString(PROMPT_VERSION)}
+  contentMode: "price-brief"
   selectionBasis: ${yamlString(selectionBasis)}
 ${seasonalTopic ? `  seasonalTopic: ${yamlString(seasonalTopic)}\n` : ""}  editorialContext: ${yamlString(seasonalContext)}
   generatedAt: ${yamlString(new Date(now).toISOString())}
@@ -115,6 +117,53 @@ ${considerations}
 ## Editorial note
 
 This automated brief uses structured affiliate-feed facts and Workers AI-assisted drafting. Product identity, prices, availability, the affiliate link, and the timestamp are validated by code. It is not a hands-on product test.
+`;
+}
+
+export function buildSeasonalEditorialMarkdown({
+  topic,
+  now = new Date(),
+}) {
+  const date = new Date(now).toISOString().slice(0, 10);
+  const sourceLines = topic.sources
+    .map(
+      (source) => `  - label: ${yamlString(source.label)}
+    url: ${yamlString(source.url)}
+    publisher: ${yamlString(source.publisher)}`,
+    )
+    .join("\n");
+
+  return `---
+title: ${yamlString(topic.title)}
+description: ${yamlString(topic.description)}
+date: ${yamlString(date)}
+updatedAt: ${yamlString(date)}
+category: ${yamlString(topic.category)}
+subcategory: ${yamlString(topic.subcategory)}
+format: ${yamlString(topic.format)}
+readingTime: ${yamlString(topic.readingTime)}
+image: ${yamlString(topic.image)}
+imageAlt: ${yamlString(topic.imageAlt)}
+imageCredit: "Trusted Buyer Lab editorial image"
+featured: false
+editorialStatus: "automated"
+author: "newsroom"
+sources:
+${sourceLines || "  []"}
+automation:
+  model: "deterministic-seasonal-editorial"
+  promptVersion: "seasonal-editorial-v1"
+  contentMode: "seasonal-editorial"
+  seasonalTopic: ${yamlString(topic.subcategory)}
+  editorialContext: ${yamlString(topic.context)}
+  generatedAt: ${yamlString(new Date(now).toISOString())}
+---
+
+## Why this matters now
+
+${topic.context}
+
+${topic.bodyMarkdown.trim()}
 `;
 }
 
@@ -190,5 +239,26 @@ export async function writeGeneratedArticle({
     filePath,
     imagePath,
     publishedAt: now.toISOString().slice(0, 10),
+  };
+}
+
+export async function writeSeasonalEditorialArticle({
+  now = new Date(),
+  outputRoot = root,
+}) {
+  const topic = seasonalEditorialFor(now);
+  const date = new Date(now).toISOString().slice(0, 10);
+  const slug = `seasonal-${topic.slug}-${date}`;
+  const articleDir = resolve(outputRoot, "src/content/articles");
+  await mkdir(articleDir, { recursive: true });
+  const filePath = resolve(articleDir, `${slug}.md`);
+  const markdown = buildSeasonalEditorialMarkdown({ topic, now });
+  await writeFile(filePath, markdown, "utf8");
+  return {
+    slug,
+    filePath,
+    publishedAt: date,
+    seasonalTopic: topic.subcategory,
+    contentMode: "seasonal-editorial",
   };
 }

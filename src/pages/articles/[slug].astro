@@ -34,7 +34,9 @@ const subcategory = SUBCATEGORIES[article.subcategory];
 const format = FORMATS[article.format];
 const author = AUTHORS[article.author];
 const automatedLabel =
-  article.automation?.selectionBasis === "daily-snapshot"
+  article.automation?.contentMode === "seasonal-editorial"
+    ? "Seasonal appliance update"
+    : article.automation?.selectionBasis === "daily-snapshot"
     ? "Automated price check"
     : "Automated price brief";
 const toc = headings.filter(
@@ -151,7 +153,9 @@ const schema = {
       <article class="article-content prose">
         <p class="article-disclosure">
           {article.editorialStatus === "automated"
-            ? article.automation?.selectionBasis === "daily-snapshot"
+            ? article.automation?.contentMode === "seasonal-editorial"
+              ? "This seasonal update is assembled from a maintained editorial calendar and curated public guidance. It is not a hands-on product test, and it is not presented as live search-trend data."
+              : article.automation?.selectionBasis === "daily-snapshot"
               ? "This daily price check is assembled from structured affiliate-feed data and AI-assisted drafting. It does not claim that a discount threshold was met. Product facts, price, and links are validated by code before publication."
               : "This brief is assembled from structured affiliate-feed data and AI-assisted drafting. Product facts, price, and links are validated by code before publication."
             : "Independent editorial based on published specifications, manufacturer documentation, and ownership constraints. Retailer details can change, so confirm current information before purchase."}

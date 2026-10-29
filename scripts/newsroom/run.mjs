@@ -1,7 +1,10 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { generateDraft } from "./ai.mjs";
-import { writeGeneratedArticle } from "./content.mjs";
+import {
+  writeGeneratedArticle,
+  writeSeasonalEditorialArticle,
+} from "./content.mjs";
 import {
   applyDailyPriceCheckTitle,
   applyDraftFallbacks,
@@ -78,11 +81,21 @@ const fetchFeed = async () => {
 };
 
 const main = async () => {
-  const payload = await fetchFeed();
-
   const now = dryRun
     ? new Date("2026-10-27T00:00:00Z")
     : new Date();
+  let payload;
+  try {
+    payload = await fetchFeed();
+  } catch (error) {
+    if (dryRun || probeOnly) throw error;
+    const message = error instanceof Error ? error.message : String(error);
+    console.log(
+      `::warning title=PartnerBoost unavailable::${message.replaceAll("\n", " ")}`,
+    );
+    payload = { data: [] };
+  }
+
   const rawOffers = opportunitiesFromPayload(payload);
   const offers = normalizeOffers(payload, now);
   if (offers.length === 0) {
@@ -92,9 +105,6 @@ const main = async () => {
       );
       return;
     }
-    throw new Error(
-      "Daily publishing requirement not met: the feed returned no usable appliance offers.",
-    );
   }
 
   if (probeOnly) {
@@ -140,13 +150,21 @@ const main = async () => {
   const hasDailyArticle = published.posts.some(
     (post) => post.publishedAt === today,
   );
-  if (!dryRun && candidates.length === 0 && !hasDailyArticle) {
-    throw new Error(
-      "Daily publishing requirement not met: no eligible offer is available for today's article.",
-    );
-  }
   const nextHistory = appendHistory(history, offers, now);
   const generated = [];
+
+  if (!dryRun && candidates.length === 0 && !hasDailyArticle) {
+    const result = await writeSeasonalEditorialArticle({ now, outputRoot });
+    generated.push(result);
+    published.posts.push({
+      productId: null,
+      slug: result.slug,
+      publishedAt: result.publishedAt,
+      selectionBasis: "seasonal-editorial",
+      seasonalTopic: result.seasonalTopic,
+    });
+  }
+
   const publishCandidates = dryRun ? candidates.slice(0, 1) : candidates;
 
   for (const candidate of publishCandidates) {

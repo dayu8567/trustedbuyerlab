@@ -94,6 +94,7 @@ Automated publishing rules:
 - Runs daily at `13:10` and `21:10` UTC.
 - Publishes at least one article each UTC day. If no offer meets the discount thresholds, the first run publishes a clearly labeled daily price check instead.
 - Uses a North American seasonal calendar: fans are excluded in autumn and winter, while heating, humidification, indoor-air, cold-weather cleaning, coffee, and holiday kitchen topics are prioritized.
+- Falls back to a maintained seasonal editorial guide when no product offer is both in season and suitable for publication, so the daily update does not force an off-season deal.
 - Offer updated within 48 hours and currently available.
 - At least 10% below the trailing 30-day median or 15% below the supplied list price.
 - No repeat for 14 days unless the price improves another 5%.

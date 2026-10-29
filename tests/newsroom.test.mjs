@@ -3,11 +3,15 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { resolve } from "node:path";
 import { buildMessages } from "../scripts/newsroom/ai.mjs";
-import { buildArticleMarkdown } from "../scripts/newsroom/content.mjs";
+import {
+  buildArticleMarkdown,
+  buildSeasonalEditorialMarkdown,
+} from "../scripts/newsroom/content.mjs";
 import {
   applyDailyPriceCheckTitle,
   applyDraftFallbacks,
 } from "../scripts/newsroom/draft.mjs";
+import { seasonalEditorialFor } from "../scripts/newsroom/editorial.mjs";
 import {
   normalizeOffers,
   opportunitiesFromPayload,
@@ -362,4 +366,17 @@ test("adds the seasonal editorial angle to automated articles", () => {
   assert.match(markdown, /seasonalTopic: "air-fryers"/);
   assert.match(markdown, /## Why it matters now/);
   assert.match(markdown, /more indoor time changes appliance use/);
+});
+
+test("provides a seasonal editorial fallback without off-season products", () => {
+  const autumn = new Date("2026-10-29T12:00:00Z");
+  const topic = seasonalEditorialFor(autumn);
+  assert.equal(topic.seasons.includes("autumn"), true);
+  assert.doesNotMatch(topic.slug, /fan/);
+
+  const markdown = buildSeasonalEditorialMarkdown({ topic, now: autumn });
+  assert.match(markdown, /date: "2026-10-29"/);
+  assert.match(markdown, /contentMode: "seasonal-editorial"/);
+  assert.match(markdown, /## Why this matters now/);
+  assert.match(markdown, /generatedAt: "2026-10-29T12:00:00.000Z"/);
 });
