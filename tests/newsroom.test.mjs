@@ -109,7 +109,7 @@ test("excludes fans in autumn while keeping seasonal appliance topics", () => {
   const base = normalizeOffers(feed, now)[0];
   const fan = {
     ...base,
-    title: "52 Inch Ceiling Fan with Light",
+    title: "52 Inch Smart Fan Offer",
     category: "air-climate",
     subcategory: "fans-heaters",
   };

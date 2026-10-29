@@ -47,6 +47,7 @@ const topicContext = {
 const seasonalRules = {
   fan: { peak: [5, 6, 7], active: [4, 8], off: [9, 10, 11, 0, 1, 2, 3] },
   heater: { peak: [9, 10, 11, 0, 1], active: [2, 3, 8], off: [4, 5, 6, 7] },
+  "fans-heaters": { peak: [], active: [], off: [9, 10, 11, 0, 1, 2, 3] },
   humidifier: { peak: [9, 10, 11, 0, 1, 2], active: [3, 8] },
   dehumidifier: { peak: [5, 6, 7, 8], active: [3, 4, 9], off: [10, 11, 0, 1, 2] },
   "air-purifiers": { peak: [8, 9, 10, 11, 0, 1], active: [2, 3, 4, 5, 6, 7] },
@@ -60,12 +61,7 @@ const seasonalRules = {
 const topicForOffer = (offer) => {
   if (offer.subcategory !== "fans-heaters") return offer.subcategory;
   const title = offer.title.toLowerCase();
-  if (
-    /(?:ceiling|floor|tower|pedestal|box|desk|oscillating|misting|window|exhaust)\s+fan|fandelier/.test(
-      title,
-    ) &&
-    !/\bheater\b/.test(title)
-  ) {
+  if ((/\bfan\b|fandelier/.test(title)) && !/\bheater\b/.test(title)) {
     return "fan";
   }
   if (/heater|heating|radiator|fireplace/.test(title)) return "heater";

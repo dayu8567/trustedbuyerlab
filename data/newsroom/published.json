@@ -29,15 +29,6 @@
       "currency": "USD",
       "publishedAt": "2026-10-28",
       "selectionBasis": "discount"
-    },
-    {
-      "productId": "F6367GD-RGB_8486873694405_45290642538693",
-      "slug": "price-watch-f6367gd-rgb-8486873694405-45290642538693-2026-10-29",
-      "price": 189,
-      "currency": "USD",
-      "publishedAt": "2026-10-29",
-      "selectionBasis": "discount",
-      "seasonalTopic": "fans-heaters"
     }
   ]
 }
