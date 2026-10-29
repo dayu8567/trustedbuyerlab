@@ -67,13 +67,14 @@ export function buildFallbackDescription(offer) {
   return clipAtWord(description, MAX_DESCRIPTION_LENGTH);
 }
 
-export function applyDailyPriceCheckTitle(draft, offer) {
+export function applyDailyPriceCheckTitle(draft, offer, now = new Date()) {
   const product =
     offer.title ||
     `${offer.brand || "Home appliance"} ${labelFromSlug(offer.subcategory)}`;
+  const date = new Date(now).toISOString().slice(0, 10);
   return {
     ...draft,
-    title: clipAtWord(`Daily price check: ${product}`, MAX_TITLE_LENGTH),
+    title: clipAtWord(`Daily price check ${date}: ${product}`, MAX_TITLE_LENGTH),
   };
 }
 

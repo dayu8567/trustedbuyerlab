@@ -70,14 +70,16 @@ export function selectCandidates({
     const previous = posts
       .filter((post) => post.productId === offer.id)
       .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))[0];
+    let ageDays = null;
+    let recentRepeat = false;
     if (previous) {
-      const ageDays =
+      ageDays =
         (new Date(`${today}T00:00:00Z`).getTime() -
           new Date(`${previous.publishedAt}T00:00:00Z`).getTime()) /
         DAY_MS;
-      if (ageDays < duplicateDays && offer.price > previous.price * (1 - improvementMargin)) {
-        continue;
-      }
+      recentRepeat =
+        ageDays < duplicateDays &&
+        offer.price > previous.price * (1 - improvementMargin);
     }
 
     const facts = discountFacts(offer, history, now);
@@ -89,9 +91,13 @@ export function selectCandidates({
     const freshnessHours =
       (now.getTime() - new Date(offer.updatedAt).getTime()) / 3_600_000;
     const freshnessScore = Math.max(0, 48 - Math.max(0, freshnessHours));
+    const noveltyScore = previous
+      ? Math.min(Math.max(ageDays ?? 0, 0), duplicateDays) * 2
+      : 30;
     const snapshotScore =
       Math.max(0, facts.listDrop ?? 0) * 40 +
       freshnessScore +
+      noveltyScore +
       (offer.listPrice ? 3 : 0) +
       (offer.model ? 1 : 0);
 
@@ -102,6 +108,7 @@ export function selectCandidates({
       selectionBasis: "daily-snapshot",
     });
 
+    if (recentRepeat) continue;
     if (!passesMedian && !passesList) continue;
 
     const discountStrength = Math.max(facts.medianDrop ?? 0, facts.listDrop ?? 0);

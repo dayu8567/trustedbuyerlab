@@ -10,7 +10,7 @@ const categoryRules = [
   {
     category: "kitchen-appliances",
     subcategory: "coffee-makers",
-    pattern: /coffee\s+(?:maker|machine|grinder|press|brewer)|espresso\s+(?:machine|maker)/i,
+    pattern: /coffee\s+(?:maker|machine|grinder|press|brewer|filter|pod|tamper|knock\s*box|puck\s*screen|accessor)|espresso/i,
   },
   {
     category: "kitchen-appliances",

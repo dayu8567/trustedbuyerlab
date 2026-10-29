@@ -91,6 +91,18 @@ test("rejects automotive parts that contain heater or fan words", () => {
   assert.equal(offers.length, 0);
 });
 
+test("accepts espresso accessories in the coffee category", () => {
+  const espressoAccessory = {
+    ...feed.products[0],
+    name: "IKAPE Espresso V1 Knock Box",
+    sku: "ESPRESSO-ACCESSORY-001",
+    category: "Home > Kitchen > Coffee",
+  };
+  const offers = normalizeOffers({ data: { list: [espressoAccessory] } }, now);
+  assert.equal(offers.length, 1);
+  assert.equal(offers[0].subcategory, "coffee-makers");
+});
+
 test("selects only verified discounts and caps the daily volume", () => {
   const offers = normalizeOffers(feed, now);
   const history = {
@@ -163,7 +175,7 @@ test("publishes one daily price check when no discount clears the thresholds", (
   assert.deepEqual(capped, []);
 });
 
-test("suppresses repeat posts unless the price improves by five percent", () => {
+test("keeps discount posts deduplicated while allowing a dated daily check", () => {
   const offers = normalizeOffers(feed, now);
   const history = {
     "fixture-air-fryer-001": [{ date: "2026-10-20", price: 100 }],
@@ -184,7 +196,8 @@ test("suppresses repeat posts unless the price improves by five percent", () => 
     blocklist: { productIds: [], brands: [] },
     now,
   });
-  assert.equal(unchanged.length, 0);
+  assert.equal(unchanged.length, 1);
+  assert.equal(unchanged[0].selectionBasis, "daily-snapshot");
 
   const improvedOffer = { ...offers[0], price: 70 };
   const improved = selectCandidates({
@@ -195,6 +208,7 @@ test("suppresses repeat posts unless the price improves by five percent", () => 
     now,
   });
   assert.equal(improved.length, 1);
+  assert.equal(improved[0].selectionBasis, "discount");
 });
 
 test("appends one price snapshot per product and day", () => {
@@ -243,8 +257,8 @@ test("repairs an oversized AI description with a bounded fallback", () => {
 
 test("forces a transparent daily price-check title for snapshot coverage", () => {
   const offer = normalizeOffers(feed, now)[0];
-  const titled = applyDailyPriceCheckTitle(draft, offer);
-  assert.match(titled.title, /^Daily price check:/);
+  const titled = applyDailyPriceCheckTitle(draft, offer, now);
+  assert.match(titled.title, /^Daily price check 2026-10-26:/);
   assert.equal(validateAiDraft(titled, offer).valid, true);
 
   const messages = buildMessages(offer, "daily-snapshot");
@@ -279,7 +293,7 @@ test("marks non-discount daily articles as price checks in the article body", ()
   const offer = normalizeOffers(feed, now)[0];
   const markdown = buildArticleMarkdown({
     offer,
-    draft: applyDailyPriceCheckTitle(draft, offer),
+    draft: applyDailyPriceCheckTitle(draft, offer, now),
     now,
     imagePath: "/images/articles/example.webp",
     selectionBasis: "daily-snapshot",

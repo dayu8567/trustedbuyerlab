@@ -155,7 +155,7 @@ const main = async () => {
     let feedback = "";
     const prepareDraft = (value) =>
       candidate.selectionBasis === "daily-snapshot"
-        ? applyDailyPriceCheckTitle(value, candidate.offer)
+        ? applyDailyPriceCheckTitle(value, candidate.offer, now)
         : value;
     for (let attempt = 1; attempt <= 3; attempt += 1) {
       draft = prepareDraft(
