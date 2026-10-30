@@ -45,6 +45,24 @@
       "publishedAt": "2026-10-29",
       "selectionBasis": "discount",
       "seasonalTopic": "security-cameras"
+    },
+    {
+      "productId": "C7L-4H_9271234068716_47706762608876",
+      "slug": "price-watch-c7l-4h-9271234068716-47706762608876-2026-10-30",
+      "price": 299.99,
+      "currency": "USD",
+      "publishedAt": "2026-10-30",
+      "selectionBasis": "discount",
+      "seasonalTopic": "security-cameras"
+    },
+    {
+      "productId": "C6L-6H_9227772100844_47549372891372",
+      "slug": "price-watch-c6l-6h-9227772100844-47549372891372-2026-10-30",
+      "price": 389.99,
+      "currency": "USD",
+      "publishedAt": "2026-10-30",
+      "selectionBasis": "discount",
+      "seasonalTopic": "security-cameras"
     }
   ]
 }
