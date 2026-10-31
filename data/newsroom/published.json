@@ -63,6 +63,13 @@
       "publishedAt": "2026-10-30",
       "selectionBasis": "discount",
       "seasonalTopic": "security-cameras"
+    },
+    {
+      "productId": null,
+      "slug": "seasonal-space-heater-safety-cold-rooms-2026-10-31",
+      "publishedAt": "2026-10-31",
+      "selectionBasis": "seasonal-editorial",
+      "seasonalTopic": "fans-heaters"
     }
   ]
 }
