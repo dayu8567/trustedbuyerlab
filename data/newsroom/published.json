@@ -70,6 +70,13 @@
       "publishedAt": "2026-10-31",
       "selectionBasis": "seasonal-editorial",
       "seasonalTopic": "fans-heaters"
+    },
+    {
+      "productId": null,
+      "slug": "seasonal-coffee-maker-holiday-hosting-prep-2026-11-01",
+      "publishedAt": "2026-11-01",
+      "selectionBasis": "seasonal-editorial",
+      "seasonalTopic": "coffee-makers"
     }
   ]
 }
