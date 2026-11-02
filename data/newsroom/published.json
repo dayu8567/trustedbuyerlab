@@ -77,6 +77,13 @@
       "publishedAt": "2026-11-01",
       "selectionBasis": "seasonal-editorial",
       "seasonalTopic": "coffee-makers"
+    },
+    {
+      "productId": null,
+      "slug": "seasonal-dishwasher-holiday-loading-prep-2026-11-02",
+      "publishedAt": "2026-11-02",
+      "selectionBasis": "seasonal-editorial",
+      "seasonalTopic": "dishwashers"
     }
   ]
 }
