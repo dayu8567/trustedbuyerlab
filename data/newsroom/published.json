@@ -84,6 +84,24 @@
       "publishedAt": "2026-11-02",
       "selectionBasis": "seasonal-editorial",
       "seasonalTopic": "dishwashers"
+    },
+    {
+      "productId": "HD-B1050W-US",
+      "slug": "price-watch-hd-b1050w-us-2026-11-03",
+      "price": 37.99,
+      "currency": "USD",
+      "publishedAt": "2026-11-03",
+      "selectionBasis": "discount",
+      "seasonalTopic": "security-cameras"
+    },
+    {
+      "productId": "IPC-D3653WD-RB-N*4-US",
+      "slug": "price-watch-ipc-d3653wd-rb-n-4-us-2026-11-03",
+      "price": 179.99,
+      "currency": "USD",
+      "publishedAt": "2026-11-03",
+      "selectionBasis": "discount",
+      "seasonalTopic": "security-cameras"
     }
   ]
 }
