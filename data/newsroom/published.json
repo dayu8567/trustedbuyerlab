@@ -102,6 +102,24 @@
       "publishedAt": "2026-11-03",
       "selectionBasis": "discount",
       "seasonalTopic": "security-cameras"
+    },
+    {
+      "productId": "IPC-D283WD-S*4-US",
+      "slug": "price-watch-ipc-d283wd-s-4-us-2026-11-04",
+      "price": 300,
+      "currency": "USD",
+      "publishedAt": "2026-11-04",
+      "selectionBasis": "discount",
+      "seasonalTopic": "security-cameras"
+    },
+    {
+      "productId": "PTZIP4C425XIR-P",
+      "slug": "price-watch-ptzip4c425xir-p-2026-11-04",
+      "price": 699,
+      "currency": "USD",
+      "publishedAt": "2026-11-04",
+      "selectionBasis": "discount",
+      "seasonalTopic": "security-cameras"
     }
   ]
 }
