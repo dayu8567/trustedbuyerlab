@@ -120,6 +120,13 @@
       "publishedAt": "2026-11-04",
       "selectionBasis": "discount",
       "seasonalTopic": "security-cameras"
+    },
+    {
+      "productId": null,
+      "slug": "seasonal-humidifier-heating-season-check-2026-11-05",
+      "publishedAt": "2026-11-05",
+      "selectionBasis": "seasonal-editorial",
+      "seasonalTopic": "humidifiers"
     }
   ]
 }
