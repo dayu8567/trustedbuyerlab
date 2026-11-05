@@ -127,6 +127,15 @@
       "publishedAt": "2026-11-05",
       "selectionBasis": "seasonal-editorial",
       "seasonalTopic": "humidifiers"
+    },
+    {
+      "productId": "C6L-4H_9227772100844_47549372924140",
+      "slug": "price-watch-c6l-4h-9227772100844-47549372924140-2026-11-05",
+      "price": 299.99,
+      "currency": "USD",
+      "publishedAt": "2026-11-05",
+      "selectionBasis": "discount",
+      "seasonalTopic": "security-cameras"
     }
   ]
 }
