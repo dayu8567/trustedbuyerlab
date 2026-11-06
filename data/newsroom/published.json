@@ -136,6 +136,13 @@
       "publishedAt": "2026-11-05",
       "selectionBasis": "discount",
       "seasonalTopic": "security-cameras"
+    },
+    {
+      "productId": null,
+      "slug": "seasonal-air-purifier-filter-closed-window-check-2026-11-06",
+      "publishedAt": "2026-11-06",
+      "selectionBasis": "seasonal-editorial",
+      "seasonalTopic": "air-purifiers"
     }
   ]
 }
