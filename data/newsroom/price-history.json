@@ -8833,6 +8833,11 @@
       "date": "2026-11-07",
       "price": 99,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-09",
+      "price": 99,
+      "listPrice": null
     }
   ],
   "VZA01W109A-BLE_8507614003397_45365748728005": [
@@ -8850,6 +8855,11 @@
       "date": "2026-11-07",
       "price": 99,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-09",
+      "price": 99,
+      "listPrice": null
     }
   ],
   "VZA01W109ABN-BLE_8507614003397_45365748793541": [
@@ -8865,6 +8875,11 @@
     },
     {
       "date": "2026-11-07",
+      "price": 99,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-09",
       "price": 99,
       "listPrice": null
     }
@@ -10859,6 +10874,20 @@
     {
       "date": "2026-11-09",
       "price": 99,
+      "listPrice": null
+    }
+  ],
+  "F6059DK_10411444633797_50906009862341": [
+    {
+      "date": "2026-11-09",
+      "price": 169,
+      "listPrice": null
+    }
+  ],
+  "F8003BK-CONTROLLER_8776886943941_50917340184773": [
+    {
+      "date": "2026-11-09",
+      "price": 59,
       "listPrice": null
     }
   ]
