@@ -112,6 +112,34 @@ export const IMAGE_CREDITS: ImageCredit[] = [
       "https://commons.wikimedia.org/wiki/File:Air_Purifier_(Levoit_LV-H133)_(49317867758).jpg",
   },
   {
+    asset: "Portable space heater",
+    title: "Heizlüfter",
+    creator: "Christos Vittoratos",
+    license: "CC BY 3.0",
+    licenseUrl: "https://creativecommons.org/licenses/by/3.0/",
+    sourceUrl:
+      "https://commons.wikimedia.org/wiki/File:Heizl%C3%BCfter.jpg",
+  },
+  {
+    asset: "Coffee maker preparing a cup",
+    title: "Coffee maker in use at home to prepare a cup of coffee in the morning",
+    creator: "Shixart1985",
+    license: "CC BY 2.0",
+    licenseUrl: "https://creativecommons.org/licenses/by/2.0/",
+    sourceUrl:
+      "https://commons.wikimedia.org/wiki/File:Coffee_maker_in_use_at_home_to_prepare_a_cup_of_coffee_in_the_morning.jpg",
+  },
+  {
+    asset: "Dishwasher loaded for holiday cleanup",
+    title:
+      "Dishwasher loaded with clean dishes at a home kitchen in the evening",
+    creator: "Shixart1985",
+    license: "CC BY 2.0",
+    licenseUrl: "https://creativecommons.org/licenses/by/2.0/",
+    sourceUrl:
+      "https://commons.wikimedia.org/wiki/File:Dishwasher_loaded_with_clean_dishes_at_a_home_kitchen_in_the_evening.jpg",
+  },
+  {
     asset: "Smart doorbell and lock",
     title: "Ring and Schlage in MI home",
     creator: "AG20044018",

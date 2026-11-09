@@ -108,8 +108,10 @@ Write down the filter install date and the manufacturer's recommended inspection
     subcategory: "fans-heaters",
     format: "how-to",
     readingTime: "5 min read",
-    image: "/images/articles/placeholder-home-appliance.webp",
+    image: "/images/articles/seasonal-space-heater-safety.webp",
     imageAlt: "Portable heater in a cleared indoor space",
+    imageCredit:
+      "Photo: Christos Vittoratos / Wikimedia Commons, CC BY 3.0",
     seasons: ["autumn", "winter"],
     sources: [cpscHeating],
     context:
@@ -139,8 +141,9 @@ Keep vents unobstructed, use the timer or thermostat only as designed, and turn 
     subcategory: "coffee-makers",
     format: "how-to",
     readingTime: "4 min read",
-    image: "/images/articles/placeholder-home-appliance.webp",
+    image: "/images/articles/seasonal-coffee-maker-hosting.webp",
     imageAlt: "Coffee maker prepared for a gathering",
+    imageCredit: "Photo: Shixart1985 / Wikimedia Commons, CC BY 2.0",
     seasons: ["autumn", "winter"],
     sources: [],
     context:
@@ -170,8 +173,9 @@ For a large gathering, test the brew cycle a day ahead and know how long a full 
     subcategory: "dishwashers",
     format: "how-to",
     readingTime: "5 min read",
-    image: "/images/articles/placeholder-home-appliance.webp",
+    image: "/images/articles/seasonal-dishwasher-holiday-prep.webp",
     imageAlt: "Dishwasher ready for a large meal cleanup",
+    imageCredit: "Photo: Shixart1985 / Wikimedia Commons, CC BY 2.0",
     seasons: ["autumn", "winter"],
     sources: [energyStarDishwashers],
     context:

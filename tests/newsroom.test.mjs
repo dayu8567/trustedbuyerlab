@@ -380,3 +380,22 @@ test("provides a seasonal editorial fallback without off-season products", () =>
   assert.match(markdown, /## Why this matters now/);
   assert.match(markdown, /generatedAt: "2026-10-29T12:00:00.000Z"/);
 });
+
+test("uses distinct attributed images for recent seasonal guides", () => {
+  const topics = [
+    seasonalEditorialFor(new Date("2026-11-07T12:00:00Z")),
+    seasonalEditorialFor(new Date("2026-11-08T12:00:00Z")),
+    seasonalEditorialFor(new Date("2026-11-09T12:00:00Z")),
+  ];
+  assert.equal(new Set(topics.map((topic) => topic.image)).size, 3);
+  assert.equal(
+    topics.some(
+      (topic) => topic.image === "/images/articles/placeholder-home-appliance.webp",
+    ),
+    false,
+  );
+  assert.equal(
+    topics.every((topic) => /Wikimedia Commons/.test(topic.imageCredit)),
+    true,
+  );
+});

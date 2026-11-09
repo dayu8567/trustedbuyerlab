@@ -144,7 +144,7 @@ format: ${yamlString(topic.format)}
 readingTime: ${yamlString(topic.readingTime)}
 image: ${yamlString(topic.image)}
 imageAlt: ${yamlString(topic.imageAlt)}
-imageCredit: "Trusted Buyer Lab editorial image"
+imageCredit: ${yamlString(topic.imageCredit ?? "Trusted Buyer Lab editorial image")}
 featured: false
 editorialStatus: "automated"
 author: "newsroom"
