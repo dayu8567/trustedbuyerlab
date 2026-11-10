@@ -164,6 +164,13 @@
       "publishedAt": "2026-11-09",
       "selectionBasis": "seasonal-editorial",
       "seasonalTopic": "dishwashers"
+    },
+    {
+      "productId": null,
+      "slug": "seasonal-winter-dryer-laundry-check-2026-11-10",
+      "publishedAt": "2026-11-10",
+      "selectionBasis": "seasonal-editorial",
+      "seasonalTopic": "dryers"
     }
   ]
 }
