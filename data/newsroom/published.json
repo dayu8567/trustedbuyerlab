@@ -178,6 +178,15 @@
       "publishedAt": "2026-11-11",
       "selectionBasis": "seasonal-editorial",
       "seasonalTopic": "robot-vacuums"
+    },
+    {
+      "productId": "PTZIP4C425XIR-P-N*2-US",
+      "slug": "price-watch-ptzip4c425xir-p-n-2-us-2026-11-11",
+      "price": 833,
+      "currency": "USD",
+      "publishedAt": "2026-11-11",
+      "selectionBasis": "discount",
+      "seasonalTopic": "security-cameras"
     }
   ]
 }
