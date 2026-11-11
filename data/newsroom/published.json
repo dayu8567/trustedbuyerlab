@@ -171,6 +171,13 @@
       "publishedAt": "2026-11-10",
       "selectionBasis": "seasonal-editorial",
       "seasonalTopic": "dryers"
+    },
+    {
+      "productId": null,
+      "slug": "seasonal-robot-vacuum-autumn-indoor-routine-2026-11-11",
+      "publishedAt": "2026-11-11",
+      "selectionBasis": "seasonal-editorial",
+      "seasonalTopic": "robot-vacuums"
     }
   ]
 }
