@@ -187,6 +187,24 @@
       "publishedAt": "2026-11-11",
       "selectionBasis": "discount",
       "seasonalTopic": "security-cameras"
+    },
+    {
+      "productId": "IPK7632K3053W-20-AZ-US",
+      "slug": "price-watch-ipk7632k3053w-20-az-us-2026-11-12",
+      "price": 1251.5,
+      "currency": "USD",
+      "publishedAt": "2026-11-12",
+      "selectionBasis": "discount",
+      "seasonalTopic": "security-cameras"
+    },
+    {
+      "productId": "PTZIP4C425XIR-P-N-US",
+      "slug": "price-watch-ptzip4c425xir-p-n-us-2026-11-12",
+      "price": 455,
+      "currency": "USD",
+      "publishedAt": "2026-11-12",
+      "selectionBasis": "discount",
+      "seasonalTopic": "security-cameras"
     }
   ]
 }
