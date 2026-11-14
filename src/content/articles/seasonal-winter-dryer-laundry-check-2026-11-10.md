@@ -9,7 +9,7 @@ format: "how-to"
 readingTime: "5 min read"
 image: "/images/articles/washing-machine-maintenance-routine.webp"
 imageAlt: "Laundry appliances in a utility room during winter"
-imageCredit: "Trusted Buyer Lab editorial image"
+imageCredit: "Photo: Wikimedia Commons / CC0"
 featured: false
 editorialStatus: "automated"
 author: "newsroom"

@@ -9,7 +9,7 @@ format: "how-to"
 readingTime: "5 min read"
 image: "/images/articles/humidifier-vs-air-purifier.webp"
 imageAlt: "Air purifier in a living room during closed-window season"
-imageCredit: "Trusted Buyer Lab editorial image"
+imageCredit: "Photo: Home Air Quality Guides / Wikimedia Commons, CC BY-SA 2.0"
 featured: false
 editorialStatus: "automated"
 author: "newsroom"

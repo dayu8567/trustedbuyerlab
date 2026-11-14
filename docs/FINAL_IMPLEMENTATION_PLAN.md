@@ -70,6 +70,8 @@ matches current household use, such as heating and indoor air in winter rather
 than cooling products.
 When the feed has no suitable in-season appliance, the newsroom publishes a
 maintained seasonal guide instead of forcing an unrelated product article.
+Seasonal guide topics used within the previous 30 days are deprioritized so
+the fallback does not repeat the same title on a short cycle.
 
 ## Performance And Accessibility
 

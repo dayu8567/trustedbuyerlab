@@ -9,7 +9,7 @@ format: "how-to"
 readingTime: "5 min read"
 image: "/images/articles/humidifier-bedroom-guide.webp"
 imageAlt: "Humidifier running in a bedroom during heating season"
-imageCredit: "Trusted Buyer Lab editorial image"
+imageCredit: "Photo: Wikimedia Commons / public domain"
 featured: false
 editorialStatus: "automated"
 author: "newsroom"

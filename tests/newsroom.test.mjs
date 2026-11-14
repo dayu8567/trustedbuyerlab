@@ -399,3 +399,37 @@ test("uses distinct attributed images for recent seasonal guides", () => {
     true,
   );
 });
+
+test("avoids repeating a seasonal guide published within the last 30 days", () => {
+  const recentPosts = [
+    {
+      slug: "seasonal-space-heater-safety-cold-rooms-2026-11-07",
+      publishedAt: "2026-11-07",
+      selectionBasis: "seasonal-editorial",
+    },
+  ];
+  const topic = seasonalEditorialFor(
+    new Date("2026-11-14T12:00:00Z"),
+    recentPosts,
+  );
+  assert.notEqual(topic.slug, "space-heater-safety-cold-rooms");
+
+  const allRecentTopics = [
+    "humidifier-heating-season-check",
+    "air-purifier-filter-closed-window-check",
+    "space-heater-safety-cold-rooms",
+    "coffee-maker-holiday-hosting-prep",
+    "dishwasher-holiday-loading-prep",
+    "winter-dryer-laundry-check",
+    "robot-vacuum-autumn-indoor-routine",
+  ].map((slug) => ({
+    slug: `seasonal-${slug}-2026-11-10`,
+    publishedAt: "2026-11-10",
+    selectionBasis: "seasonal-editorial",
+  }));
+  const newTopic = seasonalEditorialFor(
+    new Date("2026-11-14T12:00:00Z"),
+    allRecentTopics,
+  );
+  assert.equal(newTopic.slug, "refrigerator-holiday-food-storage");
+});

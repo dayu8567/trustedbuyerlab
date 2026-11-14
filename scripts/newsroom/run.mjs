@@ -154,7 +154,11 @@ const main = async () => {
   const generated = [];
 
   if (!dryRun && candidates.length === 0 && !hasDailyArticle) {
-    const result = await writeSeasonalEditorialArticle({ now, outputRoot });
+    const result = await writeSeasonalEditorialArticle({
+      now,
+      outputRoot,
+      publishedPosts: published.posts,
+    });
     generated.push(result);
     published.posts.push({
       productId: null,

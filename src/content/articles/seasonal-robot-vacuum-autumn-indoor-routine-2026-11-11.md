@@ -9,7 +9,7 @@ format: "how-to"
 readingTime: "4 min read"
 image: "/images/articles/robot-vacuum-maintenance-routine.webp"
 imageAlt: "Robot vacuum being maintained before indoor cleaning season"
-imageCredit: "Trusted Buyer Lab editorial image"
+imageCredit: "Photo: Auledas / Wikimedia Commons, CC BY-SA 4.0"
 featured: false
 editorialStatus: "automated"
 author: "newsroom"

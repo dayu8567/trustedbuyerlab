@@ -245,8 +245,9 @@ export async function writeGeneratedArticle({
 export async function writeSeasonalEditorialArticle({
   now = new Date(),
   outputRoot = root,
+  publishedPosts = [],
 }) {
-  const topic = seasonalEditorialFor(now);
+  const topic = seasonalEditorialFor(now, publishedPosts);
   const date = new Date(now).toISOString().slice(0, 10);
   const slug = `seasonal-${topic.slug}-${date}`;
   const articleDir = resolve(outputRoot, "src/content/articles");

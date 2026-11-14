@@ -30,6 +30,12 @@ const energyStarDishwashers = {
   publisher: "ENERGY STAR",
 };
 
+const fdaFoodStorage = {
+  label: "FDA: Are you storing food safely?",
+  url: "https://www.fda.gov/consumers/consumer-updates/are-you-storing-food-safely",
+  publisher: "U.S. Food and Drug Administration",
+};
+
 const epaIndoorAir = {
   label: "EPA: Introduction to indoor air quality",
   url: "https://www.epa.gov/indoor-air-quality-iaq/introduction-indoor-air-quality",
@@ -48,6 +54,7 @@ const seasonalEditorials = [
     readingTime: "5 min read",
     image: "/images/articles/humidifier-bedroom-guide.webp",
     imageAlt: "Humidifier running in a bedroom during heating season",
+    imageCredit: "Photo: Wikimedia Commons / public domain",
     seasons: ["autumn", "winter"],
     sources: [epaHumidifiers, epaIndoorAir],
     context:
@@ -79,6 +86,8 @@ Use the appliance's controls as directed and stop using it if it leaks, smells u
     readingTime: "5 min read",
     image: "/images/articles/humidifier-vs-air-purifier.webp",
     imageAlt: "Air purifier in a living room during closed-window season",
+    imageCredit:
+      "Photo: Home Air Quality Guides / Wikimedia Commons, CC BY-SA 2.0",
     seasons: ["autumn", "winter"],
     sources: [epaAirCleaners, epaIndoorAir],
     context:
@@ -197,6 +206,38 @@ Face dirty surfaces toward the spray pattern, avoid nesting bowls tightly, and k
 Select a cycle that matches the load and the manual's guidance. Use detergent and rinse aid as directed, and avoid adding a second cleaning product unless the machine specifies it. If the dishwasher leaks, will not drain, or leaves standing water, stop and arrange service before the next large meal.`,
   },
   {
+    slug: "refrigerator-holiday-food-storage",
+    title: "Refrigerator prep for holiday food storage",
+    description:
+      "A practical pre-holiday refrigerator check covering temperature, airflow, raw-food separation, leftovers, and the signs that cold storage needs attention.",
+    category: "kitchen-appliances",
+    subcategory: "refrigerators",
+    format: "how-to",
+    readingTime: "5 min read",
+    image: "/images/articles/seasonal-refrigerator-holiday-food-storage.webp",
+    imageAlt: "Open refrigerator stocked with food before a holiday gathering",
+    imageCredit: "Photo: W.carter / Wikimedia Commons, CC BY-SA 4.0",
+    seasons: ["autumn", "winter"],
+    sources: [fdaFoodStorage],
+    context:
+      "Holiday cooking can fill the refrigerator faster than a normal week. Checking temperature, airflow, and how raw food is stored before the shopping trip is more useful than trying to reorganize an overloaded fridge at the last minute.",
+    bodyMarkdown: `## Start with the temperature
+
+Check the refrigerator temperature with an appliance thermometer if your model does not display one. The FDA recommends keeping the refrigerator at 40°F or below and the freezer at 0°F or below. Follow the appliance manual for setting and adjusting the controls.
+
+## Leave a path for cold air
+
+Clear old food, wipe up spills, and avoid packing shelves so tightly that air cannot move around the compartments. A refrigerator that is too crowded can make it harder to find food and manage temperatures consistently. Keep the door seals clean and close the door deliberately when the kitchen is busy.
+
+## Separate raw food from ready-to-eat food
+
+Place raw meat, poultry, seafood, and their juices away from produce and prepared foods. Use containers or a tray that can catch drips, and keep raw items below ready-to-eat food when the layout allows. Follow the refrigerator manual for any storage drawers or compartments with specific controls.
+
+## Manage leftovers deliberately
+
+Label containers with the food and date, cool hot food promptly using shallow containers when appropriate, and reheat or discard it according to current food-safety guidance. Do not keep adding new containers to a forgotten back shelf. Check for condensation, unusual warmth, ice buildup, or a door that no longer closes cleanly, and arrange service if the refrigerator cannot hold a safe temperature.`,
+  },
+  {
     slug: "winter-dryer-laundry-check",
     title: "Winter laundry checks that keep the dryer running",
     description:
@@ -207,6 +248,7 @@ Select a cycle that matches the load and the manual's guidance. Use detergent an
     readingTime: "5 min read",
     image: "/images/articles/washing-machine-maintenance-routine.webp",
     imageAlt: "Laundry appliances in a utility room during winter",
+    imageCredit: "Photo: Wikimedia Commons / CC0",
     seasons: ["autumn", "winter"],
     sources: [doeLaundry],
     context:
@@ -238,6 +280,7 @@ Use the moisture sensor or timed setting that fits the load, and remove items pr
     readingTime: "4 min read",
     image: "/images/articles/robot-vacuum-maintenance-routine.webp",
     imageAlt: "Robot vacuum being maintained before indoor cleaning season",
+    imageCredit: "Photo: Auledas / Wikimedia Commons, CC BY-SA 4.0",
     seasons: ["autumn", "winter"],
     sources: [epaIndoorAir],
     context:
@@ -267,15 +310,45 @@ const monthSeason = (month) => {
   return "winter";
 };
 
-export function seasonalEditorialFor(now = new Date()) {
+export function seasonalEditorialFor(now = new Date(), publishedPosts = []) {
   const date = new Date(now);
   const season = monthSeason(date.getUTCMonth());
   const candidates = seasonalEditorials.filter((topic) =>
     topic.seasons.includes(season),
   );
+  const recentCutoff =
+    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) -
+    30 * DAY_MS;
+  const lastUsed = new Map();
+
+  for (const post of publishedPosts) {
+    if (post?.selectionBasis !== "seasonal-editorial") continue;
+    const topic = candidates.find((candidate) =>
+      post.slug?.startsWith(`seasonal-${candidate.slug}-`),
+    );
+    if (!topic) continue;
+    const publishedTime = new Date(`${post.publishedAt}T00:00:00Z`).getTime();
+    if (Number.isFinite(publishedTime)) {
+      lastUsed.set(topic.slug, Math.max(lastUsed.get(topic.slug) ?? 0, publishedTime));
+    }
+  }
+
   const dayIndex = Math.floor(
     Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) /
       DAY_MS,
   );
-  return candidates[dayIndex % candidates.length];
+  const ranked = candidates
+    .map((topic, index) => ({
+      topic,
+      usedAt: lastUsed.get(topic.slug) ?? 0,
+      rotation: (index - dayIndex + candidates.length * 2) % candidates.length,
+    }))
+    .sort(
+      (a, b) =>
+        Number(a.usedAt > recentCutoff) - Number(b.usedAt > recentCutoff) ||
+        a.usedAt - b.usedAt ||
+        a.rotation - b.rotation,
+    );
+
+  return ranked[0].topic;
 }

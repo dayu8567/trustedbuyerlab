@@ -112,6 +112,15 @@ export const IMAGE_CREDITS: ImageCredit[] = [
       "https://commons.wikimedia.org/wiki/File:Air_Purifier_(Levoit_LV-H133)_(49317867758).jpg",
   },
   {
+    asset: "Refrigerator stocked for a holiday gathering",
+    title: "Open refrigerator with food at night",
+    creator: "W.carter",
+    license: "CC BY-SA 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+    sourceUrl:
+      "https://commons.wikimedia.org/wiki/File:Open_refrigerator_with_food_at_night.jpg",
+  },
+  {
     asset: "Portable space heater",
     title: "Heizlüfter",
     creator: "Christos Vittoratos",
