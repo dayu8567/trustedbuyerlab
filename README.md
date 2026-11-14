@@ -96,6 +96,7 @@ Automated publishing rules:
 - Uses a North American seasonal calendar: fans are excluded in autumn and winter, while heating, humidification, indoor-air, cold-weather cleaning, coffee, and holiday kitchen topics are prioritized.
 - Falls back to a maintained seasonal editorial guide when no product offer is both in season and suitable for publication, so the daily update does not force an off-season deal.
 - Deprioritizes any seasonal editorial topic used in the previous 30 days, preventing repeated titles such as the same heater guide appearing twice in one week.
+- Scans Google News, Bing News, and Google Trends RSS for recent coverage, scores headlines against editorial topics, and records the scan time, matched terms, providers, and source links in trend-led articles.
 - Offer updated within 48 hours and currently available.
 - At least 10% below the trailing 30-day median or 15% below the supplied list price.
 - No repeat for 14 days unless the price improves another 5%.

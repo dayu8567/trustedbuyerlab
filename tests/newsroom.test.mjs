@@ -11,7 +11,14 @@ import {
   applyDailyPriceCheckTitle,
   applyDraftFallbacks,
 } from "../scripts/newsroom/draft.mjs";
-import { seasonalEditorialFor } from "../scripts/newsroom/editorial.mjs";
+import {
+  seasonalEditorialCandidates,
+  seasonalEditorialFor,
+} from "../scripts/newsroom/editorial.mjs";
+import {
+  buildTrendSnapshot,
+  scanTrendSignals,
+} from "../scripts/newsroom/trends.mjs";
 import {
   normalizeOffers,
   opportunitiesFromPayload,
@@ -32,6 +39,9 @@ const feed = JSON.parse(
 );
 const draft = JSON.parse(
   await readFile(resolve(fixtureDir, "ai-response.json"), "utf8"),
+);
+const trendFixture = JSON.parse(
+  await readFile(resolve(fixtureDir, "trends.json"), "utf8"),
 );
 const now = new Date("2026-10-26T06:00:00Z");
 
@@ -432,4 +442,84 @@ test("avoids repeating a seasonal guide published within the last 30 days", () =
     allRecentTopics,
   );
   assert.equal(newTopic.slug, "refrigerator-holiday-food-storage");
+});
+
+test("scores recent news and Google Trends signals against editorial topics", async () => {
+  const snapshot = await scanTrendSignals({
+    topics: seasonalEditorialCandidates(now),
+    now,
+    dryRun: true,
+    fixture: trendFixture,
+  });
+  assert.equal(snapshot.items.length, 3);
+  assert.equal(snapshot.topicScores["space-heater-safety-cold-rooms"].score > 0, true);
+  assert.equal(snapshot.topicScores["refrigerator-holiday-food-storage"].score > 0, true);
+  assert.equal(snapshot.providers.fixture, true);
+});
+
+test("writes trend evidence into trend-selected seasonal articles", async () => {
+  const snapshot = await scanTrendSignals({
+    topics: seasonalEditorialCandidates(now),
+    now,
+    dryRun: true,
+    fixture: trendFixture,
+  });
+  const topic = seasonalEditorialFor(now, [], snapshot);
+  assert.equal(topic.slug, "refrigerator-holiday-food-storage");
+  assert.equal(topic.trendSignal.itemCount > 0, true);
+
+  const markdown = buildSeasonalEditorialMarkdown({ topic, now });
+  assert.match(markdown, /## What is driving interest now/);
+  assert.match(markdown, /trendScannedAt:/);
+  assert.match(markdown, /trendMatchedTerms:/);
+  assert.match(markdown, /example\.com\/news\/food-safety/);
+});
+
+test("prefers a trending topic when selecting today's seasonal guide", () => {
+  const snapshot = buildTrendSnapshot({
+    topics: seasonalEditorialCandidates(now),
+    now,
+    items: [
+      {
+        provider: "Google Trends",
+        title: "Space heater safety searches rise",
+        url: "https://example.com/trend/heater",
+        publishedAt: now,
+        publisher: "Google Trends",
+        approxTraffic: "10000+",
+      },
+    ],
+    providers: { "Google Trends": 1 },
+  });
+  const topic = seasonalEditorialFor(now, [], snapshot);
+  assert.equal(topic.slug, "space-heater-safety-cold-rooms");
+});
+
+test("publishes a trend-gated recall guide only when current news matches", () => {
+  const topics = seasonalEditorialCandidates(now);
+  const snapshot = buildTrendSnapshot({
+    topics,
+    now,
+    items: [
+      {
+        provider: "Google News",
+        title:
+          "Gourmia air fryer ovens recalled after reports of burn injuries",
+        url: "https://example.com/news/gourmia-recall",
+        publishedAt: now,
+        publisher: "Example News",
+        approxTraffic: null,
+      },
+    ],
+    providers: { "Google News": 1 },
+  });
+  const topic = seasonalEditorialFor(now, [], snapshot);
+  assert.equal(topic.slug, "gourmia-air-fryer-recall-safety-check");
+  assert.equal(topic.trendSignal.itemCount, 1);
+
+  const markdown = buildSeasonalEditorialMarkdown({ topic, now });
+  assert.match(markdown, /GTF7530/);
+  assert.match(markdown, /810002862779/);
+  assert.match(markdown, /cpsc\.gov\/Recalls/);
+  assert.match(markdown, /example\.com\/news\/gourmia-recall/);
 });

@@ -34,6 +34,11 @@ export interface AutomationMeta {
   selectionBasis?: "discount" | "daily-snapshot";
   seasonalTopic?: string;
   editorialContext?: string;
+  trendScannedAt?: string;
+  trendScore?: number;
+  trendItemCount?: number;
+  trendProviders?: string;
+  trendMatchedTerms?: string[];
   generatedAt: string;
 }
 

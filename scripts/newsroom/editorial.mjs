@@ -36,6 +36,13 @@ const fdaFoodStorage = {
   publisher: "U.S. Food and Drug Administration",
 };
 
+const cpscGourmiaRecall = {
+  label:
+    "CPSC: Gourmia recalls 9-slice digital air fryer ovens due to burn hazard",
+  url: "https://www.cpsc.gov/Recalls/2027/Gourmia-Recalls-9-Slice-Digital-Air-Fryer-Ovens-Due-to-Burn-Hazard",
+  publisher: "U.S. Consumer Product Safety Commission",
+};
+
 const epaIndoorAir = {
   label: "EPA: Introduction to indoor air quality",
   url: "https://www.epa.gov/indoor-air-quality-iaq/introduction-indoor-air-quality",
@@ -44,7 +51,48 @@ const epaIndoorAir = {
 
 const seasonalEditorials = [
   {
+    slug: "gourmia-air-fryer-recall-safety-check",
+    requiresTrend: true,
+    trendTerms: [
+      "air fryer recall",
+      "air fryer oven recall",
+      "Gourmia",
+      "burn hazard",
+      "burn injuries",
+    ],
+    title: "Gourmia air fryer oven recall: safety checks for owners",
+    description:
+      "How to identify the recalled Gourmia 9-slice digital air fryer oven, stop using an affected unit, and find the official recall instructions.",
+    category: "kitchen-appliances",
+    subcategory: "air-fryers",
+    format: "how-to",
+    readingTime: "4 min read",
+    image: "/images/articles/air-fryer-size-guide.webp",
+    imageAlt: "Countertop air fryer oven in a kitchen",
+    imageCredit: "Photo: I am R. / Wikimedia Commons, CC BY 2.0",
+    seasons: ["spring", "summer", "autumn", "winter"],
+    sources: [cpscGourmiaRecall],
+    context:
+      "Recent national coverage has focused on a Gourmia air fryer oven recall tied to a burn hazard. The official CPSC notice identifies a specific model and UPC, so owners should check the label instead of assuming every air fryer is affected.",
+    bodyMarkdown: `## Check the model and UPC
+
+The CPSC recall covers Gourmia 9-Slice Digital Air Fryer Ovens with model number GTF7530 and UPC 810002862779. The stainless-steel oven has two spring-loaded glass French doors with metal handles. The model and UPC appear on the packaging, and the model number and date codes can be checked on the label on the back of the unit.
+
+## Stop using an affected unit
+
+If the model and identifying codes match the official notice, stop using the appliance and follow the CPSC remedy instructions. Unplug it before moving or inspecting it, and do not continue cooking with a unit that has a door, hinge, or latch problem. Keep the official recall page available when contacting the manufacturer or retailer.
+
+## Check the exact configuration
+
+Appliance families can share a name while using different model numbers or production codes. Do not rely on the product category, retailer, or a social-media post alone. Compare the complete model number and UPC with the CPSC notice, and contact Gourmia through the recall instructions if the label is difficult to read.
+
+## Report a related incident
+
+Owners who experienced a burn, unexpected door movement, or another safety problem should follow the reporting instructions on the CPSC notice. Keep the appliance out of use while the case is reviewed. A recall does not mean every air fryer has the same defect; the model and code check determines whether the notice applies.`,
+  },
+  {
     slug: "humidifier-heating-season-check",
+    trendTerms: ["humidifier", "indoor humidity", "dry indoor air"],
     title: "How to get a humidifier ready for heating season",
     description:
       "A practical autumn checklist for cleaning, inspecting, and placing a home humidifier before indoor heating starts running more often.",
@@ -77,6 +125,7 @@ Use the appliance's controls as directed and stop using it if it leaks, smells u
   },
   {
     slug: "air-purifier-filter-closed-window-check",
+    trendTerms: ["air purifier", "indoor air quality", "air filtration"],
     title: "Air purifier filter checks for closed-window season",
     description:
       "What to inspect on an air purifier before autumn and winter keep windows closed, including filters, airflow, placement, and maintenance records.",
@@ -110,6 +159,12 @@ Write down the filter install date and the manufacturer's recommended inspection
   },
   {
     slug: "space-heater-safety-cold-rooms",
+    trendTerms: [
+      "space heater",
+      "heater safety",
+      "heating safety",
+      "heater recall",
+    ],
     title: "Space heater safety checks before colder nights",
     description:
       "A room-by-room safety routine for space heaters, covering cords, clearance, placement, timers, and the signs that a unit should be replaced.",
@@ -143,6 +198,7 @@ Keep vents unobstructed, use the timer or thermostat only as designed, and turn 
   },
   {
     slug: "coffee-maker-holiday-hosting-prep",
+    trendTerms: ["coffee maker", "espresso machine", "coffee recall"],
     title: "Coffee maker care before holiday hosting",
     description:
       "A simple pre-hosting routine for checking a coffee maker, cleaning removable parts, testing the brew cycle, and avoiding surprises with a full house.",
@@ -175,6 +231,7 @@ For a large gathering, test the brew cycle a day ahead and know how long a full 
   },
   {
     slug: "dishwasher-holiday-loading-prep",
+    trendTerms: ["dishwasher", "dishwasher recall", "holiday dishes"],
     title: "Dishwasher prep for holiday cooking and cleanup",
     description:
       "A pre-holiday dishwasher check covering filters, spray arms, loading habits, cycles, and the items that should stay out of the machine.",
@@ -207,6 +264,12 @@ Select a cycle that matches the load and the manual's guidance. Use detergent an
   },
   {
     slug: "refrigerator-holiday-food-storage",
+    trendTerms: [
+      "refrigerator",
+      "food safety",
+      "holiday food storage",
+      "Thanksgiving food",
+    ],
     title: "Refrigerator prep for holiday food storage",
     description:
       "A practical pre-holiday refrigerator check covering temperature, airflow, raw-food separation, leftovers, and the signs that cold storage needs attention.",
@@ -239,6 +302,7 @@ Label containers with the food and date, cool hot food promptly using shallow co
   },
   {
     slug: "winter-dryer-laundry-check",
+    trendTerms: ["clothes dryer", "dryer safety", "lint fire", "laundry"],
     title: "Winter laundry checks that keep the dryer running",
     description:
       "A cold-weather laundry routine for checking the dryer, clearing lint, protecting airflow, and avoiding overloaded cycles when clothes take longer to dry.",
@@ -271,6 +335,7 @@ Use the moisture sensor or timed setting that fits the load, and remove items pr
   },
   {
     slug: "robot-vacuum-autumn-indoor-routine",
+    trendTerms: ["robot vacuum", "vacuum recall", "indoor cleaning"],
     title: "Robot vacuum upkeep for closed-window season",
     description:
       "A seasonal robot vacuum maintenance routine for brushes, filters, wheels, docks, and floor clutter before homes spend more time closed up.",
@@ -310,12 +375,30 @@ const monthSeason = (month) => {
   return "winter";
 };
 
-export function seasonalEditorialFor(now = new Date(), publishedPosts = []) {
+export function seasonalEditorialCandidates(now = new Date()) {
   const date = new Date(now);
   const season = monthSeason(date.getUTCMonth());
-  const candidates = seasonalEditorials.filter((topic) =>
+  return seasonalEditorials.filter((topic) =>
     topic.seasons.includes(season),
   );
+}
+
+export function seasonalEditorialFor(
+  now = new Date(),
+  publishedPosts = [],
+  trendSnapshot = null,
+) {
+  const date = new Date(now);
+  const seasonalCandidates = seasonalEditorialCandidates(date);
+  const trendMatchedCandidates = seasonalCandidates.filter(
+    (topic) =>
+      !topic.requiresTrend ||
+      (trendSnapshot?.topicScores?.[topic.slug]?.score ?? 0) > 0,
+  );
+  const candidates =
+    trendMatchedCandidates.length > 0
+      ? trendMatchedCandidates
+      : seasonalCandidates.filter((topic) => !topic.requiresTrend);
   const recentCutoff =
     Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) -
     30 * DAY_MS;
@@ -341,14 +424,27 @@ export function seasonalEditorialFor(now = new Date(), publishedPosts = []) {
     .map((topic, index) => ({
       topic,
       usedAt: lastUsed.get(topic.slug) ?? 0,
+      trendScore: trendSnapshot?.topicScores?.[topic.slug]?.score ?? 0,
       rotation: (index - dayIndex + candidates.length * 2) % candidates.length,
     }))
     .sort(
       (a, b) =>
         Number(a.usedAt > recentCutoff) - Number(b.usedAt > recentCutoff) ||
+        b.trendScore - a.trendScore ||
         a.usedAt - b.usedAt ||
         a.rotation - b.rotation,
     );
 
-  return ranked[0].topic;
+  const selected = ranked[0];
+  const signal = trendSnapshot?.topicScores?.[selected.topic.slug] ?? null;
+  return {
+    ...selected.topic,
+    trendSignal: signal
+      ? {
+          ...signal,
+          scannedAt: trendSnapshot.scannedAt,
+          providers: trendSnapshot.providers,
+        }
+      : null,
+  };
 }

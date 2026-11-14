@@ -67,6 +67,10 @@ jobs:
           fi
           npm run newsroom:probe
 
+      - name: Probe recent news and trends
+        if: ${{ env.DRY_RUN == 'true' }}
+        run: npm run newsroom:trends
+
       - name: Generate live price briefs
         id: newsroom
         if: ${{ env.DRY_RUN != 'true' }}

@@ -13,6 +13,36 @@ const median = (values) => {
 
 const dateKey = (value) => new Date(value).toISOString().slice(0, 10);
 
+const trendTopicBySubcategory = {
+  humidifiers: "humidifier-heating-season-check",
+  "air-purifiers": "air-purifier-filter-closed-window-check",
+  "fans-heaters": "space-heater-safety-cold-rooms",
+  "coffee-makers": "coffee-maker-holiday-hosting-prep",
+  dishwashers: "dishwasher-holiday-loading-prep",
+  refrigerators: "refrigerator-holiday-food-storage",
+  dryers: "winter-dryer-laundry-check",
+  "robot-vacuums": "robot-vacuum-autumn-indoor-routine",
+};
+
+const trendBoostFor = (offer, trendSnapshot) => {
+  const topic = trendTopicBySubcategory[offer.subcategory];
+  const signal = topic ? trendSnapshot?.topicScores?.[topic] ?? null : null;
+  const score = signal?.score ?? 0;
+  return {
+    score,
+    boost: Math.min(50, score / 10),
+    topic,
+    signal:
+      signal && score > 0
+        ? {
+            ...signal,
+            scannedAt: trendSnapshot.scannedAt,
+            providers: trendSnapshot.providers,
+          }
+        : null,
+  };
+};
+
 export function trailingMedian(history, productId, now, days = 30) {
   const cutoff = new Date(now).getTime() - days * DAY_MS;
   const prices = (history[productId] ?? [])
@@ -51,6 +81,7 @@ export function selectCandidates({
   minimumListDrop = 0.15,
   duplicateDays = 14,
   improvementMargin = 0.05,
+  trendSnapshot = null,
 }) {
   const today = dateKey(now);
   const posts = published.posts ?? [];
@@ -70,6 +101,7 @@ export function selectCandidates({
     if (!isAvailable(offer)) continue;
     const seasonal = seasonalProfile(offer, now);
     if (!seasonal.inSeason) continue;
+    const trend = trendBoostFor(offer, trendSnapshot);
 
     const previous = posts
       .filter((post) => post.productId === offer.id)
@@ -103,6 +135,7 @@ export function selectCandidates({
       freshnessScore +
       noveltyScore +
       seasonal.score +
+      trend.boost +
       (offer.listPrice ? 3 : 0) +
       (offer.model ? 1 : 0);
 
@@ -113,6 +146,9 @@ export function selectCandidates({
       selectionBasis: "daily-snapshot",
       seasonalTopic: seasonal.topic,
       seasonalContext: seasonal.context,
+      trendTopic: trend.topic,
+      trendScore: trend.score,
+      trendSignal: trend.signal,
     });
 
     if (recentRepeat) continue;
@@ -123,6 +159,7 @@ export function selectCandidates({
       discountStrength * 100 +
       freshnessScore / 4 +
       seasonal.score +
+      trend.boost +
       (offer.listPrice ? 3 : 0) +
       (offer.model ? 1 : 0);
 
@@ -133,6 +170,9 @@ export function selectCandidates({
       selectionBasis: "discount",
       seasonalTopic: seasonal.topic,
       seasonalContext: seasonal.context,
+      trendTopic: trend.topic,
+      trendScore: trend.score,
+      trendSignal: trend.signal,
     });
   }
 

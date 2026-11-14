@@ -39,6 +39,7 @@ export function buildArticleMarkdown({
   selectionBasis = "discount",
   seasonalTopic = "",
   seasonalContext = "",
+  trendSignal = null,
 }) {
   const date = now.toISOString().slice(0, 10);
   const checkedAt = formatCheckedAt(offer.updatedAt);
@@ -49,6 +50,55 @@ export function buildArticleMarkdown({
   const considerations = draft.keyConsiderations
     .map((item) => `- ${item}`)
     .join("\n");
+  const trendSources = (trendSignal?.sources ?? []).map((source) => ({
+    label: source.title,
+    url: source.url,
+    publisher: source.publisher,
+  }));
+  const sourceEntries = [
+    {
+      label: `${offer.retailer} product listing`,
+      url: offer.sourceUrl,
+      publisher: offer.retailer,
+    },
+    ...trendSources,
+  ].filter(
+    (source, index, sources) =>
+      sources.findIndex((candidate) => candidate.url === source.url) === index,
+  );
+  const sourceLines = sourceEntries
+    .map(
+      (source) => `  - label: ${yamlString(source.label)}
+    url: ${yamlString(source.url)}
+    publisher: ${yamlString(source.publisher)}`,
+    )
+    .join("\n");
+  const trendProviders = Object.entries(trendSignal?.providers ?? {})
+    .filter(([, count]) => Number(count) > 0)
+    .map(([provider]) => provider)
+    .join(", ");
+  const trendMatchedTerms = trendSignal?.matchedTerms ?? [];
+  const trendMatchedTermsYaml = trendMatchedTerms.length
+    ? `  trendMatchedTerms:\n${trendMatchedTerms
+        .map((term) => `    - ${yamlString(term)}`)
+        .join("\n")}\n`
+    : "";
+  const trendSection = trendSignal?.itemCount
+    ? `## What is driving interest now
+
+Our newsroom scan on ${date} found ${trendSignal.itemCount} recent item${trendSignal.itemCount === 1 ? "" : "s"} matching ${trendMatchedTerms.join(", ")} across ${trendProviders || "recent news feeds"}. The offer was prioritized because its appliance category overlaps with current coverage.
+
+${trendSources
+  .map(
+    (source) =>
+      `- [${source.label.replaceAll("[", "\\[").replaceAll("]", "\\]")}](${source.url}) - ${source.publisher}`,
+  )
+  .join("\n")}
+
+Headlines are used only as topic-selection signals and do not replace the retailer listing, official guidance, or a hands-on test.
+
+`
+    : "";
   const selectionNote =
     selectionBasis === "daily-snapshot"
       ? `## Daily price check
@@ -81,9 +131,7 @@ featured: false
 editorialStatus: "automated"
 author: "newsroom"
 sources:
-  - label: ${yamlString(`${offer.retailer} product listing`)}
-    url: ${yamlString(offer.sourceUrl)}
-    publisher: ${yamlString(offer.retailer)}
+${sourceLines}
 products:
   - name: ${yamlString(offer.title)}
     brand: ${yamlString(offer.brand)}
@@ -99,12 +147,13 @@ automation:
   contentMode: "price-brief"
   selectionBasis: ${yamlString(selectionBasis)}
 ${seasonalTopic ? `  seasonalTopic: ${yamlString(seasonalTopic)}\n` : ""}  editorialContext: ${yamlString(seasonalContext)}
+${trendSignal ? `  trendScannedAt: ${yamlString(trendSignal.scannedAt)}\n  trendScore: ${trendSignal.score}\n  trendItemCount: ${trendSignal.itemCount}\n  trendProviders: ${yamlString(trendProviders)}\n${trendMatchedTermsYaml}` : ""}
   generatedAt: ${yamlString(new Date(now).toISOString())}
 ---
 
 ${draft.bodyMarkdown.trim()}
 
-${seasonalNote}${selectionNote}## Price snapshot
+${trendSection}${seasonalNote}${selectionNote}## Price snapshot
 
 The offer price was ${offer.currency} ${offer.price.toFixed(2)} when the feed data was checked on ${checkedAt}. ${listPriceLine}
 
@@ -125,13 +174,48 @@ export function buildSeasonalEditorialMarkdown({
   now = new Date(),
 }) {
   const date = new Date(now).toISOString().slice(0, 10);
-  const sourceLines = topic.sources
+  const trendSources = (topic.trendSignal?.sources ?? []).map((source) => ({
+    label: source.title,
+    url: source.url,
+    publisher: source.publisher,
+  }));
+  const allSources = [...topic.sources, ...trendSources].filter(
+    (source, index, sources) =>
+      sources.findIndex((candidate) => candidate.url === source.url) === index,
+  );
+  const sourceLines = allSources
     .map(
       (source) => `  - label: ${yamlString(source.label)}
     url: ${yamlString(source.url)}
     publisher: ${yamlString(source.publisher)}`,
     )
     .join("\n");
+  const trendProviders = Object.entries(topic.trendSignal?.providers ?? {})
+    .filter(([, count]) => Number(count) > 0)
+    .map(([provider]) => provider)
+    .join(", ");
+  const matchedTerms = topic.trendSignal?.matchedTerms ?? [];
+  const matchedTermsYaml = matchedTerms.length
+    ? `  trendMatchedTerms:\n${matchedTerms
+        .map((term) => `    - ${yamlString(term)}`)
+        .join("\n")}\n`
+    : "";
+  const trendSection = topic.trendSignal?.itemCount
+    ? `## What is driving interest now
+
+Our newsroom scan on ${date} found ${topic.trendSignal.itemCount} recent item${topic.trendSignal.itemCount === 1 ? "" : "s"} matching ${matchedTerms.join(", ")} across ${trendProviders || "recent news feeds"}. The topic was selected because it is both seasonally relevant and present in recent coverage.
+
+${topic.trendSignal.sources
+  .map(
+    (source) =>
+      `- [${source.title.replaceAll("[", "\\[").replaceAll("]", "\\]")}](${source.url}) - ${source.publisher}`,
+  )
+  .join("\n")}
+
+These headlines inform topic selection and do not replace the official guidance linked below or constitute an endorsement of a product or claim.
+
+`
+    : "";
 
   return `---
 title: ${yamlString(topic.title)}
@@ -156,6 +240,7 @@ automation:
   contentMode: "seasonal-editorial"
   seasonalTopic: ${yamlString(topic.subcategory)}
   editorialContext: ${yamlString(topic.context)}
+${topic.trendSignal ? `  trendScannedAt: ${yamlString(topic.trendSignal.scannedAt)}\n  trendScore: ${topic.trendSignal.score}\n  trendItemCount: ${topic.trendSignal.itemCount}\n  trendProviders: ${yamlString(trendProviders)}\n${matchedTermsYaml}` : ""}
   generatedAt: ${yamlString(new Date(now).toISOString())}
 ---
 
@@ -163,7 +248,7 @@ automation:
 
 ${topic.context}
 
-${topic.bodyMarkdown.trim()}
+${trendSection}${topic.bodyMarkdown.trim()}
 `;
 }
 
@@ -214,6 +299,7 @@ export async function writeGeneratedArticle({
   selectionBasis = "discount",
   seasonalTopic = "",
   seasonalContext = "",
+  trendSignal = null,
 }) {
   const slug = articleSlugForOffer(offer, now);
   const imagePath = await writeProductImage({
@@ -232,6 +318,7 @@ export async function writeGeneratedArticle({
     selectionBasis,
     seasonalTopic,
     seasonalContext,
+    trendSignal,
   });
   await writeFile(filePath, markdown, "utf8");
   return {
@@ -246,8 +333,9 @@ export async function writeSeasonalEditorialArticle({
   now = new Date(),
   outputRoot = root,
   publishedPosts = [],
+  trendSnapshot = null,
 }) {
-  const topic = seasonalEditorialFor(now, publishedPosts);
+  const topic = seasonalEditorialFor(now, publishedPosts, trendSnapshot);
   const date = new Date(now).toISOString().slice(0, 10);
   const slug = `seasonal-${topic.slug}-${date}`;
   const articleDir = resolve(outputRoot, "src/content/articles");

@@ -9,8 +9,10 @@ import {
   applyDailyPriceCheckTitle,
   applyDraftFallbacks,
 } from "./draft.mjs";
+import { seasonalEditorialCandidates } from "./editorial.mjs";
 import { normalizeOffers, opportunitiesFromPayload } from "./offers.mjs";
 import { appendHistory, selectCandidates } from "./selection.mjs";
+import { scanTrendSignals } from "./trends.mjs";
 import { validateAiDraft } from "./validation.mjs";
 
 const root = resolve(import.meta.dirname, "../..");
@@ -84,6 +86,15 @@ const main = async () => {
   const now = dryRun
     ? new Date("2026-10-27T00:00:00Z")
     : new Date();
+  const trendFixture = dryRun
+    ? await readJson(resolve(import.meta.dirname, "fixtures/trends.json"))
+    : null;
+  const trendSnapshot = await scanTrendSignals({
+    topics: seasonalEditorialCandidates(now),
+    now,
+    dryRun,
+    fixture: trendFixture,
+  });
   let payload;
   try {
     payload = await fetchFeed();
@@ -145,6 +156,7 @@ const main = async () => {
     blocklist,
     now,
     dailyCap: 2,
+    trendSnapshot,
   });
   const today = now.toISOString().slice(0, 10);
   const hasDailyArticle = published.posts.some(
@@ -158,6 +170,7 @@ const main = async () => {
       now,
       outputRoot,
       publishedPosts: published.posts,
+      trendSnapshot,
     });
     generated.push(result);
     published.posts.push({
@@ -225,6 +238,7 @@ const main = async () => {
       selectionBasis: candidate.selectionBasis,
       seasonalTopic: candidate.seasonalTopic,
       seasonalContext: candidate.seasonalContext,
+      trendSignal: candidate.trendSignal,
     });
     generated.push(result);
     published.posts.push({
@@ -250,6 +264,12 @@ const main = async () => {
         normalizedOffers: offers.length,
         candidates: candidates.length,
         hasDailyArticle,
+        trendItems: trendSnapshot.items.length,
+        trendErrors: trendSnapshot.errors.length,
+        trendingTopics: Object.entries(trendSnapshot.topicScores)
+          .sort((a, b) => b[1].score - a[1].score)
+          .slice(0, 3)
+          .map(([slug, value]) => ({ slug, score: value.score })),
         generated: generated.map((item) => item.slug),
         outputRoot,
       },

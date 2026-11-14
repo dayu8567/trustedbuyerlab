@@ -72,6 +72,9 @@ When the feed has no suitable in-season appliance, the newsroom publishes a
 maintained seasonal guide instead of forcing an unrelated product article.
 Seasonal guide topics used within the previous 30 days are deprioritized so
 the fallback does not repeat the same title on a short cycle.
+The newsroom also scans recent Google News, Bing News, and Google Trends RSS
+items. Matching headlines add transparent trend evidence and source links to
+the selected article without treating headline counts as verified product tests.
 
 ## Performance And Accessibility
 

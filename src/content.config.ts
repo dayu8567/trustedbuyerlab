@@ -76,6 +76,11 @@ const articles = defineCollection({
         selectionBasis: z.enum(["discount", "daily-snapshot"]).optional(),
         seasonalTopic: z.string().optional(),
         editorialContext: z.string().optional(),
+        trendScannedAt: z.string().optional(),
+        trendScore: z.number().optional(),
+        trendItemCount: z.number().optional(),
+        trendProviders: z.string().optional(),
+        trendMatchedTerms: z.array(z.string()).optional(),
         generatedAt: z.string(),
       })
       .optional(),
