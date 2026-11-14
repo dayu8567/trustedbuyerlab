@@ -212,6 +212,13 @@
       "publishedAt": "2026-11-13",
       "selectionBasis": "seasonal-editorial",
       "seasonalTopic": "air-purifiers"
+    },
+    {
+      "productId": null,
+      "slug": "seasonal-space-heater-safety-cold-rooms-2026-11-14",
+      "publishedAt": "2026-11-14",
+      "selectionBasis": "seasonal-editorial",
+      "seasonalTopic": "fans-heaters"
     }
   ]
 }
