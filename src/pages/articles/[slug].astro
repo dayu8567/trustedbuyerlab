@@ -34,7 +34,9 @@ const subcategory = SUBCATEGORIES[article.subcategory];
 const format = FORMATS[article.format];
 const author = AUTHORS[article.author];
 const automatedLabel =
-  article.automation?.contentMode === "seasonal-editorial"
+  article.automation?.contentMode === "trend-editorial"
+    ? "Trend-informed appliance update"
+    : article.automation?.contentMode === "seasonal-editorial"
     ? "Seasonal appliance update"
     : article.automation?.selectionBasis === "daily-snapshot"
     ? "Automated price check"
@@ -153,7 +155,9 @@ const schema = {
       <article class="article-content prose">
         <p class="article-disclosure">
           {article.editorialStatus === "automated"
-            ? article.automation?.contentMode === "seasonal-editorial"
+            ? article.automation?.contentMode === "trend-editorial"
+              ? "This update was selected from recent Google News, Bing News, and Google Trends signals, then checked against the linked official guidance. Headline coverage informs topic selection; it is not a hands-on product test or an endorsement."
+              : article.automation?.contentMode === "seasonal-editorial"
               ? "This seasonal update is assembled from a maintained editorial calendar and curated public guidance. It is not a hands-on product test, and it is not presented as live search-trend data."
               : article.automation?.selectionBasis === "daily-snapshot"
               ? "This daily price check is assembled from structured affiliate-feed data and AI-assisted drafting. It does not claim that a discount threshold was met. Product facts, price, and links are validated by code before publication."

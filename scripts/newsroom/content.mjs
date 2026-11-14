@@ -216,6 +216,9 @@ These headlines inform topic selection and do not replace the official guidance 
 
 `
     : "";
+  const contentMode = topic.trendSignal
+    ? "trend-editorial"
+    : "seasonal-editorial";
 
   return `---
 title: ${yamlString(topic.title)}
@@ -237,7 +240,7 @@ ${sourceLines || "  []"}
 automation:
   model: "deterministic-seasonal-editorial"
   promptVersion: "seasonal-editorial-v1"
-  contentMode: "seasonal-editorial"
+  contentMode: ${yamlString(contentMode)}
   seasonalTopic: ${yamlString(topic.subcategory)}
   editorialContext: ${yamlString(topic.context)}
 ${topic.trendSignal ? `  trendScannedAt: ${yamlString(topic.trendSignal.scannedAt)}\n  trendScore: ${topic.trendSignal.score}\n  trendItemCount: ${topic.trendSignal.itemCount}\n  trendProviders: ${yamlString(trendProviders)}\n${matchedTermsYaml}` : ""}

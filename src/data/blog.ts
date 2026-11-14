@@ -30,7 +30,7 @@ export interface ProductSnapshot {
 export interface AutomationMeta {
   model: string;
   promptVersion: string;
-  contentMode?: "price-brief" | "seasonal-editorial";
+  contentMode?: "price-brief" | "seasonal-editorial" | "trend-editorial";
   selectionBasis?: "discount" | "daily-snapshot";
   seasonalTopic?: string;
   editorialContext?: string;

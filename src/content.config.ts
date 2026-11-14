@@ -72,7 +72,9 @@ const articles = defineCollection({
       .object({
         model: z.string(),
         promptVersion: z.string(),
-        contentMode: z.enum(["price-brief", "seasonal-editorial"]).optional(),
+        contentMode: z
+          .enum(["price-brief", "seasonal-editorial", "trend-editorial"])
+          .optional(),
         selectionBasis: z.enum(["discount", "daily-snapshot"]).optional(),
         seasonalTopic: z.string().optional(),
         editorialContext: z.string().optional(),

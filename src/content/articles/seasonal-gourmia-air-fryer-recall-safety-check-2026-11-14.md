@@ -32,7 +32,7 @@ sources:
 automation:
   model: "deterministic-seasonal-editorial"
   promptVersion: "seasonal-editorial-v1"
-  contentMode: "seasonal-editorial"
+  contentMode: "trend-editorial"
   seasonalTopic: "air-fryers"
   editorialContext: "Recent national coverage has focused on a Gourmia air fryer oven recall tied to a burn hazard. The official CPSC notice identifies a specific model and UPC, so owners should check the label instead of assuming every air fryer is affected."
   trendScannedAt: "2026-11-14T14:45:00.000Z"
