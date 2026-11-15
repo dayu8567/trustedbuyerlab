@@ -219,6 +219,13 @@
       "publishedAt": "2026-11-14",
       "selectionBasis": "seasonal-editorial",
       "seasonalTopic": "air-fryers"
+    },
+    {
+      "productId": null,
+      "slug": "seasonal-refrigerator-holiday-food-storage-2026-11-15",
+      "publishedAt": "2026-11-15",
+      "selectionBasis": "seasonal-editorial",
+      "seasonalTopic": "refrigerators"
     }
   ]
 }
