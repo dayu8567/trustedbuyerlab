@@ -226,6 +226,13 @@
       "publishedAt": "2026-11-15",
       "selectionBasis": "seasonal-editorial",
       "seasonalTopic": "refrigerators"
+    },
+    {
+      "productId": null,
+      "slug": "seasonal-gourmia-air-fryer-recall-safety-check-2026-11-16",
+      "publishedAt": "2026-11-16",
+      "selectionBasis": "seasonal-editorial",
+      "seasonalTopic": "air-fryers"
     }
   ]
 }
