@@ -233,6 +233,13 @@
       "publishedAt": "2026-11-16",
       "selectionBasis": "seasonal-editorial",
       "seasonalTopic": "air-fryers"
+    },
+    {
+      "productId": null,
+      "slug": "seasonal-winter-dryer-laundry-check-2026-11-17",
+      "publishedAt": "2026-11-17",
+      "selectionBasis": "seasonal-editorial",
+      "seasonalTopic": "dryers"
     }
   ]
 }
