@@ -240,6 +240,13 @@
       "publishedAt": "2026-11-17",
       "selectionBasis": "seasonal-editorial",
       "seasonalTopic": "dryers"
+    },
+    {
+      "productId": null,
+      "slug": "seasonal-humidifier-heating-season-check-2026-11-18",
+      "publishedAt": "2026-11-18",
+      "selectionBasis": "seasonal-editorial",
+      "seasonalTopic": "humidifiers"
     }
   ]
 }
