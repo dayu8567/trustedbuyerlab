@@ -1,0 +1,26 @@
+---
+import { ADS_APP } from "../data/adsVerification";
+---
+
+<header class="ads-header">
+  <div class="ads-container ads-header-inner">
+    <a class="ads-brand" href="/google-ads/" aria-label={`${ADS_APP.name}首页`}>
+      <img
+        src="/brand/xingtuo-ads-mark.svg"
+        width="42"
+        height="42"
+        alt=""
+        aria-hidden="true"
+      />
+      <span>
+        <strong>{ADS_APP.name}</strong>
+        <small>Google Ads 数据工具</small>
+      </span>
+    </a>
+    <nav class="ads-nav" aria-label="品牌验证页面导航">
+      <a href="/google-ads/">工具首页</a>
+      <a href="/privacy/">隐私政策</a>
+      <a href="/terms/">服务条款</a>
+    </nav>
+  </div>
+</header>

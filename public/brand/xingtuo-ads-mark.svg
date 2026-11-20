@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="星拓广告数据">
+  <rect width="64" height="64" rx="7" fill="#0b2028"/>
+  <path d="M28 10l4.4 13.6L46 28l-13.6 4.4L28 46l-4.4-13.6L10 28l13.6-4.4z" fill="#ffffff"/>
+  <rect x="43" y="43" width="11" height="11" rx="1.5" fill="#f3c34f"/>
+</svg>

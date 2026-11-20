@@ -37,9 +37,11 @@ const pages = [
     lastmod: article.date,
   })),
   { path: "/about/", priority: "0.5", lastmod: "2026-10-26" },
+  { path: "/google-ads/", priority: "0.6", lastmod: "2026-11-20" },
   { path: "/image-credits/", priority: "0.2", lastmod: "2026-10-26" },
+  { path: "/privacy/", priority: "0.3", lastmod: "2026-11-20" },
   { path: "/privacy-policy/", priority: "0.2", lastmod: "2026-10-26" },
-  { path: "/terms/", priority: "0.2", lastmod: "2026-10-26" },
+  { path: "/terms/", priority: "0.3", lastmod: "2026-11-20" },
   { path: "/affiliate-disclosure/", priority: "0.2", lastmod: "2026-10-26" },
 ];
 

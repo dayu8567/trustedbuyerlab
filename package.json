@@ -13,7 +13,7 @@
     "newsroom:dry": "node scripts/newsroom/run.mjs --dry-run",
     "newsroom:probe": "node scripts/newsroom/run.mjs --probe",
     "newsroom:trends": "node scripts/newsroom/trend-probe.mjs",
-    "test": "node --test tests/newsroom.test.mjs"
+    "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
     "astro": "^7.4.2",

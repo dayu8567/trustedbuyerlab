@@ -12,6 +12,11 @@ interface Props {
   canonicalPath: string;
   noindex?: boolean;
   schema?: Record<string, unknown>;
+  fullTitle?: boolean;
+  lang?: string;
+  showSiteHeader?: boolean;
+  showSiteFooter?: boolean;
+  skipLabel?: string;
 }
 
 const {
@@ -20,9 +25,15 @@ const {
   canonicalPath,
   noindex = false,
   schema,
+  fullTitle = false,
+  lang = "en",
+  showSiteHeader = true,
+  showSiteFooter = true,
+  skipLabel = "Skip to main content",
 } = Astro.props;
 
-const pageTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
+const pageTitle =
+  fullTitle || title === SITE.name ? title : `${title} | ${SITE.name}`;
 const canonical = new URL(canonicalPath, SITE.url).href;
 const socialImage = await getImage({
   src: socialSource,
@@ -40,7 +51,7 @@ const jsonLd = schema
 ---
 
 <!doctype html>
-<html lang="en" data-gtm-id={SITE.gtmId}>
+<html lang={lang} data-gtm-id={SITE.gtmId}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -77,12 +88,12 @@ const jsonLd = schema
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to main content</a>
-    <SiteHeader />
+    <a class="skip-link" href="#main">{skipLabel}</a>
+    {showSiteHeader ? <SiteHeader /> : <slot name="header" />}
     <main id="main">
       <slot />
     </main>
-    <SiteFooter />
+    {showSiteFooter ? <SiteFooter /> : <slot name="footer" />}
     <script src="/scripts/tracking.js" is:inline defer></script>
   </body>
 </html>

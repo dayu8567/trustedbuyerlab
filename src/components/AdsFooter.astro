@@ -1,0 +1,23 @@
+---
+import { ADS_APP } from "../data/adsVerification";
+---
+
+<footer class="ads-footer">
+  <div class="ads-container">
+    <div class="ads-footer-grid">
+      <div>
+        <strong>{ADS_APP.name}</strong>
+        <p>{ADS_APP.operator}</p>
+      </div>
+      <div>
+        <p class="ads-footer-heading">政策与支持</p>
+        <p><a href="/privacy/">隐私政策</a></p>
+        <p><a href="/terms/">服务条款</a></p>
+        <p><a href={`mailto:${ADS_APP.email}`}>{ADS_APP.email}</a></p>
+      </div>
+    </div>
+    <p class="ads-footer-note">
+      © 2026 {ADS_APP.operator}。Google Ads 是 Google LLC 的商标。{ADS_APP.name}为独立运营的数据工具。
+    </p>
+  </div>
+</footer>

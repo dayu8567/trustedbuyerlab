@@ -118,6 +118,18 @@ npm run newsroom:dry
 node scripts/qa.mjs
 ```
 
+## Google Ads brand verification
+
+Public, server-rendered verification pages are available at:
+
+- `/google-ads/` — 星拓广告数据 tool overview and Google data usage
+- `/privacy/` — Google Ads data privacy policy
+- `/terms/` — service terms
+
+The pages share the logo asset at `/brand/xingtuo-ads-mark.svg` and are included
+in the sitemap. Cloudflare redirects extensionless requests without a trailing
+slash to the canonical trailing-slash URLs.
+
 Playwright QA covers 1440, 768, 390, and 320 px. It checks pages, subcategories,
 format hubs, all published articles, legacy noindex behavior, RSS, sitemap,
 canonical URLs, H1 counts, image loading, console errors, failed requests,

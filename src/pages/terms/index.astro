@@ -1,53 +1,157 @@
 ---
-import LegalLayout from "../../layouts/LegalLayout.astro";
+import AdsVerificationLayout from "../../layouts/AdsVerificationLayout.astro";
+import { ADS_APP } from "../../data/adsVerification";
 
-const title = "Terms of Use";
+const title = "服务条款｜星拓广告数据";
+const description =
+  "星拓广告数据服务条款，说明 Google Ads 数据工具的使用条件、账户授权、用户责任、数据保护和免责事项。";
 ---
 
-<LegalLayout
+<AdsVerificationLayout
   title={title}
-  description="Terms governing the use of Trusted Buyer Lab product research, comparisons, and affiliate links."
+  description={description}
   canonicalPath="/terms/"
 >
-  <p>
-    By using this website, you agree to these terms. If you do not agree, do
-    not use the site.
-  </p>
+  <header class="ads-legal-head">
+    <div class="ads-container">
+      <h1>星拓广告数据服务条款</h1>
+      <p>
+        生效日期：{ADS_APP.effectiveDate}　最后更新日期：{ADS_APP.effectiveDate}
+      </p>
+    </div>
+  </header>
 
-  <h2>Informational content</h2>
-  <p>
-    Content is provided for general informational and product research
-    purposes. We do not guarantee that all information is complete, current, or
-    error-free.
-  </p>
+  <section class="ads-container ads-legal">
+    <h2>一、条款的接受</h2>
+    <p>本服务由{ADS_APP.operator}运营。</p>
+    <p>
+      用户访问或使用{ADS_APP.name}，即表示用户已阅读并同意本服务条款和
+      <a href="/privacy/">《隐私政策》</a>。如果用户不同意本条款，应停止使用本服务。
+    </p>
 
-  <h2>Product information</h2>
-  <p>
-    Prices, availability, specifications, ratings, and offers can change without
-    notice. Always confirm details directly with the retailer before buying.
-  </p>
+    <h2>二、服务说明</h2>
+    <p>{ADS_APP.name}是一款 Google Ads 数据同步、报表和分析工具。</p>
+    <p>
+      用户通过 Google OAuth
+      授权后，本工具可以在授权范围内读取用户有权管理的 Google Ads
+      账户数据，并用于生成广告效果报表、分析广告表现和提供账户优化建议。
+    </p>
 
-  <h2>Affiliate relationships</h2>
-  <p>
-    This website may earn commissions from qualifying purchases through
-    affiliate links. Commissions do not increase your purchase price.
-  </p>
+    <h2>三、账户资格和授权</h2>
+    <p>
+      用户必须拥有合法的 Google Ads
+      账户访问和管理权限，才能使用本服务。
+    </p>
+    <p>
+      用户应仅授权自己有权管理的账户。用户不得使用本服务访问、查看或操作无权访问的
+      Google Ads 账户。
+    </p>
+    <p>
+      用户应妥善保护自己的 Google
+      账号和设备，并可以随时通过
+      <a
+        href={ADS_APP.permissions}
+        target="_blank"
+        rel="noopener noreferrer">Google 账号权限页面</a
+      >
+      撤销授权。
+    </p>
 
-  <h2>No professional advice</h2>
-  <p>
-    The information on this website is not professional, technical, legal, or
-    financial advice. Use your own judgment before making a purchase.
-  </p>
+    <h2>四、允许的使用方式</h2>
+    <p>
+      用户只能出于合法的广告数据处理、报表分析、账户管理和业务运营目的使用本服务。
+    </p>
+    <p>用户不得：</p>
+    <ol>
+      <li>违反 Google Ads 条款、Google API 服务条款或适用法律；</li>
+      <li>访问或操作无权管理的广告账户；</li>
+      <li>出售、转售或非法披露通过本服务获得的 Google 用户数据；</li>
+      <li>利用本服务发送垃圾信息、实施欺诈或侵犯他人权利；</li>
+      <li>干扰、破坏或绕过本服务的安全控制；</li>
+      <li>将本服务用于未经授权的身份验证或账户代理登录。</li>
+    </ol>
 
-  <h2>External links</h2>
-  <p>
-    We may link to third-party websites and are not responsible for external
-    content, policies, products, or services.
-  </p>
+    <h2>五、Google 服务和第三方服务</h2>
+    <p>
+      本服务依赖 Google Ads API、Google OAuth 和其他 Google
+      服务。Google 服务的功能、权限、配额、接口和可用性可能发生变化。
+    </p>
+    <p>
+      Google Ads 是 Google LLC
+      的商标。本服务独立运营，不代表由 Google 官方运营、认证或背书。
+    </p>
 
-  <h2>Limitation of liability</h2>
-  <p>
-    We are not liable for any loss, damage, or inconvenience arising from use of
-    this website or reliance on its content.
-  </p>
-</LegalLayout>
+    <h2>六、数据处理和隐私</h2>
+    <p>
+      Google 用户数据的获取、使用、存储、共享、保留和删除规则以
+      <a href="/privacy/">《隐私政策》</a>为准：
+      <a href={ADS_APP.privacy}>{ADS_APP.privacy}</a>
+    </p>
+    <p>
+      用户撤销授权后，本服务将停止进一步读取相关 Google Ads
+      数据，并按隐私政策规定的期限删除相关数据。
+    </p>
+
+    <h2>七、服务可用性</h2>
+    <p>
+      我们会合理维护本工具的正常运行，但不保证服务始终不中断或无错误。
+    </p>
+    <p>
+      因系统维护、网络故障、Google API 调整、Google
+      账号权限变化、不可抗力或其他超出我们合理控制范围的原因导致的服务暂停或数据延迟，我们不承担超出适用法律规定的责任。
+    </p>
+
+    <h2>八、数据准确性和广告效果</h2>
+    <p>
+      本工具展示的数据来源于 Google Ads
+      API 和用户授权账户。我们会合理处理数据，但不保证所有报表、指标或分析结果始终完整、实时或没有误差。
+    </p>
+    <p>
+      本工具提供的分析和建议不构成广告效果保证。用户应自行评估并决定是否采用相关建议。
+    </p>
+
+    <h2>九、知识产权</h2>
+    <p>
+      除非另有说明，{ADS_APP.name}的网站、软件、页面设计、文字和相关材料归运营主体或相应权利人所有。
+    </p>
+    <p>
+      未经授权，用户不得复制、修改、分发、出售或反向工程本服务的任何部分。Google、Google
+      Ads 及相关商标归其各自权利人所有。
+    </p>
+
+    <h2>十、暂停和终止</h2>
+    <p>
+      如果用户违反本条款、Google
+      相关政策或适用法律，或存在危害账户、数据或系统安全的行为，我们可以暂停或终止其访问权限。
+    </p>
+    <p>
+      用户可以随时停止使用本服务、撤销 Google
+      授权，并通过联系邮箱请求删除相关数据。
+    </p>
+
+    <h2>十一、免责声明和责任限制</h2>
+    <p>在适用法律允许的范围内，本服务按“现状”和“现有可用”状态提供。</p>
+    <p>
+      对于因用户错误配置广告账户、超出授权范围使用、Google
+      服务变化、第三方平台故障或其他非因运营主体故意或重大过失造成的数据、账户或广告损失，运营主体不承担超出适用法律规定的责任。
+    </p>
+
+    <h2>十二、条款更新</h2>
+    <p>
+      我们可能根据功能变化、Google
+      政策变化或法律要求更新本条款。更新后的条款会在本页面公布，并修改“最后更新日期”。
+    </p>
+
+    <h2>十三、适用法律和争议解决</h2>
+    <p>
+      本条款适用中华人民共和国法律。因本条款或本服务产生的争议，双方应先友好协商；协商不成的，可依法向运营主体所在地有管辖权的人民法院提起诉讼。
+    </p>
+
+    <h2>十四、联系我们</h2>
+    <p>运营主体：{ADS_APP.operator}</p>
+    <p>联系邮箱：<a href={`mailto:${ADS_APP.email}`}>{ADS_APP.email}</a></p>
+    <p>网站：<a href={ADS_APP.website}>{ADS_APP.website}</a></p>
+    <p>首页：<a href="/google-ads/">{ADS_APP.home}</a></p>
+    <p>隐私政策：<a href="/privacy/">{ADS_APP.privacy}</a></p>
+  </section>
+</AdsVerificationLayout>

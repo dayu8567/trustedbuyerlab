@@ -1,0 +1,181 @@
+---
+import AdsVerificationLayout from "../../layouts/AdsVerificationLayout.astro";
+import { ADS_APP } from "../../data/adsVerification";
+
+const title = "星拓广告数据｜Google Ads 数据报表与分析工具";
+const description =
+  "星拓广告数据是广安市广安区星拓互联网信息服务部运营的 Google Ads 数据报表与分析工具，用于同步和分析用户授权的广告账户数据。";
+---
+
+<AdsVerificationLayout
+  title={title}
+  description={description}
+  canonicalPath="/google-ads/"
+>
+  <section class="ads-hero">
+    <div class="ads-container ads-hero-copy">
+      <p class="ads-eyebrow">Google Ads reporting and analytics</p>
+      <h1>{ADS_APP.name}</h1>
+      <p class="ads-hero-lead">
+        用于 Google Ads 广告数据同步、报表与效果分析的内部数据工具
+      </p>
+      <div class="ads-hero-meta">
+        <span>运营主体：{ADS_APP.operator}</span>
+        <span>支持邮箱：{ADS_APP.email}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="ads-section">
+    <div class="ads-container ads-content">
+      <h2>品牌介绍</h2>
+      <p>
+        {ADS_APP.name}是由{ADS_APP.operator}运营的 Google Ads
+        数据管理和分析工具。
+      </p>
+      <p>
+        本工具用于将用户明确授权的 Google Ads 经理账户及其关联广告账户中的广告数据同步到内部报表系统，帮助授权的广告运营人员查看广告表现、分析数据并优化广告账户。
+      </p>
+    </div>
+  </section>
+
+  <section class="ads-section alt">
+    <div class="ads-container">
+      <div class="ads-content">
+        <h2>主要功能</h2>
+      </div>
+      <div class="ads-feature-grid">
+        <article class="ads-feature">
+          <h3>1. 广告数据同步</h3>
+          <p>
+            同步用户有权管理的 Google Ads
+            账户中的广告系列、广告组、关键词和广告效果数据。
+          </p>
+        </article>
+        <article class="ads-feature">
+          <h3>2. 广告效果报表</h3>
+          <p>
+            汇总展示展示次数、点击次数、花费和转化等指标，生成广告效果报表。
+          </p>
+        </article>
+        <article class="ads-feature">
+          <h3>3. 账户分析</h3>
+          <p>
+            根据用户主动选择的账户和日期范围，查看广告表现并分析优化方向。
+          </p>
+        </article>
+        <article class="ads-feature">
+          <h3>4. 访问权限管理</h3>
+          <p>
+            只有经过用户明确授权并拥有相应 Google Ads
+            账户权限的人员，才能查看相关广告数据。
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ads-section">
+    <div class="ads-container ads-content">
+      <h2>Google 账号授权说明</h2>
+      <p>我们不会要求用户提供 Google 账号密码。</p>
+      <p>
+        用户通过 Google OAuth 明确授权后，本工具才能访问用户有权管理的
+        Google Ads 数据。授权范围仅用于广告数据同步、报表和分析。
+      </p>
+      <p>
+        用户可以通过
+        <a
+          href={ADS_APP.permissions}
+          rel="noopener noreferrer"
+          target="_blank">Google 账号权限页面</a
+        >
+        随时撤销授权。
+      </p>
+
+      <h2>使用哪些数据</h2>
+      <p>经用户授权后，本工具可能访问：</p>
+      <ul>
+        <li>Google Ads 客户账户 ID</li>
+        <li>广告系列、广告组和关键词数据</li>
+        <li>展示次数、点击次数、花费和转化数据</li>
+        <li>生成广告报表和进行账户分析所需的其他 Google Ads 数据</li>
+      </ul>
+      <p>
+        本工具不访问 Gmail、Google Drive 或其他与 Google Ads
+        报表无关的数据。
+      </p>
+
+      <h2>数据用途</h2>
+      <p>Google Ads 数据仅用于：</p>
+      <ul>
+        <li>生成用户请求的广告效果报表</li>
+        <li>分析广告系列、广告组和关键词表现</li>
+        <li>为授权用户提供广告账户优化建议</li>
+        <li>维护本工具与 Google Ads 账户之间的数据同步</li>
+      </ul>
+      <p>
+        我们不会出售或出租 Google
+        用户数据，也不会将上述数据用于与广告数据报表和分析无关的目的。
+      </p>
+
+      <h2>用户范围</h2>
+      <p>
+        本工具目前仅供本公司授权的广告运营人员内部使用，不向公众提供
+        Google Ads 账户代理登录或代理管理服务。
+      </p>
+
+      <h2>数据安全与保留</h2>
+      <p>
+        Google Ads 数据通过 HTTPS
+        加密传输，并保存在访问权限受限的环境中。相关数据默认保留不超过
+        180 天；超过期限后自动删除或匿名化处理。
+      </p>
+      <p>
+        用户撤销授权或要求删除数据后，我们会在 30
+        天内停止访问并删除授权数据，法律要求继续保留的信息除外。
+      </p>
+    </div>
+  </section>
+
+  <section class="ads-section alt">
+    <div class="ads-container ads-content">
+      <h2>运营主体和联系方式</h2>
+      <div class="ads-fact-grid">
+        <div class="ads-fact">
+          <span>运营主体</span>
+          <strong>{ADS_APP.operator}</strong>
+        </div>
+        <div class="ads-fact">
+          <span>联系邮箱</span>
+          <strong><a href={`mailto:${ADS_APP.email}`}>{ADS_APP.email}</a></strong>
+        </div>
+        <div class="ads-fact">
+          <span>网站</span>
+          <strong><a href={ADS_APP.website}>{ADS_APP.website}</a></strong>
+        </div>
+        <div class="ads-fact">
+          <span>OAuth 权限范围</span>
+          <strong>{ADS_APP.scope}</strong>
+        </div>
+      </div>
+      <div class="ads-callout">
+        <p>
+          隐私政策：<a href="/privacy/">{ADS_APP.privacy}</a>
+        </p>
+        <p>
+          服务条款：<a href="/terms/">{ADS_APP.terms}</a>
+        </p>
+      </div>
+
+      <h2>English summary</h2>
+      <p lang="en">
+        This page describes {ADS_APP.name}, an internal Google Ads reporting
+        and analytics tool operated by {ADS_APP.operator}. Users explicitly
+        authorize access through Google OAuth. The tool uses Google Ads data
+        only to provide reporting, performance analysis, and account
+        optimization for authorized users.
+      </p>
+    </div>
+  </section>
+</AdsVerificationLayout>
