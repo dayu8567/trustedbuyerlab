@@ -124,6 +124,11 @@
       "date": "2026-11-20",
       "price": 249,
       "listPrice": 299
+    },
+    {
+      "date": "2026-11-21",
+      "price": 249,
+      "listPrice": 299
     }
   ],
   "F6017_8895888687301_50766631829701": [
@@ -214,6 +219,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 249,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 249,
       "listPrice": null
     }
@@ -329,6 +339,11 @@
       "date": "2026-11-20",
       "price": 249,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 249,
+      "listPrice": null
     }
   ],
   "F6017S48GD-NL_10373973246149_50779669004485": [
@@ -421,6 +436,11 @@
       "date": "2026-11-20",
       "price": 249,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 249,
+      "listPrice": null
     }
   ],
   "F8004ABK-NL_8381020340421_50781409345733": [
@@ -511,6 +531,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 439.9,
+      "listPrice": 699
+    },
+    {
+      "date": "2026-11-21",
       "price": 439.9,
       "listPrice": 699
     }
@@ -692,6 +717,11 @@
       "date": "2026-11-20",
       "price": 249,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 249,
+      "listPrice": null
     }
   ],
   "GA046_10367009259717_50731993039045": [
@@ -782,6 +812,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 49,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 49,
       "listPrice": null
     }
@@ -890,6 +925,11 @@
       "date": "2026-11-20",
       "price": 199,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 199,
+      "listPrice": null
     }
   ],
   "F5140S48WH_10382453407941_50804541358277": [
@@ -989,6 +1029,11 @@
       "date": "2026-11-20",
       "price": 209,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 209,
+      "listPrice": null
     }
   ],
   "F5140S60GDWH_10382505607365_50804910620869": [
@@ -1083,6 +1128,11 @@
       "date": "2026-11-20",
       "price": 249,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 249,
+      "listPrice": null
     }
   ],
   "530173SQQSNBW_8902938656965_46635334369477": [
@@ -1168,6 +1218,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 249,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 249,
       "listPrice": null
     }
@@ -1264,6 +1319,11 @@
       "date": "2026-11-20",
       "price": 249,
       "listPrice": 359
+    },
+    {
+      "date": "2026-11-21",
+      "price": 249,
+      "listPrice": 359
     }
   ],
   "F6061_8927693865157_46641149411525": [
@@ -1351,6 +1411,11 @@
       "date": "2026-11-20",
       "price": 169,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 169,
+      "listPrice": null
     }
   ],
   "F6057GD_8944907026629_46641201479877": [
@@ -1436,6 +1501,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 229,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 229,
       "listPrice": null
     }
@@ -1532,6 +1602,11 @@
       "date": "2026-11-20",
       "price": 269,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 269,
+      "listPrice": null
     }
   ],
   "F8012BK_8796031582405_46662262063301": [
@@ -1619,6 +1694,11 @@
       "date": "2026-11-20",
       "price": 199,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 199,
+      "listPrice": null
     }
   ],
   "F6040WH_8797904470213_46662336905413": [
@@ -1704,6 +1784,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 119,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 119,
       "listPrice": null
     }
@@ -1815,6 +1900,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "GA049-VZ106_8430570471621_46724809588933": [
@@ -1905,6 +1995,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 49,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 49,
       "listPrice": null
     }
@@ -1999,6 +2094,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "F6016-CONTROLLER_8776886943941_46873321930949": [
@@ -2089,6 +2189,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 59,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 59,
       "listPrice": null
     }
@@ -2183,6 +2288,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "F6048WH-CONTROLLER_8533185003717_46895514517701": [
@@ -2273,6 +2383,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 49,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 49,
       "listPrice": null
     }
@@ -2367,6 +2482,11 @@
       "date": "2026-11-20",
       "price": 59,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 59,
+      "listPrice": null
     }
   ],
   "530173SQQWO_8902938656965_46635335090373": [
@@ -2457,6 +2577,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 249,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 249,
       "listPrice": null
     }
@@ -2551,6 +2676,11 @@
       "date": "2026-11-20",
       "price": 239,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 239,
+      "listPrice": null
     }
   ],
   "VZA01B109ACGD_8976976806085_46930132730053": [
@@ -2641,6 +2771,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 109,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 109,
       "listPrice": null
     }
@@ -2735,6 +2870,11 @@
       "date": "2026-11-20",
       "price": 109,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 109,
+      "listPrice": null
     }
   ],
   "VZA01B109ACSN_8976976806085_46930132795589": [
@@ -2825,6 +2965,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 109,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 109,
       "listPrice": null
     }
@@ -2919,6 +3064,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "VZA01B109BCGD_8976992731333_46979814588613": [
@@ -3009,6 +3159,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 99,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 99,
       "listPrice": null
     }
@@ -3103,6 +3258,11 @@
       "date": "2026-11-20",
       "price": 99,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 99,
+      "listPrice": null
     }
   ],
   "VZA01B109BCSN_8976992731333_46979814654149": [
@@ -3193,6 +3353,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 99,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 99,
       "listPrice": null
     }
@@ -3287,6 +3452,11 @@
       "date": "2026-11-20",
       "price": 59,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 59,
+      "listPrice": null
     }
   ],
   "GA042-F6357_8049763549381_46982888259781": [
@@ -3377,6 +3547,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 59,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 59,
       "listPrice": null
     }
@@ -3471,6 +3646,11 @@
       "date": "2026-11-20",
       "price": 59,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 59,
+      "listPrice": null
     }
   ],
   "GA042-F6371_8049763549381_46982888325317": [
@@ -3561,6 +3741,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 59,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 59,
       "listPrice": null
     }
@@ -3655,6 +3840,11 @@
       "date": "2026-11-20",
       "price": 59,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 59,
+      "listPrice": null
     }
   ],
   "55006GD_8944911450309_46654739185861": [
@@ -3745,6 +3935,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 219,
+      "listPrice": 299
+    },
+    {
+      "date": "2026-11-21",
       "price": 219,
       "listPrice": 299
     }
@@ -3839,6 +4034,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "F6017S84GD-NL_8902815449285_46473693069509": [
@@ -3924,6 +4124,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 329,
+      "listPrice": 499
+    },
+    {
+      "date": "2026-11-21",
       "price": 329,
       "listPrice": 499
     }
@@ -4300,6 +4505,11 @@
       "date": "2026-11-20",
       "price": 136,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 136,
+      "listPrice": null
     }
   ],
   "57002NI_8902889472197_46506728030405": [
@@ -4387,6 +4597,11 @@
       "date": "2026-11-20",
       "price": 299,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 299,
+      "listPrice": null
     }
   ],
   "GA030-F8004_7490313322693_46086062211269": [
@@ -4462,6 +4677,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 59,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 59,
       "listPrice": null
     }
@@ -4541,6 +4761,11 @@
       "date": "2026-11-20",
       "price": 119,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 119,
+      "listPrice": null
     }
   ],
   "F6040_8797904470213_46086132826309": [
@@ -4616,6 +4841,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 119,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 119,
       "listPrice": null
     }
@@ -4695,6 +4925,11 @@
       "date": "2026-11-20",
       "price": 59,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 59,
+      "listPrice": null
     }
   ],
   "GA042-F6367_8049763549381_46132567539909": [
@@ -4772,6 +5007,11 @@
       "date": "2026-11-20",
       "price": 59,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 59,
+      "listPrice": null
     }
   ],
   "GA042-F6372_8049763549381_46208911278277": [
@@ -4847,6 +5087,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 59,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 59,
       "listPrice": null
     }
@@ -4936,6 +5181,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "F6389-CONTROLLER_8122628243653_46282980851909": [
@@ -5021,6 +5271,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 59,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 59,
       "listPrice": null
     }
@@ -5110,6 +5365,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "F3027_8843448877253_46308697637061": [
@@ -5195,6 +5455,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 459,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 459,
       "listPrice": null
     }
@@ -5284,6 +5549,11 @@
       "date": "2026-11-20",
       "price": 739,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 739,
+      "listPrice": null
     }
   ],
   "F3030_8843453956293_46318604288197": [
@@ -5369,6 +5639,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 659,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 659,
       "listPrice": null
     }
@@ -5458,6 +5733,11 @@
       "date": "2026-11-20",
       "price": 189,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 189,
+      "listPrice": null
     }
   ],
   "F8021BK-NL_8880277651653_46340661248197": [
@@ -5543,6 +5823,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 589,
+      "listPrice": 859
+    },
+    {
+      "date": "2026-11-21",
       "price": 589,
       "listPrice": 859
     }
@@ -5632,6 +5917,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "GA049-VZ110_8430570471621_46448531472581": [
@@ -5717,6 +6007,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 49,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 49,
       "listPrice": null
     }
@@ -5806,6 +6101,11 @@
       "date": "2026-11-20",
       "price": 699,
       "listPrice": 989
+    },
+    {
+      "date": "2026-11-21",
+      "price": 699,
+      "listPrice": 989
     }
   ],
   "GA049-VZ109_8430570471621_46455070490821": [
@@ -5891,6 +6191,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 49,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 49,
       "listPrice": null
     }
@@ -5980,6 +6285,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "F6036-CONTROLLER_8533185003717_46470620414149": [
@@ -6067,6 +6377,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "F6017GD-NL_8895888687301_46446418362565": [
@@ -6152,6 +6467,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 249,
+      "listPrice": 299
+    },
+    {
+      "date": "2026-11-21",
       "price": 249,
       "listPrice": 299
     }
@@ -6248,6 +6568,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "BBF3026-CONTROLLER_8766566072517_46496100417733": [
@@ -6335,6 +6660,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "JC001BKBR_8910797209797_46495553880261": [
@@ -6417,6 +6747,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 249,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 249,
       "listPrice": null
     }
@@ -6506,6 +6841,11 @@
       "date": "2026-11-20",
       "price": 249,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 249,
+      "listPrice": null
     }
   ],
   "F6062_8902926401733_46496143245509": [
@@ -6591,6 +6931,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 159,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 159,
       "listPrice": null
     }
@@ -6680,6 +7025,11 @@
       "date": "2026-11-20",
       "price": 299,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 299,
+      "listPrice": null
     }
   ],
   "57002BK_8902889472197_46506728063173": [
@@ -6765,6 +7115,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 269,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 269,
       "listPrice": null
     }
@@ -6854,6 +7209,11 @@
       "date": "2026-11-20",
       "price": 219,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 219,
+      "listPrice": null
     }
   ],
   "59002-NL_8843447763141_46507059740869": [
@@ -6941,6 +7301,11 @@
       "date": "2026-11-20",
       "price": 399,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 399,
+      "listPrice": null
     }
   ],
   "A560701CA110V-CA_7459244736709_46537414475973": [
@@ -7026,6 +7391,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 358.39,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 358.39,
       "listPrice": null
     }
@@ -7127,6 +7497,11 @@
       "date": "2026-11-20",
       "price": 199,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 199,
+      "listPrice": null
     }
   ],
   "F6027BK_8902841041093_46519360782533": [
@@ -7212,6 +7587,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 129,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 129,
       "listPrice": null
     }
@@ -7301,6 +7681,11 @@
       "date": "2026-11-20",
       "price": 399,
       "listPrice": 539
+    },
+    {
+      "date": "2026-11-21",
+      "price": 399,
+      "listPrice": 539
     }
   ],
   "F8018BK-L_8161476903109_46318344175813": [
@@ -7386,6 +7771,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 399.99,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 399.99,
       "listPrice": null
     }
@@ -7475,6 +7865,11 @@
       "date": "2026-11-20",
       "price": 639,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 639,
+      "listPrice": null
     }
   ],
   "F6017CGD_8895866765509_46446374060229": [
@@ -7560,6 +7955,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 249,
+      "listPrice": 359
+    },
+    {
+      "date": "2026-11-21",
       "price": 249,
       "listPrice": 359
     }
@@ -7649,6 +8049,11 @@
       "date": "2026-11-20",
       "price": 249,
       "listPrice": 359
+    },
+    {
+      "date": "2026-11-21",
+      "price": 249,
+      "listPrice": 359
     }
   ],
   "F6017S84GD_8902815449285_46473693036741": [
@@ -7736,6 +8141,11 @@
       "date": "2026-11-20",
       "price": 329,
       "listPrice": 499
+    },
+    {
+      "date": "2026-11-21",
+      "price": 329,
+      "listPrice": 499
     }
   ],
   "F8298S20SN_8784573464773_46015635226821": [
@@ -7811,6 +8221,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 99,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 99,
       "listPrice": null
     }
@@ -7890,6 +8305,11 @@
       "date": "2026-11-20",
       "price": 159,
       "listPrice": 209
+    },
+    {
+      "date": "2026-11-21",
+      "price": 159,
+      "listPrice": 209
     }
   ],
   "F6049_8618342351045_45744399777989": [
@@ -7957,6 +8377,11 @@
       "date": "2026-11-20",
       "price": 249,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 249,
+      "listPrice": null
     }
   ],
   "VZA01A115GD-BLE_8162043068613_45750775218373": [
@@ -8022,6 +8447,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 159.99,
+      "listPrice": 199
+    },
+    {
+      "date": "2026-11-21",
       "price": 159.99,
       "listPrice": 199
     }
@@ -8096,6 +8526,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "F6387-CONTROLLER_8122628243653_45926958399685": [
@@ -8166,6 +8601,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 59,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 59,
       "listPrice": null
     }
@@ -8254,6 +8694,11 @@
       "date": "2026-11-20",
       "price": 109,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 109,
+      "listPrice": null
     }
   ],
   "VZA01A117-CONTROLLER_8766617256133_45980294119621": [
@@ -8324,6 +8769,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 49,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 49,
       "listPrice": null
     }
@@ -8398,6 +8848,11 @@
       "date": "2026-11-20",
       "price": 59,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 59,
+      "listPrice": null
     }
   ],
   "F8003BK_8778019471557_45996747980997": [
@@ -8468,6 +8923,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 449,
+      "listPrice": 699
+    },
+    {
+      "date": "2026-11-21",
       "price": 449,
       "listPrice": 699
     }
@@ -8542,6 +9002,11 @@
       "date": "2026-11-20",
       "price": 449,
       "listPrice": 699
+    },
+    {
+      "date": "2026-11-21",
+      "price": 449,
+      "listPrice": 699
     }
   ],
   "F6046_8778017800389_46002024022213": [
@@ -8612,6 +9077,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 139,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 139,
       "listPrice": null
     }
@@ -8686,6 +9156,11 @@
       "date": "2026-11-20",
       "price": 209,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 209,
+      "listPrice": null
     }
   ],
   "F6047_8777998434501_46015771312325": [
@@ -8756,6 +9231,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 159,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 159,
       "listPrice": null
     }
@@ -8830,6 +9310,11 @@
       "date": "2026-11-20",
       "price": 59,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 59,
+      "listPrice": null
     }
   ],
   "F5001BK-CONTROLLER_8049763549381_46041160843461": [
@@ -8902,6 +9387,11 @@
       "date": "2026-11-20",
       "price": 59,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 59,
+      "listPrice": null
     }
   ],
   "F8012WH_8796031582405_46054200606917": [
@@ -8972,6 +9462,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 199,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 199,
       "listPrice": null
     }
@@ -9051,6 +9546,11 @@
       "date": "2026-11-20",
       "price": 149,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 149,
+      "listPrice": null
     }
   ],
   "VZA01A117C_8763394621637_45945383616709": [
@@ -9126,6 +9626,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 99,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 99,
       "listPrice": null
     }
@@ -9205,6 +9710,11 @@
       "date": "2026-11-20",
       "price": 99,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 99,
+      "listPrice": null
     }
   ],
   "BBF3020_8757867446469_45955821207749": [
@@ -9282,6 +9792,11 @@
       "date": "2026-11-20",
       "price": 119,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 119,
+      "listPrice": null
     }
   ],
   "F6048_8618342547653_45744436412613": [
@@ -9352,6 +9867,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 299,
+      "listPrice": 369
+    },
+    {
+      "date": "2026-11-21",
       "price": 299,
       "listPrice": 369
     }
@@ -9426,6 +9946,11 @@
       "date": "2026-11-20",
       "price": 159.99,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 159.99,
+      "listPrice": null
     }
   ],
   "F6048WH_8618342547653_45744436379845": [
@@ -9496,6 +10021,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 299,
+      "listPrice": 369
+    },
+    {
+      "date": "2026-11-21",
       "price": 299,
       "listPrice": 369
     }
@@ -9575,6 +10105,11 @@
       "date": "2026-11-20",
       "price": 99,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 99,
+      "listPrice": null
     }
   ],
   "VZA01A125BK_8763399864517_45945403179205": [
@@ -9650,6 +10185,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 109,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 109,
       "listPrice": null
     }
@@ -9729,6 +10269,11 @@
       "date": "2026-11-20",
       "price": 109,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 109,
+      "listPrice": null
     }
   ],
   "BBF3024_8757047165125_45929948545221": [
@@ -9799,6 +10344,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 119,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 119,
       "listPrice": null
     }
@@ -9878,6 +10428,11 @@
       "date": "2026-11-20",
       "price": 119,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 119,
+      "listPrice": null
     }
   ],
   "BBF3021_8757868232901_45957944639685": [
@@ -9953,6 +10508,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 99,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 99,
       "listPrice": null
     }
@@ -10032,6 +10592,11 @@
       "date": "2026-11-20",
       "price": 149,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 149,
+      "listPrice": null
     }
   ],
   "VZA01A125GD_8763399864517_45945403146437": [
@@ -10057,6 +10622,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 109,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 109,
       "listPrice": null
     }
@@ -10116,6 +10686,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 49,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 49,
       "listPrice": null
     }
@@ -10208,6 +10783,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "F8006-CONTROLLER_8533185003717_45500410593477": [
@@ -10268,6 +10848,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 49,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 49,
       "listPrice": null
     }
@@ -10332,6 +10917,11 @@
       "date": "2026-11-20",
       "price": 239,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 239,
+      "listPrice": null
     }
   ],
   "F6363-CONTROLLER_8423625556165_45519790768325": [
@@ -10392,6 +10982,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 49,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 49,
       "listPrice": null
     }
@@ -10456,6 +11051,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "GA059-VZA01A121_8430570471621_45584442425541": [
@@ -10516,6 +11116,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 49,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 49,
       "listPrice": null
     }
@@ -10580,6 +11185,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "F6036_8550831554757_45584952885445": [
@@ -10640,6 +11250,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 119,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 119,
       "listPrice": null
     }
@@ -10704,6 +11319,11 @@
       "date": "2026-11-20",
       "price": 59,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 59,
+      "listPrice": null
     }
   ],
   "F6032_8525153042629_45486931640517": [
@@ -10766,6 +11386,11 @@
       "date": "2026-11-20",
       "price": 359,
       "listPrice": 599
+    },
+    {
+      "date": "2026-11-21",
+      "price": 359,
+      "listPrice": 599
     }
   ],
   "VZA01B103AGD-BLE_8502103474373_45329773854917": [
@@ -10816,6 +11441,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 119,
+      "listPrice": 199
+    },
+    {
+      "date": "2026-11-21",
       "price": 119,
       "listPrice": 199
     }
@@ -10880,6 +11510,11 @@
       "date": "2026-11-20",
       "price": 249,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 249,
+      "listPrice": null
     }
   ],
   "F3013_8518800900293_45428453900485": [
@@ -10940,6 +11575,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 199,
+      "listPrice": 359
+    },
+    {
+      "date": "2026-11-21",
       "price": 199,
       "listPrice": 359
     }
@@ -11004,6 +11644,11 @@
       "date": "2026-11-20",
       "price": 169,
       "listPrice": 399
+    },
+    {
+      "date": "2026-11-21",
+      "price": 169,
+      "listPrice": 399
     }
   ],
   "F6037S_8517507940549_45417539895493": [
@@ -11066,6 +11711,11 @@
       "date": "2026-11-20",
       "price": 139,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 139,
+      "listPrice": null
     }
   ],
   "VZA01W109AGD-BLE_8507614003397_45365748760773": [
@@ -11116,6 +11766,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 109,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 109,
       "listPrice": null
     }
@@ -13882,6 +14537,11 @@
       "date": "2026-11-20",
       "price": 199,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 199,
+      "listPrice": null
     }
   ],
   "F5140S48BKWD_10382453407941_50813162258629": [
@@ -13967,6 +14627,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 199,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 199,
       "listPrice": null
     }
@@ -14056,6 +14721,11 @@
       "date": "2026-11-20",
       "price": 199,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 199,
+      "listPrice": null
     }
   ],
   "F5140S48WH_10382453407941_50813162455237": [
@@ -14141,6 +14811,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 199,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 199,
       "listPrice": null
     }
@@ -14230,6 +14905,11 @@
       "date": "2026-11-20",
       "price": 199,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 199,
+      "listPrice": null
     }
   ],
   "F5140S60GDBR_10382505607365_50813287661765": [
@@ -14317,6 +14997,11 @@
       "date": "2026-11-20",
       "price": 209,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 209,
+      "listPrice": null
     }
   ],
   "F5140S60GDWH_10382505607365_50813302964421": [
@@ -14402,6 +15087,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 209,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 209,
       "listPrice": null
     }
@@ -14523,6 +15213,11 @@
       "date": "2026-11-20",
       "price": 169,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 169,
+      "listPrice": null
     }
   ],
   "VZA01A117CGD-BLE_8763394621637_45945383649477": [
@@ -14595,6 +15290,11 @@
       "date": "2026-11-20",
       "price": 99,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 99,
+      "listPrice": null
     }
   ],
   "F8012_8796031582405_46054200541381": [
@@ -14665,6 +15365,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 199,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 199,
       "listPrice": null
     }
@@ -14876,6 +15581,11 @@
       "date": "2026-11-20",
       "price": 99,
       "listPrice": 199
+    },
+    {
+      "date": "2026-11-21",
+      "price": 99,
+      "listPrice": 199
     }
   ],
   "VZA01B109A-BLE_8507614003397_45365748695237": [
@@ -14916,6 +15626,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 99,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 99,
       "listPrice": null
     }
@@ -14960,6 +15675,11 @@
       "date": "2026-11-20",
       "price": 99,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 99,
+      "listPrice": null
     }
   ],
   "VZA01W109ABN-BLE_8507614003397_45365748793541": [
@@ -15000,6 +15720,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 99,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 99,
       "listPrice": null
     }
@@ -15047,6 +15772,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 59,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 59,
       "listPrice": null
     }
@@ -17784,6 +18514,11 @@
       "date": "2026-11-20",
       "price": 129,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 129,
+      "listPrice": null
     }
   ],
   "C9C-Single-2_8151075946732_68061854073068": [
@@ -17867,6 +18602,11 @@
       "date": "2026-11-20",
       "price": 169,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 169,
+      "listPrice": null
     }
   ],
   "F8003BK-CONTROLLER_8776886943941_50917340184773": [
@@ -17917,6 +18657,11 @@
     },
     {
       "date": "2026-11-20",
+      "price": 59,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 59,
       "listPrice": null
     }
@@ -18038,6 +18783,11 @@
       "date": "2026-11-20",
       "price": 49,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 49,
+      "listPrice": null
     }
   ],
   "BBF3031_10422972711109_50995702988997": [
@@ -18050,11 +18800,21 @@
       "date": "2026-11-20",
       "price": 229,
       "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
+      "price": 229,
+      "listPrice": null
     }
   ],
   "F8020_10420596474053_50940038545605": [
     {
       "date": "2026-11-20",
+      "price": 699,
+      "listPrice": null
+    },
+    {
+      "date": "2026-11-21",
       "price": 699,
       "listPrice": null
     }
