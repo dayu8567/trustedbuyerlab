@@ -261,6 +261,13 @@
       "publishedAt": "2026-11-21",
       "selectionBasis": "seasonal-editorial",
       "seasonalTopic": "air-fryers"
+    },
+    {
+      "productId": null,
+      "slug": "seasonal-dishwasher-holiday-loading-prep-2026-11-22",
+      "publishedAt": "2026-11-22",
+      "selectionBasis": "seasonal-editorial",
+      "seasonalTopic": "dishwashers"
     }
   ]
 }
