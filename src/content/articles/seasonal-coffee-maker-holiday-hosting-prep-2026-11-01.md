@@ -11,6 +11,7 @@ image: "/images/articles/placeholder-home-appliance.webp"
 imageAlt: "Coffee maker prepared for a gathering"
 imageCredit: "Trusted Buyer Lab editorial image"
 featured: false
+draft: true
 editorialStatus: "automated"
 author: "newsroom"
 sources:

@@ -11,6 +11,7 @@ image: "/images/articles/humidifier-vs-air-purifier.webp"
 imageAlt: "Air purifier in a living room during closed-window season"
 imageCredit: "Trusted Buyer Lab editorial image"
 featured: false
+draft: true
 editorialStatus: "automated"
 author: "newsroom"
 sources:

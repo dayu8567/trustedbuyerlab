@@ -6,9 +6,9 @@ category: "air-climate"
 subcategory: "humidifiers"
 format: "how-to"
 readingTime: "5 min read"
-image: "/images/articles/clean-a-humidifier.webp"
+image: "/images/articles/humidifier-cleaning-editorial.webp"
 imageAlt: "Humidifier with a removable water tank"
-imageCredit: "Photo via Wikimedia Commons, public domain"
+imageCredit: "Photo: Shixart1985 / Wikimedia Commons, CC BY 2.0"
 featured: false
 sources:
   - label: "Use and care of home humidifiers"

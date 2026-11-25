@@ -6,9 +6,9 @@ category: "cleaning"
 subcategory: "robot-vacuums"
 format: "how-to"
 readingTime: "5 min read"
-image: "/images/articles/robot-vacuum-maintenance-routine.webp"
-imageAlt: "Vacuum cleaner ready for filter and brush maintenance"
-imageCredit: "Photo by Auledas, CC BY-SA 4.0, via Wikimedia Commons"
+image: "/images/articles/robot-vacuum-maintenance-editorial.webp"
+imageAlt: "Robot vacuum connected to its charging dock"
+imageCredit: "Photo: ajay_suresh / Wikimedia Commons, CC BY 2.0"
 featured: false
 sources:
   - label: "Robot vacuum support and maintenance"

@@ -9,11 +9,11 @@ import {
 } from "../data/taxonomy";
 import { SITE } from "../data/site";
 import {
-  getAllArticles,
+  getListingArticles,
   getCategoryCounts,
 } from "../lib/articles";
 
-const articles = await getAllArticles();
+const articles = await getListingArticles();
 const counts = await getCategoryCounts();
 const featured =
   articles.find((article) => article.featured) ?? articles[0];

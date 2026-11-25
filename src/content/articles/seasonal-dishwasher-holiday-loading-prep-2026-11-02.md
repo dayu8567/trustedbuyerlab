@@ -11,6 +11,7 @@ image: "/images/articles/placeholder-home-appliance.webp"
 imageAlt: "Dishwasher ready for a large meal cleanup"
 imageCredit: "Trusted Buyer Lab editorial image"
 featured: false
+draft: true
 editorialStatus: "automated"
 author: "newsroom"
 sources:

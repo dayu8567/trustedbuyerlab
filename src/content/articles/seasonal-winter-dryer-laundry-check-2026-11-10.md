@@ -11,6 +11,7 @@ image: "/images/articles/washing-machine-maintenance-routine.webp"
 imageAlt: "Laundry appliances in a utility room during winter"
 imageCredit: "Photo: Wikimedia Commons / CC0"
 featured: false
+draft: true
 editorialStatus: "automated"
 author: "newsroom"
 sources:

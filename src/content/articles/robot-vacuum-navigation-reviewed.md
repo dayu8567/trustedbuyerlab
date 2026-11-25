@@ -6,9 +6,9 @@ category: "cleaning"
 subcategory: "robot-vacuums"
 format: "reviews"
 readingTime: "7 min read"
-image: "/images/articles/robot-vacuum-navigation-reviewed.webp"
-imageAlt: "Vacuum cleaner on a hard floor"
-imageCredit: "Photo by Auledas, CC BY-SA 4.0, via Wikimedia Commons"
+image: "/images/articles/robot-vacuum-navigation-editorial.webp"
+imageAlt: "Robot vacuum on a wood floor"
+imageCredit: "Photo: Popey900 / Wikimedia Commons, copyrighted free use"
 featured: false
 sources:
   - label: "Robot vacuum support and maintenance"

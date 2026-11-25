@@ -6,9 +6,9 @@ category: "laundry"
 subcategory: "washing-machines"
 format: "how-to"
 readingTime: "5 min read"
-image: "/images/articles/washing-machine-maintenance-routine.webp"
-imageAlt: "Front-load washing machine ready for maintenance"
-imageCredit: "Photo via Wikimedia Commons, CC0"
+image: "/images/articles/washing-machine-maintenance-editorial.webp"
+imageAlt: "Front-load washing machine in a utility area"
+imageCredit: "Photo: Wikimedia Commons contributor / CC BY-SA 2.0"
 featured: false
 sources:
   - label: "Laundry"

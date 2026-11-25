@@ -11,6 +11,7 @@ image: "/images/articles/air-fryer-size-guide.webp"
 imageAlt: "Countertop air fryer oven in a kitchen"
 imageCredit: "Photo: I am R. / Wikimedia Commons, CC BY 2.0"
 featured: false
+draft: true
 editorialStatus: "automated"
 author: "newsroom"
 sources:

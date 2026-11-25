@@ -241,7 +241,7 @@ const main = async () => {
       trendSignal: candidate.trendSignal,
     });
     generated.push(result);
-    published.posts.push({
+    const publishedEntry = {
       productId: candidate.offer.id,
       slug: result.slug,
       price: candidate.offer.price,
@@ -249,7 +249,15 @@ const main = async () => {
       publishedAt: result.publishedAt,
       selectionBasis: candidate.selectionBasis,
       seasonalTopic: candidate.seasonalTopic,
-    });
+    };
+    const existingPostIndex = published.posts.findIndex(
+      (post) => post.slug === result.slug,
+    );
+    if (existingPostIndex >= 0) {
+      published.posts[existingPostIndex] = publishedEntry;
+    } else {
+      published.posts.push(publishedEntry);
+    }
   }
 
   if (!dryRun) {

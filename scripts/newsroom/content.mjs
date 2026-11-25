@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import sharp from "sharp";
 import { PROMPT_VERSION } from "./ai.mjs";
@@ -340,9 +340,19 @@ export async function writeSeasonalEditorialArticle({
 }) {
   const topic = seasonalEditorialFor(now, publishedPosts, trendSnapshot);
   const date = new Date(now).toISOString().slice(0, 10);
-  const slug = `seasonal-${topic.slug}-${date}`;
   const articleDir = resolve(outputRoot, "src/content/articles");
   await mkdir(articleDir, { recursive: true });
+  const topicPrefix = `seasonal-${topic.slug}`;
+  const existing = (await readdir(articleDir))
+    .filter(
+      (name) =>
+        name.endsWith(".md") &&
+        (name === `${topicPrefix}.md` ||
+          name.startsWith(`${topicPrefix}-`)),
+    )
+    .sort();
+  const slug =
+    existing.at(-1)?.replace(/\.md$/, "") ?? topicPrefix;
   const filePath = resolve(articleDir, `${slug}.md`);
   const markdown = buildSeasonalEditorialMarkdown({ topic, now });
   await writeFile(filePath, markdown, "utf8");

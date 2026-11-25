@@ -11,6 +11,7 @@ image: "/images/articles/price-watch-ptzip4c425xir-p-2026-11-04.webp"
 imageAlt: "Product image for Anpviz TandemVu 2-in-1 4MP 25X Zoom PTZ POE Camera, 8MP Dual Lens Bullet Security Camera, Smart Linkage, 360�� Panoramic IP Camera Outdoor, AI Motion Detection 2.0, 330ft IR Night Vision, Pe"
 imageCredit: "Product image supplied by the affiliate feed"
 featured: false
+draft: true
 editorialStatus: "automated"
 author: "newsroom"
 sources:
