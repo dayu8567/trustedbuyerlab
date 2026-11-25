@@ -1,8 +1,8 @@
 ---
 title: "Gourmia air fryer oven recall: safety checks for owners"
 description: "How to identify the recalled Gourmia 9-slice digital air fryer oven, stop using an affected unit, and find the official recall instructions."
-date: "2026-11-24"
-updatedAt: "2026-11-24"
+date: "2026-11-25"
+updatedAt: "2026-11-25"
 category: "kitchen-appliances"
 subcategory: "air-fryers"
 format: "how-to"
@@ -26,14 +26,14 @@ automation:
   contentMode: "trend-editorial"
   seasonalTopic: "air-fryers"
   editorialContext: "Recent national coverage has focused on a Gourmia air fryer oven recall tied to a burn hazard. The official CPSC notice identifies a specific model and UPC, so owners should check the label instead of assuming every air fryer is affected."
-  trendScannedAt: "2026-11-24T00:44:42.589Z"
-  trendScore: 9
+  trendScannedAt: "2026-11-25T22:25:25.267Z"
+  trendScore: 8
   trendItemCount: 1
   trendProviders: "Google News, Google Trends, Bing News"
   trendMatchedTerms:
     - "Gourmia"
 
-  generatedAt: "2026-11-24T00:44:42.589Z"
+  generatedAt: "2026-11-25T22:25:25.267Z"
 ---
 
 ## Why this matters now
@@ -42,7 +42,7 @@ Recent national coverage has focused on a Gourmia air fryer oven recall tied to 
 
 ## What is driving interest now
 
-Our newsroom scan on 2026-11-24 found 1 recent item matching Gourmia across Google News, Google Trends, Bing News. The topic was selected because it is both seasonally relevant and present in recent coverage.
+Our newsroom scan on 2026-11-25 found 1 recent item matching Gourmia across Google News, Google Trends, Bing News. The topic was selected because it is both seasonally relevant and present in recent coverage.
 
 - [Lawsuit Alleges Gourmia Pressure Cooker Lid Opened Under Pressure - Wisevoter](https://news.google.com/rss/articles/CBMihwFBVV95cUxOUEZMbm9udldoMTVmNkxKQnV4ZVk0dTJwb244WW92c0VLTmdCQ3dpTW5wNXBKZXdvQnBDQV9wQkphbmJ2Wmp4SE1zcjNMU2h2WTJianIxVXI0TkRqODFIYTYzdm9iTmFxN0x6MXlNZkFoRlJXemhtTUpfMi0zakF6QTNzbDZhVjA?oc=5) - Wisevoter
 
