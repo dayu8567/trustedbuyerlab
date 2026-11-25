@@ -11,6 +11,7 @@ image: "/images/articles/dryer-editorial.webp"
 imageAlt: "Laundry appliances in a utility room during winter"
 imageCredit: "Photo: Sweetie candykim / Wikimedia Commons, CC0"
 featured: false
+draft: true
 editorialStatus: "automated"
 author: "newsroom"
 sources:

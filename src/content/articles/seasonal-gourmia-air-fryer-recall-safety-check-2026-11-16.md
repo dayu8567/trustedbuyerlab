@@ -11,6 +11,7 @@ image: "/images/articles/gourmia-recall-official.webp"
 imageAlt: "Recalled Gourmia 9-slice digital air fryer oven"
 imageCredit: "Image: U.S. Consumer Product Safety Commission"
 featured: false
+draft: true
 editorialStatus: "automated"
 author: "newsroom"
 sources:
