@@ -26,9 +26,13 @@ const formatCheckedAt = (value) =>
     timeZoneName: "short",
   }).format(new Date(value));
 
+export function articleSlugBaseForOffer(offer) {
+  return `price-watch-${slugify(offer.id)}`;
+}
+
 export function articleSlugForOffer(offer, now = new Date()) {
   const date = now.toISOString().slice(0, 10);
-  return `price-watch-${slugify(offer.id)}-${date}`;
+  return `${articleSlugBaseForOffer(offer)}-${date}`;
 }
 
 export function buildArticleMarkdown({
@@ -304,14 +308,24 @@ export async function writeGeneratedArticle({
   seasonalContext = "",
   trendSignal = null,
 }) {
-  const slug = articleSlugForOffer(offer, now);
+  const slugPrefix = articleSlugBaseForOffer(offer);
+  const articleDir = resolve(outputRoot, "src/content/articles");
+  await mkdir(articleDir, { recursive: true });
+  const existing = (await readdir(articleDir))
+    .filter(
+      (name) =>
+        name.endsWith(".md") &&
+        (name === `${slugPrefix}.md` || name.startsWith(`${slugPrefix}-`)),
+    )
+    .sort();
+  const slug =
+    existing.at(-1)?.replace(/\.md$/, "") ??
+    articleSlugForOffer(offer, now);
   const imagePath = await writeProductImage({
     imageUrl: offer.imageUrl,
     outputRoot,
     slug,
   });
-  const articleDir = resolve(outputRoot, "src/content/articles");
-  await mkdir(articleDir, { recursive: true });
   const filePath = resolve(articleDir, `${slug}.md`);
   const markdown = buildArticleMarkdown({
     offer,

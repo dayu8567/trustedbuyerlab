@@ -4,6 +4,7 @@ import test from "node:test";
 import { resolve } from "node:path";
 import { buildMessages } from "../scripts/newsroom/ai.mjs";
 import {
+  articleSlugBaseForOffer,
   buildArticleMarkdown,
   buildSeasonalEditorialMarkdown,
 } from "../scripts/newsroom/content.mjs";
@@ -345,6 +346,14 @@ test("writes deterministic product facts into the article frontmatter", () => {
   assert.match(markdown, /format: "deals"/);
   assert.match(markdown, /price: 79.99/);
   assert.match(markdown, /editorialStatus: "automated"/);
+});
+
+test("uses a stable product slug prefix so repeat coverage updates one article", () => {
+  const offer = normalizeOffers(feed, now)[0];
+  assert.equal(
+    articleSlugBaseForOffer(offer),
+    "price-watch-fixture-air-fryer-001",
+  );
 });
 
 test("marks non-discount daily articles as price checks in the article body", () => {
